@@ -34,8 +34,14 @@ public class AppliedOR {
       ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-      nursesD = test.readAllExceptCyclicSchedule(3);
-      workPatternsD = test.readWorkPatterns(1);
+      nursesD = test.readAllExceptCyclicSchedule(3);  
+      workPatternsD = test.readWorkPatterns(3);
+     
+      //System.out.println(nursesD.get(12).getPreferences());
+      
+        workPatternsD.get(12).getBinaryDayPlanning();
+      
+      /*workPatternsD = test.readWorkPatterns(1);
         System.out.println(nursesD.get(21).getSpecificPreference(0, 6));
         System.out.println(nursesD.get(21).getSpecificPreference(1, 6));
         System.out.println(nursesD.get(21).getSpecificPreference(2, 6));

@@ -49,9 +49,9 @@ public class ExcellReader {
                 nurses.add(Temp);
             }
             
-            for (Nurse nurse : nurses) {
+          /*  for (Nurse nurse : nurses) {
                 System.out.println(nurse);
-            }
+            }*/
         }
         catch (BiffException e) {
             e.printStackTrace();

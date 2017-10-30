@@ -52,6 +52,12 @@ public class Nurse {
     }
 
     public int[][] getBinaryDayPlanning() {
+        /*for (int i = 0; i < 7; i++) {
+            System.out.print(this.binaryDayPlanning [0][i]);
+        } System.out.println("");
+        for (int i = 0; i < 7; i++) {
+            System.out.print(this.binaryDayPlanning [1] [i]);   
+        }System.out.println("");*/
         return binaryDayPlanning;
     }
 
@@ -68,6 +74,15 @@ public class Nurse {
     }
 
     public int[][] getPreferences() {
+        /*for (int i = 0; i < 7; i++) {
+            System.out.print(this.preferences [0][i]);
+        } System.out.println("");
+        for (int i = 0; i < 7; i++) {
+            System.out.print(this.preferences [1] [i]);   
+        } System.out.println("");
+        for (int i = 0; i < 7; i++) {
+            System.out.print(this.preferences [2] [i]);
+        } System.out.println(""); */
         return preferences;
     }
     public int getSpecificPreference(int shift, int day){
