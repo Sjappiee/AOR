@@ -42,7 +42,7 @@ public class Nurse {
 
     @Override
     public String toString() {
-        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + binaryDayPlanning + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + preferences + '}';
+        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + Arrays.toString(binaryDayPlanning) + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + Arrays.toString(preferences) + '}';
     }
 
 

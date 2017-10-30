@@ -49,9 +49,9 @@ public class ExcellReader {
                 nurses.add(Temp);
             }
             
-//            for (Nurse nurse : nurses) {
-//                System.out.println(nurse);
-//            }
+            for (Nurse nurse : nurses) {
+                System.out.println(nurse);
+            }
         }
         catch (BiffException e) {
             e.printStackTrace();
@@ -70,14 +70,26 @@ public class ExcellReader {
             
             for (int i = startRow; i <= lastRow; i++) { //gaat door een rij, kolom per kolom. Dan weer volgende rij enzovoort
                 
-                int [] [] dayPlanning = giveBinaryDayPlanning(sheetNr,i);                
+                int [] [] dayPlanning = giveBinaryDayPlanning(sheetNr,i);
+             
+                
+            /*for (int j = 0; j < 7; j++) {
+                System.out.print(dayPlanning [0] [j]);
+            }
+            System.out.println("");
+            for (int j = 0; j < 7; j++) {
+                System.out.print(dayPlanning [1] [j]);
+            }
+            System.out.println("");*/
+                
+                
                 Nurse Temp = new Nurse (dayPlanning);
                 workPatterns.add(Temp);
             }
             
-//            for (Nurse nurse : nurses) {
-//                System.out.println(nurse);
-//            }
+            /*for (Nurse workPattern : workPatterns) {
+                System.out.println(Arrays.toString(workPattern.getBinaryDayPlanning()));
+            }*/
         }
         catch (BiffException e) {
             e.printStackTrace();
@@ -111,6 +123,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
+        //System.out.println(startRow);
           return startRow;
     }
     
@@ -140,6 +153,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
+        //    System.out.println(lastRow-1);
           return lastRow-1;
     }
         
@@ -159,7 +173,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-//        System.out.println(pref);
+        //System.out.println(pref);
         return pref;
         }
         
@@ -180,7 +194,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-//        System.out.println(type);
+       // System.out.println(type);
         return type;
         }
         
@@ -201,7 +215,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-//        System.out.println(EmploymentRate);
+       // System.out.println(EmploymentRate);
         return EmploymentRate;
         }
         
@@ -221,7 +235,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-//        System.out.println(number);
+        //System.out.println(number);
         return number;
         }
         
@@ -270,14 +284,14 @@ public class ExcellReader {
               e.printStackTrace();
         }
 
-//            for (int j = 0; j < columns; j++) {
-//                System.out.print(binaryPlanning [0] [j]);
-//            }
-//            System.out.println("");
-//            for (int j = 0; j < columns; j++) {
-//                System.out.print(binaryPlanning [1] [j]);
-//            }
-//            System.out.println("");
+         /*   for (int j = 0; j < columns; j++) {
+                System.out.print(binaryPlanning [0] [j]);
+            }
+            System.out.println("");
+            for (int j = 0; j < columns; j++) {
+                System.out.print(binaryPlanning [1] [j]);
+            }
+            System.out.println("");*/
             
         return binaryPlanning;
         }
@@ -298,16 +312,16 @@ public class ExcellReader {
             for (int k=18;k<39;k++){
                Cell cell = sheet.getCell(k, row);
                
-               if (k%3==0){ //even
+               if (k%3==0){ //veelvoud van 3, is shift 1
                    preferences[0][counter1] = Integer.parseInt(cell.getContents());
                    counter1+=1;
                }
-               else if (k%3==1){
+               else if (k%3==1){ //shift 2
                   preferences[1][counter2] = Integer.parseInt(cell.getContents()); 
                    counter2+=1;
                 } 
                
-               else {
+               else { //free shift
                   preferences[2][counter3] = Integer.parseInt(cell.getContents());    
                    counter3+=1;
                 }
@@ -318,20 +332,10 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-//            for (int i = 0; i < 7; i++) {
-//                System.out.print(preferences [0][i]);
-//            }
-//            System.out.println("");
-//            
-//            for (int i = 0; i < 7; i++) {
-//                System.out.print(preferences [1][i]);
-//            }System.out.println("");
-//            
-//            for (int i = 0; i < 7; i++) {
-//                System.out.print(preferences [2][i]);
-//            }System.out.println("");
+
         return preferences;
         }
+        
                
         
         /*

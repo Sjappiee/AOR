@@ -18,10 +18,12 @@ public class Schedule {
        //welke nurse als er meerderen met dezelfde min score zijn?
        //volgorde van welke patterns je eerst aan een nurse koppelt beïnvloed welke nurses over zijn voor de patterns er na
        //   => totale eindkost is sterk afhankelijk van volgorde ! (oplossing zoeken) 
+       // 2e schifting vinden voor nurses die gelijke score hebben! Zodat dit zeker niet afhankelijk is van nurse nummer
+       return null;
     }
     
     public int [][] prefScoreCalculation (){
-        int [][] prefScores = new int [workPatterns.size()][nurses.size()];
+        int [][] prefScores = new int [workPatterns.size()][nurses.size()]; //workPatterns are columns, nurses are rows
         for (int i = 0; i < workPatterns.size(); i++) {
             int [][] workPattern = workPatterns . get(i).getBinaryDayPlanning();
             for (int j = 0; j < nurses.size(); j++) {

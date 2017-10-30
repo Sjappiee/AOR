@@ -18,31 +18,44 @@ public class AppliedOR {
        
        ExcellReader test = new ExcellReader ();
        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
-       
-//       test.giveNurseNumber(0,14);
-//       test.giveBinaryDayPlanning(0,14);
-//       test.giveEmploymentRate(0,4);
-//       test.giveType(0,14);
-//       test.givePref(0,14);
-//       test.giveNumbPref(0,4);
-//       
-       ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
-       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
-      nursesD = test.readAllExceptCyclicSchedule(3);
-      workPatternsD = test.readWorkPatterns(3);
       
+       
+       /*
+       test.searchFirstRow(1);
+       test.searchLastRow(1);
+       test.giveNurseNumber(1,14);
+       test.giveBinaryDayPlanning(1,14);
+       test.giveEmploymentRate(1,14);
+       test.giveType(1,14);
+       test.givePref(1,14);
+       test.giveNumbPref(1,14);
+       */
+//       
+      ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+      ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
+      
+      nursesD = test.readAllExceptCyclicSchedule(3);
+      workPatternsD = test.readWorkPatterns(1);
+        System.out.println(nursesD.get(21).getSpecificPreference(0, 6));
+        System.out.println(nursesD.get(21).getSpecificPreference(1, 6));
+        System.out.println(nursesD.get(21).getSpecificPreference(2, 6));
+        
       int[][] t = new int [2][7];
       Nurse nurse = new Nurse();
-      nurse = workPatternsD.get(5);
+        for (Nurse nurse1 : workPatternsD) {
+            System.out.println(nurse1);
+        }
+      nurse = workPatternsD.get(5); 
       t=nurse.getBinaryDayPlanning();
-        System.out.println(t[1][5]);
+      System.out.println(t[1][5]);
+
+      /*Schedule testSchedule = new Schedule (nursesD,workPatternsD);
+      int [][] prefScores = testSchedule.prefScoreCalculation();
+      System.out.println(prefScores[0][0]);
+      System.out.println(prefScores[2][2]);
+      System.out.println(prefScores[3][3]);
+      System.out.println(prefScores[12][12]); */
       
-        Schedule testSchedule = new Schedule (nursesD,workPatternsD);
-        int [][] prefScores = testSchedule.prefScoreCalculation();
-        System.out.println(prefScores[0][0]);
-        System.out.println(prefScores[2][2]);
-        System.out.println(prefScores[3][3]);
-        System.out.println(prefScores[12][12]);
     }
 
     } 
