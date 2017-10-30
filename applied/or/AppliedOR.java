@@ -19,7 +19,7 @@ public class AppliedOR {
        ExcellReader test = new ExcellReader ();
        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
        
-       
+        System.out.println("KAK");
        
 //       test.giveNurseNumber(0,14);
 //       test.giveBinaryDayPlanning(0,14);
