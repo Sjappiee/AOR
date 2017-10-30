@@ -20,7 +20,7 @@ public class AppliedOR {
        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
        
        
-        System.out.println("TESTETST");
+       
 //       test.giveNurseNumber(0,14);
 //       test.giveBinaryDayPlanning(0,14);
 //       test.giveEmploymentRate(0,4);
