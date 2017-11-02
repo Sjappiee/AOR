@@ -45,7 +45,7 @@ public class Schedule {
                 for (int k = 0; k < 7; k++) {                             // days
                   int notFree = 0;
                   for (int l = 0; l < 2; l++) {
-                      score += nursePref[l][k] + workPattern [l][k];
+                      score += nursePref[l][k] * workPattern [l][k];
                       if(workPattern [l][k] !=0){
                           notFree+=1;
                       }

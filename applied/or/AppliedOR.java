@@ -39,28 +39,28 @@ public class AppliedOR {
      
       //System.out.println(nursesD.get(12).getPreferences());
       
-        workPatternsD.get(12).getBinaryDayPlanning();
+        //workPatternsD.get(12).getBinaryDayPlanning();
       
-      /*workPatternsD = test.readWorkPatterns(1);
-        System.out.println(nursesD.get(21).getSpecificPreference(0, 6));
-        System.out.println(nursesD.get(21).getSpecificPreference(1, 6));
-        System.out.println(nursesD.get(21).getSpecificPreference(2, 6));
-        
-      int[][] t = new int [2][7];
-      Nurse nurse = new Nurse();
-        for (Nurse nurse1 : workPatternsD) {
-            System.out.println(nurse1);
-        }
-      nurse = workPatternsD.get(5); 
-      t=nurse.getBinaryDayPlanning();
-      System.out.println(t[1][5]);
+//      workPatternsD = test.readWorkPatterns(1);
+//        System.out.println(nursesD.get(21).getSpecificPreference(0, 6));
+//        System.out.println(nursesD.get(21).getSpecificPreference(1, 6));
+//        System.out.println(nursesD.get(21).getSpecificPreference(2, 6));
+//        
+//      int[][] t = new int [2][7];
+//      Nurse nurse = new Nurse();
+//        for (Nurse nurse1 : workPatternsD) {
+//            System.out.println(nurse1);
+//        }
+//      nurse = workPatternsD.get(5); 
+//      t=nurse.getBinaryDayPlanning();
+//      System.out.println(t[1][5]);
 
-      /*Schedule testSchedule = new Schedule (nursesD,workPatternsD);
+      Schedule testSchedule = new Schedule (nursesD,workPatternsD);
       int [][] prefScores = testSchedule.prefScoreCalculation();
       System.out.println(prefScores[0][0]);
       System.out.println(prefScores[2][2]);
       System.out.println(prefScores[3][3]);
-      System.out.println(prefScores[12][12]); */
+      System.out.println(prefScores[12][12]);
       
     }
 
