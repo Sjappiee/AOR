@@ -68,6 +68,11 @@ public class AppliedOR {
             }
             System.out.println("");
         }
+        System.out.println(" ");
+        System.out.println("");
+        
+        testSchedule.ListMinScore(prefScores, 0);
+        
       
     }
     
