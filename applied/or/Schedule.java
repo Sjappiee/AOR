@@ -23,6 +23,7 @@ public class Schedule {
     }
     
     public int [][] prefScoreCalculation (){
+        //System.out.println(workPatterns.size() + " " + nurses.size());
         int [][] prefScores = new int [workPatterns.size()][nurses.size()]; //workPatterns are columns, nurses are rows
         for (int i = 0; i < workPatterns.size(); i++) {
             int [][] workPattern = workPatterns . get(i).getBinaryDayPlanning();
@@ -57,6 +58,12 @@ public class Schedule {
                 prefScores[i][j] = score;
             }
         }
+       /* for (int i = 0; i < nurses.size(); i++) {
+            for (int j = 0; j < workPatterns.size(); j++) {
+                System.out.print(prefScores [i] [j]);
+            }
+            System.out.println("");
+        }*/
         return prefScores;
     }
 

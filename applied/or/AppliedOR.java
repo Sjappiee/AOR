@@ -1,4 +1,4 @@
-
+ 
 package applied.or;
 
 import java.io.IOException;
@@ -57,12 +57,20 @@ public class AppliedOR {
 
       Schedule testSchedule = new Schedule (nursesD,workPatternsD);
       int [][] prefScores = testSchedule.prefScoreCalculation();
-      System.out.println(prefScores[0][0]);
-      System.out.println(prefScores[2][2]);
-      System.out.println(prefScores[3][3]);
-      System.out.println(prefScores[12][12]);
+      System.out.println(prefScores[0][14]);
+      System.out.println(prefScores[1][14]);
+      System.out.println(prefScores[2][14]);
+      System.out.println(prefScores[3][14]);
+    
+        for (int i = 0; i < 47; i++) {
+            for (int j = 0; j < 47; j++) {
+                System.out.print(prefScores [j] [i] + " ");
+            }
+            System.out.println("");
+        }
       
     }
+    
 
     } 
 
