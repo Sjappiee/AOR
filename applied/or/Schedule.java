@@ -18,7 +18,20 @@ public class Schedule {
     
     public ArrayList<Nurse> schedulingProcess (){
         
+        ArrayList <Nurse> temp= listMinScore(3);
+        //het rijnummer van de eerste nurse in de laagste score lijst
+        int max = getSumRow(IDToPrefRow(temp.get(0).getNr())-1);
+        String IDmax = temp.get(0).getNr();
         
+        for (Nurse nurse : temp) {
+            if (getSumRow(IDToPrefRow(nurse.getNr())-1) > max)
+                    {
+                        max = getSumRow(IDToPrefRow(nurse.getNr())-1);
+                        IDmax = nurse.getNr();
+                    }   
+        }
+        System.out.println(IDmax);
+        System.out.println(max);
         
        //zoek per workPattern de nurse met min prefScore en koppel dan dat work pattern aan die nurse
        //welke nurse als er meerderen met dezelfde min score zijn?
@@ -28,11 +41,30 @@ public class Schedule {
        return null;
     }
     
-    public ArrayList <Nurse> listMinScore (int workSchedule[][], int scheduleNr ) { 
+    public int IDToPrefRow (String ID){
+        int row;
+        row = Integer.parseInt(ID.substring(ID.length()-2));
+        return row;
+    }
+    
+    public ArrayList <Nurse> listMinScore (int scheduleNr,  int [][] prefScores) { 
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         int min = getMinOfColumn (scheduleNr);
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (workSchedule [scheduleNr] [i] == min) {
+            if (prefScores [scheduleNr] [i] == min) {
+                nursesLowScore.add(nurses.get(i));
+            }
+        }
+        return nursesLowScore;
+       /* for (Nurse nurse : nursesLowScore) {
+            System.out.println(nurse);
+        }*/
+    }
+        public ArrayList <Nurse> listMinScore (int scheduleNr) { 
+        ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
+        int min = getMinOfColumn (scheduleNr);
+        for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+            if (prefScores [scheduleNr] [i] == min) {
                 nursesLowScore.add(nurses.get(i));
             }
         }
@@ -51,14 +83,24 @@ public class Schedule {
         }
         return min;
     }
+
     
-    public int getMaxRow (int row){
-        int [] [] temp = prefScoreCalculation();
-        int max = 0;
-        for (int i = 0; i < nurses.size(); i++) {
-            max += temp[i][row];
+    public int getSumRow (int row, int [][] prefScores){
+        int [] [] temp = prefScores;
+        int sum = 0;
+        for (int i = 0; i < workPatterns.size(); i++) {
+            sum += temp[i][row];
         }
-        return max;
+        return sum;
+    }
+    
+        public int getSumRow (int row){
+        int [] [] temp = prefScores;
+        int sum = 0;
+        for (int i = 0; i < workPatterns.size(); i++) {
+            sum += temp[i][row];
+        }
+        return sum;
     }
     
     
