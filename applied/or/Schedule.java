@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Schedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+    private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
 
 
     public Schedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
@@ -25,10 +26,9 @@ public class Schedule {
        return null;
     }
     
-    public ArrayList <Nurse> ListMinScore (int workSchedule[][], int scheduleNr ) { //aparte lijst wordt nu bijgehouden met alle nurses in die de laagste preScore hebben. Afhankelijk van input schedule
+    public void listMinScore (int workSchedule[][], int scheduleNr ) { //aparte lijst wordt nu bijgehouden met alle nurses in die de laagste preScore hebben. Afhankelijk van input schedule
         //moeten zeker nog iets vinden om bij creatie van dat schedule bepaalde workschedules EN nurses eruit te halen!!!
-        
-        ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
+        //ben nu aan het denken om nurses als een private list al klaar te maken die dan eens een nurse eruit gehaald wordt weer leeg gemaakt wordt. Een beetje een dummy variabele die telkens na gebruik weer leeg komt te staan.
         int min = getMinOfColumn (scheduleNr);
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
             if (workSchedule [scheduleNr] [i] == min) {
@@ -38,7 +38,6 @@ public class Schedule {
        /* for (Nurse nurse : nursesLowScore) {
             System.out.println(nurse);
         }*/
-        return nursesLowScore;
     }
     
     public int getMinOfColumn (int column) { //minimum van kolom vinden
@@ -54,6 +53,7 @@ public class Schedule {
     public int [][] prefScoreCalculation (){ //in orde! 
         // !!!!!! Denk wel dat we hier parameters gebruikt moeten worden zodat we een schema maken dat gebaseerd is op huidige input en niet op de originele input. 
         //BV: als schema 2,3,5 en nurse 32, 4, 12 er al uit zijn moeten deze nurses en schema's er ook al uit gaan aangezien andere methodes op deze input verder werken!!!!!
+        //denk dus hierbij te werken met die lijsten die we origineel inladen en dan telkens er iemand uit gehaald wordt die uit de lijst halen en met die aangepaste lijst verder te werken
         //System.out.println(workPatterns.size() + " " + nurses.size());
         int [][] prefScores = new int [workPatterns.size()][nurses.size()]; //workPatterns are columns, nurses are rows
         for (int i = 0; i < workPatterns.size(); i++) {
