@@ -6,12 +6,14 @@ import java.util.ArrayList;
 public class Schedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
-    private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
+    //private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
+    private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
 
 
     public Schedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
         this.workPatterns = workPatterns;
+        this.prefScores = null;   
     }
     
     public ArrayList<Nurse> schedulingProcess (){
@@ -26,15 +28,15 @@ public class Schedule {
        return null;
     }
     
-    public void listMinScore (int workSchedule[][], int scheduleNr ) { //aparte lijst wordt nu bijgehouden met alle nurses in die de laagste preScore hebben. Afhankelijk van input schedule
-        //moeten zeker nog iets vinden om bij creatie van dat schedule bepaalde workschedules EN nurses eruit te halen!!!
-        //ben nu aan het denken om nurses als een private list al klaar te maken die dan eens een nurse eruit gehaald wordt weer leeg gemaakt wordt. Een beetje een dummy variabele die telkens na gebruik weer leeg komt te staan.
+    public ArrayList <Nurse> listMinScore (int workSchedule[][], int scheduleNr ) { 
+        ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         int min = getMinOfColumn (scheduleNr);
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
             if (workSchedule [scheduleNr] [i] == min) {
                 nursesLowScore.add(nurses.get(i));
             }
         }
+        return nursesLowScore;
        /* for (Nurse nurse : nursesLowScore) {
             System.out.println(nurse);
         }*/
@@ -50,30 +52,24 @@ public class Schedule {
         return min;
     }
     
+    public int getMaxRow (int row){
+        int [] [] temp = prefScoreCalculation();
+        int max = 0;
+        for (int i = 0; i < nurses.size(); i++) {
+            max += temp[i][row];
+        }
+        return max;
+    }
+    
+    
     public int [][] prefScoreCalculation (){ //in orde! 
-        // !!!!!! Denk wel dat we hier parameters gebruikt moeten worden zodat we een schema maken dat gebaseerd is op huidige input en niet op de originele input. 
-        //BV: als schema 2,3,5 en nurse 32, 4, 12 er al uit zijn moeten deze nurses en schema's er ook al uit gaan aangezien andere methodes op deze input verder werken!!!!!
-        //denk dus hierbij te werken met die lijsten die we origineel inladen en dan telkens er iemand uit gehaald wordt die uit de lijst halen en met die aangepaste lijst verder te werken
-        //System.out.println(workPatterns.size() + " " + nurses.size());
-        int [][] prefScores = new int [workPatterns.size()][nurses.size()]; //workPatterns are columns, nurses are rows
+        int [][] temp = new int [workPatterns.size()][nurses.size()];
         for (int i = 0; i < workPatterns.size(); i++) {
             int [][] workPattern = workPatterns . get(i).getBinaryDayPlanning();
             for (int j = 0; j < nurses.size(); j++) {
                 int[][] nursePref = nurses.get(j).getPreferences();
                 int score = 0;
-//                for (int k = 0; k < nursePref[0].length; k++) {         //shift 1, score voor elke dag (k) optellen
-//                    score += nursePref[0][k] * workPattern[0][k];
-//                }
-//                for (int k = 0; k < nursePref[1].length; k++) {         //shift 2, score voor elke dag (k) optellen
-//                    score += nursePref[1][k] * workPattern[1][k];
-//                }
-//                for (int k = 0; k < nursePref[2].length; k++) {         //free , score voor elke dag (k) optellen
-//                    int free=0;     // 0 if not free, 1 if free
-//                    if(workPattern [l][k] == 0 && workPattern [l][k] == 0){
-//                        free = 1;
-//                    }
-//                    score += free*nursePref[2][k];
-//                }
+
                 for (int k = 0; k < 7; k++) {                             // days
                   int notFree = 0;
                   for (int l = 0; l < 2; l++) {
@@ -86,16 +82,11 @@ public class Schedule {
                       score += nursePref[2][k];
                   }  
                 }
-                prefScores[i][j] = score;
+                temp[i][j] = score;
             }
         }
-       /* for (int i = 0; i < nurses.size(); i++) {
-            for (int j = 0; j < workPatterns.size(); j++) {
-                System.out.print(prefScores [i] [j]);
-            }
-            System.out.println("");
-        }*/
-        return prefScores;
+       prefScores = temp; 
+       return prefScores;
     }
 
     public ArrayList<Nurse> getNurses() {
@@ -112,6 +103,14 @@ public class Schedule {
 
     public void setWorkPatterns(ArrayList<Nurse> workPatterns) {
         this.workPatterns = workPatterns;
+    }
+
+    public int[][] getPrefScores() {
+        return prefScores;
+    }
+
+    public void setPrefScores(int[][] prefScores) {
+        this.prefScores = prefScores;
     }
     
     
