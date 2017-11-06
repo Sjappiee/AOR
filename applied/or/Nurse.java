@@ -88,6 +88,10 @@ public class Nurse {
     public int getSpecificPreference(int shift, int day){
         return preferences[shift][day];
     }
+
+    public void setBinaryDayPlanning(int[][] binaryDayPlanning) {
+        this.binaryDayPlanning = binaryDayPlanning;
+    }
     
     
     

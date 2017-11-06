@@ -30,8 +30,27 @@ public class Schedule {
                         IDmax = nurse.getNr();
                     }   
         }
-        System.out.println(IDmax);
-        System.out.println(max);
+        nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(3).getBinaryDayPlanning());
+        for (int i = 0; i < workPatterns.size(); i++) {
+            prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
+        }
+//        for (int i = 0; i < 47; i++) {
+//            for (int j = 0; j < 47; j++) {
+//            System.out.print(prefScores[j][i] +" ");
+//            }
+//            System.out.println("");
+//        }
+//        int [][] binaryPlanning = nurses.get(IDToPrefRow(IDmax)-1).getBinaryDayPlanning();
+//        for (int j = 0; j < 7; j++) {
+//                System.out.print(binaryPlanning [0] [j]);
+//            }
+//            System.out.println("");
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(binaryPlanning [1] [j]);
+//            }
+//            System.out.println("");
+//        System.out.println(IDmax);
+//        System.out.println(max);
         
        //zoek per workPattern de nurse met min prefScore en koppel dan dat work pattern aan die nurse
        //welke nurse als er meerderen met dezelfde min score zijn?
