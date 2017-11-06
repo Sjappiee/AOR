@@ -17,10 +17,11 @@ public class Schedule {
     }
     
     public ArrayList<Nurse> schedulingProcess (){
-        
-        ArrayList <Nurse> temp= listMinScore(3);
-        //het rijnummer van de eerste nurse in de laagste score lijst
-        int max = getSumRow(IDToPrefRow(temp.get(0).getNr())-1);
+     // nog for loop maken en elk workpattern overlopen  
+        // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
+        ArrayList <Nurse> temp= listMinScore(3);        // lijst met nurses die min prefscores bij een bepaald workpattern
+        //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
+        int max = getSumRow(IDToPrefRow(temp.get(0).getNr())-1);       
         String IDmax = temp.get(0).getNr();
         
         for (Nurse nurse : temp) {
@@ -30,7 +31,9 @@ public class Schedule {
                         IDmax = nurse.getNr();
                     }   
         }
+        // deze nurse word gekoppeld aan het workpattern
         nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(3).getBinaryDayPlanning());
+        //nurse kan niet meer gebruikt worden dus zet prefscores heel hoog zodat deze nooit meer tot de minlijst behoort
         for (int i = 0; i < workPatterns.size(); i++) {
             prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
         }
@@ -52,21 +55,16 @@ public class Schedule {
 //        System.out.println(IDmax);
 //        System.out.println(max);
         
-       //zoek per workPattern de nurse met min prefScore en koppel dan dat work pattern aan die nurse
-       //welke nurse als er meerderen met dezelfde min score zijn?
-       //volgorde van welke patterns je eerst aan een nurse koppelt beïnvloed welke nurses over zijn voor de patterns er na
-       //   => totale eindkost is sterk afhankelijk van volgorde ! (oplossing zoeken) 
-       // 2e schifting vinden voor nurses die gelijke score hebben! Zodat dit zeker niet afhankelijk is van nurse nummer
        return null;
     }
     
-    public int IDToPrefRow (String ID){
+    public int IDToPrefRow (String ID){     // de laatste 2 string elementen uit het ID omzetten naar een int, dit getal - 1 is dan de index van die nurse in de nurses lijst
         int row;
         row = Integer.parseInt(ID.substring(ID.length()-2));
         return row;
     }
     
-    public ArrayList <Nurse> listMinScore (int scheduleNr,  int [][] prefScores) { 
+    public ArrayList <Nurse> listMinScore (int scheduleNr,  int [][] prefScores) {  //lijst van nurses die allen dezelfde min prefscore hebben bij een geg patroon
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         int min = getMinOfColumn (scheduleNr);
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
@@ -104,7 +102,7 @@ public class Schedule {
     }
 
     
-    public int getSumRow (int row, int [][] prefScores){
+    public int getSumRow (int row, int [][] prefScores){       // som van alle prefscores van 1 nurse, over alle workpatterns heen
         int [] [] temp = prefScores;
         int sum = 0;
         for (int i = 0; i < workPatterns.size(); i++) {
