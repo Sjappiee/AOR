@@ -16,7 +16,7 @@ public class Schedule {
         this.prefScores = null;   
     }
     
-    public ArrayList<Nurse> schedulingProcess (){ //zoals nu houden we geen rekening met empoyment rate van de nurse in kwestie. 
+    public ArrayList<Nurse> schedulingProcess (){
      // nog for loop maken en elk workpattern overlopen  
         // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
         ArrayList <Nurse> temp= listMinScore(3);        // lijst met nurses die min prefscores bij een bepaald workpattern
@@ -34,27 +34,27 @@ public class Schedule {
         // deze nurse word gekoppeld aan het workpattern
         nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(3).getBinaryDayPlanning());
         
-       // for (int i = 0; i < workPatterns.size(); i++) { //een hele rij van pref van specifieke nurse op 1000 zetten zodat deze niet meer gekozen wordt
-         //   prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
-       // }
-        for (int i = 0; i < 47; i++) {
-            for (int j = 0; j < 47; j++) {
-            System.out.print(prefScores[j][i] +" ");
+        for (int i = 0; i < workPatterns.size(); i++) {
+            prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
             }
-            System.out.println("");
-        }
-        int [][] binaryPlanning = nurses.get(IDToPrefRow(IDmax)-1).getBinaryDayPlanning();
-        for (int j = 0; j < 7; j++) {
-                System.out.print(binaryPlanning [0] [j]);
-            }
-            System.out.println("");
-            for (int j = 0; j < 7; j++) {
-                System.out.print(binaryPlanning [1] [j]);
-            }
-            System.out.println("");
-        System.out.println(IDmax);
-        System.out.println(max);
-        System.out.println(nurses.get(IDToPrefRow(IDmax)-1));
+//        for (int i = 0; i < 47; i++) {
+//            for (int j = 0; j < 47; j++) {
+//            System.out.print(prefScores[j][i] +" ");
+//            }
+//            System.out.println("");
+//        }
+//        int [][] binaryPlanning = nurses.get(IDToPrefRow(IDmax)-1).getBinaryDayPlanning();
+//        for (int j = 0; j < 7; j++) {
+//                System.out.print(binaryPlanning [0] [j]);
+//            }
+//            System.out.println("");
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(binaryPlanning [1] [j]);
+//            }
+//            System.out.println("");
+//        System.out.println(IDmax);
+//        System.out.println(max);
+        
        return null;
     }
     
