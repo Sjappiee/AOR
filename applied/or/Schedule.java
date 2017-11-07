@@ -17,10 +17,11 @@ public class Schedule {
     }
     
     public ArrayList<Nurse> schedulingProcess (){
+        //werkt voor 1 schema en nurse. MAAR: hoort empl rate bij een bepaald schema of een bepaalde wens van een nurse? Ik zou zeggen bij wens nurse en we kunnen dit al dan niet voorzien als de nood er is gezien input van de rest.
      // nog for loop maken en elk workpattern overlopen  
         // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
         // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
-        ArrayList <Nurse> temp= listMinScore(3);        // lijst met nurses die min prefscores bij een bepaald workpattern
+        ArrayList <Nurse> temp= listMinScore(10);        // lijst met nurses die min prefscores bij een bepaald workpattern
         //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
         int max = getSumRow(IDToPrefRow(temp.get(0).getNr())-1);       
         String IDmax = temp.get(0).getNr();
@@ -33,28 +34,28 @@ public class Schedule {
                     }   
         }
         // deze nurse word gekoppeld aan het workpattern
-        nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(3).getBinaryDayPlanning());
+        nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(10).getBinaryDayPlanning());
         
         for (int i = 0; i < workPatterns.size(); i++) {
             prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
             }
-//        for (int i = 0; i < 47; i++) {
-//            for (int j = 0; j < 47; j++) {
-//            System.out.print(prefScores[j][i] +" ");
-//            }
-//            System.out.println("");
-//        }
-//        int [][] binaryPlanning = nurses.get(IDToPrefRow(IDmax)-1).getBinaryDayPlanning();
-//        for (int j = 0; j < 7; j++) {
-//                System.out.print(binaryPlanning [0] [j]);
-//            }
-//            System.out.println("");
-//            for (int j = 0; j < 7; j++) {
-//                System.out.print(binaryPlanning [1] [j]);
-//            }
-//            System.out.println("");
-//        System.out.println(IDmax);
-//        System.out.println(max);
+        for (int i = 0; i < 47; i++) {
+            for (int j = 0; j < 47; j++) {
+            System.out.print(prefScores[j][i] +" ");
+            }
+            System.out.println("");
+        }
+        int [][] binaryPlanning = nurses.get(IDToPrefRow(IDmax)-1).getBinaryDayPlanning();
+        for (int j = 0; j < 7; j++) {
+                System.out.print(binaryPlanning [0] [j]);
+            }
+            System.out.println("");
+            for (int j = 0; j < 7; j++) {
+                System.out.print(binaryPlanning [1] [j]);
+            }
+            System.out.println("");
+        System.out.println(IDmax);
+        System.out.println(max);
         
        return null;
     }
@@ -70,41 +71,27 @@ public class Schedule {
 //lijst van nurses die allen dezelfde min prefscore hebben bij een geg patroon
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         int min = getMinOfColumn (scheduleNr);
+
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (prefScores [scheduleNr] [i] == min) {
+            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)) {
                 nursesLowScore.add(nurses.get(i));
             }
-        } //iedereen met lage score is nu in de lijst ingeladen
-//hier gaan we nog eens door de finale lijst die gemaakt is en verwijderen we de foute nurses alvorens de lijst te retourneren. Dus in deze lijst degene die MINSTENS het gewenste aantal dagen willen werken.
-        for (int j = 0; j < nursesLowScore.size(); j++) {
-            if (nursesLowScore.get(j).getEmploymentRate() <EmploymentRateSchedule(scheduleNr))
-            {
-                nursesLowScore.remove(j);
-            }
-        }
-        for (Nurse nurse : nursesLowScore) {
-            System.out.println(nurse);
-        }
+        }     
         return nursesLowScore;
     }
        
         public ArrayList <Nurse> listMinScore (int scheduleNr) { 
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         int min = getMinOfColumn (scheduleNr);
+
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (prefScores [scheduleNr] [i] == min) {
+            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)) {
                 nursesLowScore.add(nurses.get(i));
             }
         }
-        for (int j = 0; j < nursesLowScore.size(); j++) {
-            if (nursesLowScore.get(j).getEmploymentRate() <EmploymentRateSchedule(scheduleNr))
-            {
-                nursesLowScore.remove(j);
+            for (Nurse nurse : nursesLowScore) {
+                System.out.println(nurse);
             }
-        }
-        for (Nurse nurse : nursesLowScore) {
-            System.out.println(nurse);
-        }
         return nursesLowScore;
     }
     
@@ -115,6 +102,7 @@ public class Schedule {
             if (temp [column] [i] < min)
                 min = temp [column] [i];
         }
+        System.out.println(min);
         return min;
     }
 
