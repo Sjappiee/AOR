@@ -56,20 +56,21 @@ public class AppliedOR {
 //      System.out.println(t[1][5]);
 
       Schedule testSchedule = new Schedule (nursesD,workPatternsD);
-      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD
+      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
+      //testSchedule.schedulingProcess();
       
-      //ArrayList <Nurse> ttt = new ArrayList <Nurse> ();
-      //ttt = testSchedule.listMinScore(0, temp);
-      testSchedule.schedulingProcess();
-//        for (Nurse nurse : ttt) {
-//            System.out.println(nurse);
-//        }
-//        for (int i = 0; i < 47; i++) {
-//            for (int j = 0; j < 47; j++) {
-//                System.out.print(prefScores[j][i] + " ");
-//            }
-//            System.out.println("");
-//        }
+      ArrayList <Nurse> ttt = new ArrayList <Nurse> ();
+      ttt = testSchedule.listMinScore(0, temp);
+      
+        for (Nurse nurse : ttt) {
+            System.out.println(nurse);
+        }
+        for (int i = 0; i < 47; i++) {
+            for (int j = 0; j < 47; j++) {
+                System.out.print(temp[j][i] + " ");
+            }
+            System.out.println("");
+        }
         
         
 //      ArrayList <Nurse> temp = testSchedule.listMinScore(prefScores, 0);

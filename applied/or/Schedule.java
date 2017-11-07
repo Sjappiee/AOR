@@ -19,6 +19,7 @@ public class Schedule {
     public ArrayList<Nurse> schedulingProcess (){
      // nog for loop maken en elk workpattern overlopen  
         // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
+        // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
         ArrayList <Nurse> temp= listMinScore(3);        // lijst met nurses die min prefscores bij een bepaald workpattern
         //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
         int max = getSumRow(IDToPrefRow(temp.get(0).getNr())-1);       
@@ -141,8 +142,21 @@ public class Schedule {
         int [][] temp = new int [workPatterns.size()][nurses.size()];
         for (int i = 0; i < workPatterns.size(); i++) {
             int [][] workPattern = workPatterns . get(i).getBinaryDayPlanning();
+            //calc workrate for the pattern i
+            double amountWorkDays = 0;
+            for (int k = 0; k < 7; k++) {
+                for (int l = 0; l < 2; l++) {
+                    if(workPattern [l][k] !=0){
+                        amountWorkDays +=1.0;
+                    }
+                }
+            }
+            double fulltime = 4.0;    //bij 2 SHIFT system: "fulltime" = 4workdays, bij 3 shift system: 5
+            double workRate = amountWorkDays/fulltime;            
+            //calc prefscores for each nurse for the pattern i
             for (int j = 0; j < nurses.size(); j++) {
                 int[][] nursePref = nurses.get(j).getPreferences();
+                float employementRate = nurses.get(j).getEmploymentRate();
                 int score = 0;
 
                 for (int k = 0; k < 7; k++) {                             // days
@@ -156,6 +170,12 @@ public class Schedule {
                   if(notFree==0){                                       //pref score for free
                       score += nursePref[2][k];
                   }  
+                }
+                if (employementRate - workRate == 0.25){
+                    score += 10;
+                }
+                if (employementRate - workRate == 0.5){
+                    score += 20;
                 }
                 temp[i][j] = score;
             }
