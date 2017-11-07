@@ -60,7 +60,8 @@ public class ExcellReader {
     }
     
         public ArrayList <Nurse> readWorkPatterns (int sheetNr) throws IOException { //methode om alle data in te lezen EN in de nurse objecten te steken
-        File inputWorkbook = new File (inputFile);
+        // AANPASSEn: juiste first en lastrow methode
+            File inputWorkbook = new File (inputFile);
         Workbook w;
         
         try{
@@ -98,6 +99,7 @@ public class ExcellReader {
     }
         
     public int searchFirstRow (int sheetNr) throws IOException { //methode voor het vinden van de eerste cell ongeacht department etc.
+        // zelfde methode nog eens maar dan voor worpatterns + in excel kollom toev
         File inputWorkbook = new File (inputFile);
         Workbook w;
         int startRow = 0;
@@ -128,7 +130,8 @@ public class ExcellReader {
     }
     
         public int searchLastRow (int sheetNr) throws IOException { //methode voor het vinden van de laatste cell ongeacht department en hoeveel nurses er daar gepland zijn.
-        File inputWorkbook = new File (inputFile);
+        // zelfde methode nog eens maar dan voor worpatterns + in excel kollom toev
+            File inputWorkbook = new File (inputFile);
         Workbook w;
         int lastRow = 0;
         int startColumn = 0;

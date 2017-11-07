@@ -33,7 +33,7 @@ public class Schedule {
         }
         // deze nurse word gekoppeld aan het workpattern
         nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(3).getBinaryDayPlanning());
-        //nurse kan niet meer gebruikt worden dus zet prefscores heel hoog zodat deze nooit meer tot de minlijst behoort
+        
         for (int i = 0; i < workPatterns.size(); i++) {
             prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
         }
