@@ -72,7 +72,8 @@ public class ExcellReader {
             for (int i = startRow; i <= lastRow; i++) { //gaat door een rij, kolom per kolom. Dan weer volgende rij enzovoort
                 
                 int [] [] dayPlanning = giveBinaryDayPlanning(sheetNr,i);
-             
+                int type = givePatternType(sheetNr,i);
+                String nr = givePatternNumber (sheetNr, i);
                 
             /*for (int j = 0; j < 7; j++) {
                 System.out.print(dayPlanning [0] [j]);
@@ -84,7 +85,7 @@ public class ExcellReader {
             System.out.println("");*/
                 
                 
-                Nurse Temp = new Nurse (dayPlanning);
+                Nurse Temp = new Nurse (nr, dayPlanning, type);
                 workPatterns.add(Temp);
             }
             
@@ -201,6 +202,25 @@ public class ExcellReader {
         return type;
         }
         
+        public int givePatternType (int sheetNr, int row) throws IOException {//retourneert het type van de nurse in de rij
+            
+        File inputWorkbook = new File (inputFile);
+        Workbook w;
+        int type = 0;
+        
+        try{
+            w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
+            Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
+            Cell cell = sheet.getCell(16, row);
+            type = Integer.parseInt(cell.getContents());
+            
+        }
+        catch (BiffException e) {
+              e.printStackTrace();
+        }
+       // System.out.println(type);
+        return type;
+        }
         
         public float giveEmploymentRate (int sheetNr, int row) throws IOException {//retourneert de employmentrate van de nurse in de rij
             
@@ -223,6 +243,26 @@ public class ExcellReader {
         }
         
         public String giveNurseNumber (int sheetNr, int row) throws IOException {//retourneert het nursenummer van de nurse in de rij
+            
+        File inputWorkbook = new File (inputFile);
+        Workbook w;
+        String number ="";
+        
+        try{
+            w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
+            Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
+            Cell cell = sheet.getCell(0, row);
+            number = cell.getContents();
+            
+        }
+        catch (BiffException e) {
+              e.printStackTrace();
+        }
+        //System.out.println(number);
+        return number;
+        }
+        
+        public String givePatternNumber (int sheetNr, int row) throws IOException {//retourneert het nursenummer van de nurse in de rij
             
         File inputWorkbook = new File (inputFile);
         Workbook w;

@@ -60,7 +60,7 @@ public class AppliedOR {
       testSchedule.schedulingProcess();
       
       ArrayList <Nurse> ttt = new ArrayList <Nurse> ();
-      ttt = testSchedule.listMinScore(10);
+      ttt = testSchedule.listMinScore(0);
       
         for (int i = 0; i < 47; i++) {
             for (int j = 0; j < 47; j++) {
