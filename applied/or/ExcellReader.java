@@ -157,7 +157,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(startRow);
+        //System.out.println(startRow);
           return startRow;
     }
     
@@ -218,7 +218,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(lastRow-1);
+        //System.out.println(lastRow-1);
           return lastRow-1;
     }
         
