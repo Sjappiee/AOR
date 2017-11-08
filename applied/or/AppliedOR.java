@@ -20,10 +20,11 @@ public class AppliedOR {
        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
       
        
-       /*
-       test.searchFirstRow(1);
-       test.searchLastRow(1);
-       test.giveNurseNumber(1,14);
+       
+        System.out.println(test.searchFirstRow(3));
+       System.out.println(test.searchLastRow(3));
+       
+       /*test.giveNurseNumber(1,14);
        test.giveBinaryDayPlanning(1,14);
        test.giveEmploymentRate(1,14);
        test.giveType(1,14);
