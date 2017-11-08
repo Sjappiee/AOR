@@ -83,17 +83,23 @@ public class Schedule {
        
         public ArrayList <Nurse> listMinScore (int scheduleNr) { 
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
-        int min = getMinOfColumn (scheduleNr);
+        //int min = getMinOfColumn (scheduleNr);
+        
+        for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
             System.out.println(min);
-        for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
-                    && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
-                nursesLowScore.add(nurses.get(i));
+            for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+                if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
+                        && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+                    nursesLowScore.add(nurses.get(i));
+                }
             }
-        }
             for (Nurse nurse : nursesLowScore) {
                 System.out.println(nurse);
             }
+            if(nursesLowScore != null){
+                min+=1000;
+            }
+        }
         return nursesLowScore;
     }
     
@@ -114,7 +120,7 @@ public class Schedule {
                 min = temp [column] [i];
             }
         }
-        System.out.println(min);
+        //System.out.println(min);
         return min;
     }
 
