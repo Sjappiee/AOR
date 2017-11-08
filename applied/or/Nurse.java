@@ -25,6 +25,7 @@ public class Nurse {
     public Nurse(String nr, int[][] binaryDayPlanning, int type) {
         this.binaryDayPlanning = binaryDayPlanning;
         this.type = type;
+        this.nr = nr;
     }
 
     public Nurse(String nr, int[][] binaryDayPlanning, float employmentRate, int type, String preferenceText, int[][] preferences) {
