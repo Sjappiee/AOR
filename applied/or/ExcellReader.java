@@ -49,9 +49,9 @@ public class ExcellReader {
                 nurses.add(Temp);
             }
             
-            for (Nurse nurse : nurses) {
-                System.out.println(nurse);
-            }
+//            for (Nurse nurse : nurses) {
+//                System.out.println(nurse);
+//            }
         }
         catch (BiffException e) {
             e.printStackTrace();
@@ -75,22 +75,22 @@ public class ExcellReader {
                 int type = givePatternType(sheetNr,i);
                 String nr = givePatternNumber (sheetNr, i);
                 
-            for (int j = 0; j < 7; j++) {
-                System.out.print(dayPlanning [0] [j]);
-            }
-            System.out.println("");
-            for (int j = 0; j < 7; j++) {
-                System.out.print(dayPlanning [1] [j]);
-            }
-            System.out.println("");
-                
-                
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(dayPlanning [0] [j]);
+//            }
+//            System.out.println("");
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(dayPlanning [1] [j]);
+//            }
+//            System.out.println("");
+//                
+//                
                 Nurse Temp = new Nurse (nr, dayPlanning, type);
                 workPatterns.add(Temp);
-            }
-            
-            for (Nurse workPattern : workPatterns) {
-                System.out.println(Arrays.toString(workPattern.getBinaryDayPlanning()));
+//            }
+//            
+//            for (Nurse workPattern : workPatterns) {
+//                System.out.println(Arrays.toString(workPattern.getBinaryDayPlanning()));
             }
         }
         catch (BiffException e) {
@@ -126,7 +126,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(startRow);
+//        System.out.println(startRow);
           return startRow;
     }
     
@@ -157,7 +157,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(lastRow-1);
+//        System.out.println(lastRow-1);
           return lastRow-1;
     }
         
@@ -177,7 +177,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(pref);
+//        System.out.println(pref);
         return pref;
         }
         
@@ -198,7 +198,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-       System.out.println(type);
+//       System.out.println(type);
         return type;
         }
         
@@ -218,7 +218,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-       System.out.println(type);
+//       System.out.println(type);
         return type;
         }
         
@@ -238,7 +238,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-       System.out.println(EmploymentRate);
+//       System.out.println(EmploymentRate);
         return EmploymentRate;
         }
         
@@ -258,7 +258,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(number);
+//        System.out.println(number);
         return number;
         }
         
@@ -278,7 +278,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-        System.out.println(number);
+//        System.out.println(number);
         return number;
         }
         
@@ -327,14 +327,14 @@ public class ExcellReader {
               e.printStackTrace();
         }
 
-            for (int j = 0; j < columns; j++) {
-                System.out.print(binaryPlanning [0] [j]);
-            }
-            System.out.println("");
-            for (int j = 0; j < columns; j++) {
-                System.out.print(binaryPlanning [1] [j]);
-            }
-            System.out.println("");
+//            for (int j = 0; j < columns; j++) {
+//                System.out.print(binaryPlanning [0] [j]);
+//            }
+//            System.out.println("");
+//            for (int j = 0; j < columns; j++) {
+//                System.out.print(binaryPlanning [1] [j]);
+//            }
+//            System.out.println("");
             
         return binaryPlanning;
         }
