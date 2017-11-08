@@ -73,7 +73,8 @@ public class Schedule {
         int min = getMinOfColumn (scheduleNr);
 
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)) {
+            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
+                    && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                 nursesLowScore.add(nurses.get(i));
             }
         }     
@@ -85,7 +86,8 @@ public class Schedule {
         int min = getMinOfColumn (scheduleNr);
 
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)) {
+            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
+                    && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                 nursesLowScore.add(nurses.get(i));
             }
         }
@@ -131,16 +133,7 @@ public class Schedule {
         for (int i = 0; i < workPatterns.size(); i++) {
             int [][] workPattern = workPatterns . get(i).getBinaryDayPlanning();
             //calc workrate for the pattern i
-            double amountWorkDays = 0;
-            for (int k = 0; k < 7; k++) {
-                for (int l = 0; l < 2; l++) {
-                    if(workPattern [l][k] !=0){
-                        amountWorkDays +=1.0;
-                    }
-                }
-            }
-            double fulltime = 4.0;    //bij 2 SHIFT system: "fulltime" = 4workdays, bij 3 shift system: 5
-            double workRate = amountWorkDays/fulltime;            
+            double workRate = EmploymentRateSchedule (i);
             //calc prefscores for each nurse for the pattern i
             for (int j = 0; j < nurses.size(); j++) {
                 int[][] nursePref = nurses.get(j).getPreferences();
