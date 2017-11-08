@@ -93,13 +93,14 @@ public class Schedule {
                     nursesLowScore.add(nurses.get(i));
                 }
             }
-            for (Nurse nurse : nursesLowScore) {
-                System.out.println(nurse);
-            }
             if(nursesLowScore != null){
                 min+=1000;
             }
+  
         }
+        for (Nurse nurse : nursesLowScore) {
+                System.out.println(nurse);
+            }
         return nursesLowScore;
     }
     
