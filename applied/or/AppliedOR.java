@@ -37,8 +37,8 @@ public class AppliedOR {
       ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-      nursesD = test.readAllExceptCyclicSchedule(3);  
-      workPatternsD = test.readWorkPatterns(3);
+      nursesD = test.readAllExceptCyclicSchedule(2);  
+      workPatternsD = test.readWorkPatterns(2);
       
 //        for (Nurse nurse : nursesD) {
 //            System.out.println(nurse);
@@ -64,16 +64,23 @@ public class AppliedOR {
 
       Schedule testSchedule = new Schedule (nursesD,workPatternsD);
       int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
+      
+//        for (int i = 0; i < 32; i++) {
+//            for (int j = 0; j < 32; j++) {
+//                System.out.print(temp[j][i] + " ");
+//            }
+//            System.out.println("");
+//        }
       testSchedule.schedulingProcess();
       
-      for(Nurse nurse : testSchedule.getNurses()){
-        for (int i = 0; i < 47; i++) {
-            for (int j = 0; j < 47; j++) {
-                System.out.println(nurse.getNr());
-                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
-            }
-            System.out.println("");
-        }    
+//      for(Nurse nurse : testSchedule.getNurses()){
+//        for (int i = 0; i < 47; i++) {
+//            for (int j = 0; j < 47; j++) {
+//                System.out.println(nurse.getNr());
+//                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
+//            }
+//            System.out.println("");
+//        }    
       }
       
 
@@ -89,5 +96,5 @@ public class AppliedOR {
     }
     
 
-    } 
+     
 
