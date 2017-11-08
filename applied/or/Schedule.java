@@ -21,7 +21,7 @@ public class Schedule {
      // nog for loop maken en elk workpattern overlopen  
         // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
         // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
-        ArrayList <Nurse> temp= listMinScore(10);        // lijst met nurses die min prefscores bij een bepaald workpattern
+        ArrayList <Nurse> temp= listMinScore(0);        // lijst met nurses die min prefscores bij een bepaald workpattern
         //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
         int max = getSumRow(IDToPrefRow(temp.get(0).getNr())-1);       
         String IDmax = temp.get(0).getNr();
@@ -34,7 +34,7 @@ public class Schedule {
                     }   
         }
         // deze nurse word gekoppeld aan het workpattern
-        nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(10).getBinaryDayPlanning());
+        nurses.get(IDToPrefRow(IDmax)-1).setBinaryDayPlanning(workPatterns.get(0).getBinaryDayPlanning());
         
         for (int i = 0; i < workPatterns.size(); i++) {
             prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
