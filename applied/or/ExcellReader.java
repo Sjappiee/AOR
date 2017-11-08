@@ -49,9 +49,9 @@ public class ExcellReader {
                 nurses.add(Temp);
             }
             
-          /*  for (Nurse nurse : nurses) {
+            for (Nurse nurse : nurses) {
                 System.out.println(nurse);
-            }*/
+            }
         }
         catch (BiffException e) {
             e.printStackTrace();
@@ -75,23 +75,23 @@ public class ExcellReader {
                 int type = givePatternType(sheetNr,i);
                 String nr = givePatternNumber (sheetNr, i);
                 
-            /*for (int j = 0; j < 7; j++) {
+            for (int j = 0; j < 7; j++) {
                 System.out.print(dayPlanning [0] [j]);
             }
             System.out.println("");
             for (int j = 0; j < 7; j++) {
                 System.out.print(dayPlanning [1] [j]);
             }
-            System.out.println("");*/
+            System.out.println("");
                 
                 
                 Nurse Temp = new Nurse (nr, dayPlanning, type);
                 workPatterns.add(Temp);
             }
             
-            /*for (Nurse workPattern : workPatterns) {
+            for (Nurse workPattern : workPatterns) {
                 System.out.println(Arrays.toString(workPattern.getBinaryDayPlanning()));
-            }*/
+            }
         }
         catch (BiffException e) {
             e.printStackTrace();
@@ -126,7 +126,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
-        //System.out.println(startRow);
+        System.out.println(startRow);
           return startRow;
     }
     
@@ -157,7 +157,7 @@ public class ExcellReader {
           catch (BiffException e) {
               e.printStackTrace();
         }
-        //    System.out.println(lastRow-1);
+        System.out.println(lastRow-1);
           return lastRow-1;
     }
         
@@ -170,14 +170,14 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(17, row);
+            Cell cell = sheet.getCell(19, row);
             pref += cell.getContents();
             
         }
         catch (BiffException e) {
               e.printStackTrace();
         }
-        //System.out.println(pref);
+        System.out.println(pref);
         return pref;
         }
         
@@ -191,14 +191,14 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(16, row);
+            Cell cell = sheet.getCell(18, row);
             type = Integer.parseInt(cell.getContents());
             
         }
         catch (BiffException e) {
               e.printStackTrace();
         }
-       // System.out.println(type);
+       System.out.println(type);
         return type;
         }
         
@@ -211,14 +211,14 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(16, row);
+            Cell cell = sheet.getCell(2, row);
             type = Integer.parseInt(cell.getContents());
             
         }
         catch (BiffException e) {
               e.printStackTrace();
         }
-       // System.out.println(type);
+       System.out.println(type);
         return type;
         }
         
@@ -231,14 +231,14 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(15, row);
+            Cell cell = sheet.getCell(17, row);
             EmploymentRate = Float.parseFloat(cell.getContents());
             
         }
         catch (BiffException e) {
               e.printStackTrace();
         }
-       // System.out.println(EmploymentRate);
+       System.out.println(EmploymentRate);
         return EmploymentRate;
         }
         
@@ -258,7 +258,7 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-        //System.out.println(number);
+        System.out.println(number);
         return number;
         }
         
@@ -271,14 +271,14 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(0, row);
+            Cell cell = sheet.getCell(1, row);
             number = cell.getContents();
             
         }
         catch (BiffException e) {
               e.printStackTrace();
         }
-        //System.out.println(number);
+        System.out.println(number);
         return number;
         }
         
@@ -297,7 +297,7 @@ public class ExcellReader {
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
             
-            for (int j = 1; j < 14; j= j+2) {
+            for (int j = 3; j < 16; j= j+2) {
                 Cell cell = sheet.getCell(j, row);
                 if (cell.getContents().isEmpty()) {
                     binaryPlanning [0] [counter1] = 0;
@@ -309,7 +309,7 @@ public class ExcellReader {
                 counter1++;
             }
             
-            for (int j = 2; j <15 ; j= j +2) {
+            for (int j = 4; j <17 ; j= j +2) {
                 Cell cell = sheet.getCell(j, row);
                 if (cell.getContents().isEmpty()) 
                 {
@@ -327,14 +327,14 @@ public class ExcellReader {
               e.printStackTrace();
         }
 
-         /*   for (int j = 0; j < columns; j++) {
+            for (int j = 0; j < columns; j++) {
                 System.out.print(binaryPlanning [0] [j]);
             }
             System.out.println("");
             for (int j = 0; j < columns; j++) {
                 System.out.print(binaryPlanning [1] [j]);
             }
-            System.out.println("");*/
+            System.out.println("");
             
         return binaryPlanning;
         }
@@ -352,7 +352,7 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            for (int k=18;k<39;k++){
+            for (int k=20;k<41;k++){
                Cell cell = sheet.getCell(k, row);
                
                if (k%3==0){ //veelvoud van 3, is shift 1
