@@ -40,9 +40,9 @@ public class AppliedOR {
       nursesD = test.readAllExceptCyclicSchedule(3);  
       workPatternsD = test.readWorkPatterns(3);
       
-        for (Nurse nurse : nursesD) {
-            System.out.println(nurse);
-        }
+//        for (Nurse nurse : nursesD) {
+//            System.out.println(nurse);
+//        }
      
       //System.out.println(nursesD.get(12).getPreferences());
       
