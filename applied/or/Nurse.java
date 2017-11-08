@@ -13,6 +13,7 @@ public class Nurse {
     private String preferenceText;
     private int [][] preferences;
 
+
     public Nurse(String nr, float employmentRate, int type, String preferenceText, int[][] preferences) {
         this.nr = nr;
         this.binaryDayPlanning = null;
@@ -41,10 +42,41 @@ public class Nurse {
 
     public Nurse() {
     }
-
+    
+    public String printBinaryPlanning () {
+        
+        String temp = "";
+        if (this.binaryDayPlanning != null) {
+        for (int i = 0; i < 7; i++) {
+            temp += this.binaryDayPlanning [0][i];
+        }
+        for (int i = 0; i < 7; i++) {
+            temp += this.binaryDayPlanning [1][i];
+        }
+        }
+        
+        return temp;
+    }
+    
+    public String printPrefs () {
+        String temp = "";
+        if (this.preferences != null) {
+        for (int i = 0; i < 7; i++) {
+            temp += this.preferences [0][i];
+        }
+        for (int i = 0; i < 7; i++) {
+            temp += this.preferences [1][i];
+        }
+        for (int i = 0; i < 7; i++) {
+            temp += this.preferences [2][i];
+        }
+        }
+        return temp;
+    }
+    
     @Override
     public String toString() {
-        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + Arrays.toString(binaryDayPlanning) + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + Arrays.toString(preferences) + '}';
+        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + printBinaryPlanning() + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + printPrefs() + '}';
     }
 
 
