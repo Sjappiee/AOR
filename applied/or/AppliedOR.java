@@ -37,8 +37,8 @@ public class AppliedOR {
       ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-      nursesD = test.readAllExceptCyclicSchedule(3);  
-      workPatternsD = test.readWorkPatterns(3);
+      nursesD = test.readAllExceptCyclicSchedule(2);  
+      workPatternsD = test.readWorkPatterns(2);
       
 //        for (Nurse nurse : nursesD) {
 //            System.out.println(nurse);

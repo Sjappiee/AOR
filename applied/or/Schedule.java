@@ -38,8 +38,8 @@ public class Schedule {
             for (int i = 0; i < workPatterns.size(); i++) {
                 prefScores[i][IDToPrefRow(IDmax)-1] = 1000;
             }
-            for (int i = 0; i < 47; i++) {
-                for (int j = 0; j < 47; j++) {
+            for (int i = 0; i < nurses.size(); i++) {
+                for (int j = 0; j < workPatterns.size(); j++) {
                 System.out.print(prefScores[j][i] +" ");
                 }
                 System.out.println("");
