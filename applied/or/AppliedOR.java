@@ -34,11 +34,11 @@ public class AppliedOR {
        test.giveNumbPref(1,14);
        */
 //       
-     /* ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+      ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
       nursesD = test.readAllExceptCyclicSchedule(3);  
-      workPatternsD = test.readWorkPatterns(3);*/
+      workPatternsD = test.readWorkPatterns(3);
      
       //System.out.println(nursesD.get(12).getPreferences());
       
@@ -60,11 +60,11 @@ public class AppliedOR {
 
       Schedule testSchedule = new Schedule (nursesD,workPatternsD);
       int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
-//      testSchedule.schedulingProcess();
-//      
-//      ArrayList <Nurse> ttt = new ArrayList <Nurse> ();
-//      ttt = testSchedule.listMinScore(0);
-//      
+      testSchedule.schedulingProcess();
+      
+      ArrayList <Nurse> ttt = new ArrayList <Nurse> ();
+      ttt = testSchedule.listMinScore(0);
+      
         for (int i = 0; i < 47; i++) {
             for (int j = 0; j < 47; j++) {
                 System.out.print(temp[j][i] + " ");
@@ -79,7 +79,7 @@ public class AppliedOR {
 //            
 //            System.out.println(nurse);
 //        }
-      
+//      
     }
     
 

@@ -84,7 +84,7 @@ public class ExcellReader {
 //            }
 //            System.out.println("");
 //                
-//                
+                
                 Nurse Temp = new Nurse (nr, dayPlanning, type);
                 workPatterns.add(Temp);
 //            }
@@ -416,11 +416,11 @@ public class ExcellReader {
             for (int k=20;k<41;k++){
                Cell cell = sheet.getCell(k, row);
                
-               if (k%3==0){ //veelvoud van 3, is shift 1
+               if (k%3==2){ //veelvoud van 3, is shift 1
                    preferences[0][counter1] = Integer.parseInt(cell.getContents());
                    counter1+=1;
                }
-               else if (k%3==1){ //shift 2
+               else if (k%3==0){ //shift 2
                   preferences[1][counter2] = Integer.parseInt(cell.getContents()); 
                    counter2+=1;
                 } 
@@ -436,7 +436,20 @@ public class ExcellReader {
         catch (BiffException e) {
               e.printStackTrace();
         }
-
+        
+//        for (int j = 0; j < 7; j++) {
+//                System.out.print(preferences [0] [j]);
+//            }
+//            System.out.println("");
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(preferences [1] [j]);
+//            }
+//            System.out.println("");
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(preferences [2] [j]);
+//            }
+//            System.out.println("");
+//            
         return preferences;
         }
         
