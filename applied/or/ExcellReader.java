@@ -34,8 +34,8 @@ public class ExcellReader {
         
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
-            int startRow = searchFirstRow(sheetNr);
-            int lastRow = searchLastRow(sheetNr);
+            int startRow = searchFirstRowNurse(sheetNr);
+            int lastRow = searchLastRowNurse(sheetNr);
             
             for (int i = startRow; i <= lastRow; i++) { //gaat door een rij, kolom per kolom. Dan weer volgende rij enzovoort
                 String nr = giveNurseNumber(sheetNr,i);
@@ -66,8 +66,8 @@ public class ExcellReader {
         
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
-            int startRow = searchFirstRow(sheetNr);
-            int lastRow = searchLastRow(sheetNr);
+            int startRow = searchFirstRowWorkSchedule(sheetNr);
+            int lastRow = searchLastRowWorkSchedule(sheetNr);
             
             for (int i = startRow; i <= lastRow; i++) { //gaat door een rij, kolom per kolom. Dan weer volgende rij enzovoort
                 
@@ -99,7 +99,7 @@ public class ExcellReader {
         return workPatterns;
     }
         
-    public int searchFirstRow (int sheetNr) throws IOException { //methode voor het vinden van de eerste cell ongeacht department etc.
+    public int searchFirstRowNurse (int sheetNr) throws IOException { //methode voor het vinden van de eerste cell ongeacht department etc.
         // zelfde methode nog eens maar dan voor worpatterns + in excel kollom toev
         File inputWorkbook = new File (inputFile);
         Workbook w;
@@ -130,12 +130,73 @@ public class ExcellReader {
           return startRow;
     }
     
-        public int searchLastRow (int sheetNr) throws IOException { //methode voor het vinden van de laatste cell ongeacht department en hoeveel nurses er daar gepland zijn.
+    public int searchFirstRowWorkSchedule (int sheetNr) throws IOException { //methode voor het vinden van de eerste cell ongeacht department etc.
+        // zelfde methode nog eens maar dan voor worpatterns + in excel kollom toev
+        File inputWorkbook = new File (inputFile);
+        Workbook w;
+        int startRow = 0;
+        int startColumn = 1;
+        
+        try{
+            w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
+            Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
+            int i = 0;
+            while (i < sheet.getRows())
+            {
+                Cell cell = sheet.getCell (startColumn, i);
+                if (cell.getContents().contains("WS"))
+                {   
+                    startRow = i;
+                    i = i + 1000000000;
+                }
+                else {
+                    i++;
+                }
+            }
+          }
+          catch (BiffException e) {
+              e.printStackTrace();
+        }
+        System.out.println(startRow);
+          return startRow;
+    }
+    
+        public int searchLastRowNurse (int sheetNr) throws IOException { //methode voor het vinden van de laatste cell ongeacht department en hoeveel nurses er daar gepland zijn.
         // zelfde methode nog eens maar dan voor worpatterns + in excel kollom toev
             File inputWorkbook = new File (inputFile);
         Workbook w;
         int lastRow = 0;
         int startColumn = 0;
+        
+        try{
+            w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
+            Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
+            int i = 0;
+            while (i < sheet.getRows())
+            {
+                Cell cell = sheet.getCell (startColumn, i);
+                if (cell.getContents().contains("Scheduled"))
+                {   
+                    lastRow = i;
+                    i = i + 1000000000;
+                }
+                else {
+                    i++;
+                }
+            }
+          }
+          catch (BiffException e) {
+              e.printStackTrace();
+        }
+        System.out.println(lastRow-1);
+          return lastRow-1;
+    }
+        public int searchLastRowWorkSchedule (int sheetNr) throws IOException { //methode voor het vinden van de laatste cell ongeacht department en hoeveel nurses er daar gepland zijn.
+        // zelfde methode nog eens maar dan voor worpatterns + in excel kollom toev
+            File inputWorkbook = new File (inputFile);
+        Workbook w;
+        int lastRow = 0;
+        int startColumn = 1;
         
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 

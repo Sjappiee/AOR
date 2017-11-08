@@ -19,11 +19,13 @@ public class AppliedOR {
        ExcellReader test = new ExcellReader ();
        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
       
+        System.out.println(test.searchFirstRowNurse(3));
+        System.out.println(test.searchLastRowNurse(3));
+        System.out.println("");
+        System.out.println(test.searchFirstRowWorkSchedule(3));
+        System.out.println(test.searchLastRowWorkSchedule(3));
        
-       
-        System.out.println(test.searchFirstRow(3));
-       System.out.println(test.searchLastRow(3));
-       
+
        /*test.giveNurseNumber(1,14);
        test.giveBinaryDayPlanning(1,14);
        test.giveEmploymentRate(1,14);
@@ -32,11 +34,11 @@ public class AppliedOR {
        test.giveNumbPref(1,14);
        */
 //       
-      ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+     /* ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
       nursesD = test.readAllExceptCyclicSchedule(3);  
-      workPatternsD = test.readWorkPatterns(3);
+      workPatternsD = test.readWorkPatterns(3);*/
      
       //System.out.println(nursesD.get(12).getPreferences());
       
