@@ -76,14 +76,15 @@ public class Schedule {
                     && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                 nursesLowScore.add(nurses.get(i));
             }
-        }     
+        }
+        
         return nursesLowScore;
     }
        
         public ArrayList <Nurse> listMinScore (int scheduleNr) { 
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         int min = getMinOfColumn (scheduleNr);
-
+            System.out.println(min);
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
             if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
                     && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
