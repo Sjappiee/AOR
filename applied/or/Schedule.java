@@ -66,6 +66,12 @@ public class Schedule {
         return row-1;
     }
     
+    public int IDToPrefColumn (String ID){     // de laatste 2 string elementen uit het ID omzetten naar een int, dit getal - 1 is dan de index van die nurse in de nurses lijst
+        int column;
+        column = Integer.parseInt(ID.substring(ID.length()-2));
+        return column-1;
+    }
+    
     public ArrayList <Nurse> listMinScore (int scheduleNr,  int [][] prefScores) { 
 //te maken: een if zodat enkel nurse into consideration komen die ook dezelfde OF MEER employment rate hebben!        
 //lijst van nurses die allen dezelfde min prefscore hebben bij een geg patroon
@@ -159,11 +165,19 @@ public class Schedule {
         return sum;
     }
     
-        public int getSumRow (int row){
+    public int getSumRow (int row){
         int [] [] temp = prefScores;
         int sum = 0;
         for (int i = 0; i < workPatterns.size(); i++) {
             sum += temp[i][row];
+        }
+        return sum;
+    }
+    
+    public int getSumColumn (int column,int [][] list){
+        int sum = 0;
+        for (int i = 0; i < nurses.size(); i++) {
+            sum += list[column][i];
         }
         return sum;
     }
@@ -222,7 +236,41 @@ public class Schedule {
         return (rate/4);
     }
     
-    public ArrayList<Nurse> addaptSchedule (){
+    public void addaptSchedules (){
+       int [] amountsPatterns =  calcScheduleRateAmounts (); // 100:0, 75:1, 50:2, 25:3
+       int [] rates = {100,75,50,25};
+        for (int i = 0; i < 4; i++) {
+            int amountNeeded = amountsPatterns [i];
+            int amountSplit = amountWithRates (workPatterns)[i] - amountNeeded;
+            int [] patternsSplit = new int [amountSplit]; 
+            int [][] temp = prefScores;
+            for (int j = 0; j < amountSplit; j++) {
+                int max = getSumColumn(0,temp);       
+                String IDmax = workPatterns.get(0).getNr();
+                for (Nurse pattern : workPatterns) {
+                    if (getSumColumn(IDToPrefColumn(pattern.getNr()),temp) > max){
+                            max = getSumColumn(IDToPrefColumn(pattern.getNr()),temp);
+                            IDmax = pattern.getNr();
+                        }   
+                }
+                patternsSplit[j] = IDToPrefColumn(IDmax);
+                for (int k = 0; k < nurses.size(); k++) {
+                    temp[IDToPrefColumn(IDmax)][k] = 0;
+                }
+            }
+            int [] amountsPatternsFromSplit = calcAmountPatternsFromSplit(amountSplit,rates[i]);
+            int counter = 0;
+            for (int j = 0; j < 4; j++) {
+                if(amountsPatternsFromSplit[j] != 0){
+                    for (int k = 0; k < amountsPatternsFromSplit[j]; k++) {
+                    //methode om patterns te splitsen
+                    }
+                }
+            }
+        }
+    }
+    
+    public int [] calcScheduleRateAmounts (){
         int [] amountsNurses = amountWithRates (nurses);
         int [] amountsPatterns = amountWithRates (workPatterns);
         int nurses100 = amountsNurses[0];
@@ -236,23 +284,45 @@ public class Schedule {
         
         if(nurses100 < patterns100){    //als minder nurses met rate 100 dan patterns => split patterns
             int difference = patterns100 - nurses100;
-            int extra75 = (int) Math.floor(difference / 3) *4;
-            patterns75 += extra75;
-            int rest = difference - (int) Math.floor(difference / 3) *3;
-            int extra50 = rest * 2;
-            patterns25 += extra50;
+            int [] amountsPatternsFromSplit = calcAmountPatternsFromSplit(difference,100);
+            patterns75 += amountsPatternsFromSplit[1];
+            patterns50 += amountsPatternsFromSplit[2];
         }
         if(nurses75 < patterns75){
             int difference = patterns75 - nurses75;
-            int extra50 = (int) Math.floor(difference/2) *3;
-            patterns50 += extra50;
-            int rest = difference - (int) Math.floor(difference/2) *2;
-            patterns25 += rest * 3;
+            int [] amountsPatternsFromSplit = calcAmountPatternsFromSplit(difference,75);
+            patterns50 += amountsPatternsFromSplit[2];
+            patterns25 += amountsPatternsFromSplit[3];
         }
         if(nurses50 < patterns50){
             int difference = patterns50 - nurses50;
-            patterns25 += difference*2;
+            int [] amountsPatternsFromSplit = calcAmountPatternsFromSplit(difference,50);
+            patterns25 += amountsPatternsFromSplit[3];
         }
+        amountsPatterns [0] = patterns100;
+        amountsPatterns [1] = patterns75;
+        amountsPatterns [2] = patterns50;
+        amountsPatterns [3] = patterns25;
+        return amountsPatterns;
+    }
+    
+    public int [] calcAmountPatternsFromSplit (int amountSplit, int rate){
+        int [] amountsPatternsFromSplit = new int [4]; //0:100, 1:75, 2:50, 3:25
+        amountsPatternsFromSplit [0] = 0;  //geen enkele rate kan gesplitst worden in patterns van 100
+        if(rate == 100){
+            amountsPatternsFromSplit [1] = (int) Math.floor(amountSplit / 3) *4;
+            int rest = amountSplit - (int) Math.floor(amountSplit / 3) *3;
+            amountsPatternsFromSplit [2] = rest * 2;
+        }
+        if(rate == 75){
+            amountsPatternsFromSplit [2] = (int) Math.floor(amountSplit/2) *3;
+            int rest = amountSplit - (int) Math.floor(amountSplit/2) *2;
+            amountsPatternsFromSplit [3] = rest * 3;
+        }
+        if(rate == 50){
+            amountsPatternsFromSplit [3] = amountSplit*2;
+        }
+        return amountsPatternsFromSplit;
     }
     
     public int [] amountWithRates (ArrayList<Nurse> list){
