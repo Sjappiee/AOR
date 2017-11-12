@@ -17,7 +17,8 @@ public class Schedule {
     }
     
     public ArrayList<Nurse> schedulingProcess (){
-        for (int k = 0; k < nurses.size(); k++) {
+        //methode om workrate patterns en nurses te matchen
+        for (int k = 0; k < workPatterns.size(); k++) {
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             ArrayList <Nurse> temp= listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
@@ -83,26 +84,24 @@ public class Schedule {
        
         public ArrayList <Nurse> listMinScore (int scheduleNr) { 
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
-        
+        //zoek nurses met zelfde workrate als schedule
             for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
-                
-            
-            for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == EmploymentRateSchedule(scheduleNr)
-                        && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
-                    nursesLowScore.add(nurses.get(i));
+                for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+                    if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == EmploymentRateSchedule(scheduleNr)
+                            && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+                        nursesLowScore.add(nurses.get(i));
+                    }
+                }
+
+                if (nursesLowScore.isEmpty())
+                {
+                    System.out.println("old min: " + min);
+                }
+                else{
+                    min +=1000;
                 }
             }
-
-            if (nursesLowScore.isEmpty())
-            {
-                System.out.println("old min: " + min);
-            }
-            else{
-                min +=1000;
-            }
-            }
-            
+        // als er geen zijn met zelfde, zoek nurses met hogere  
             if (nursesLowScore.isEmpty()) {
                for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
                     for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
@@ -119,8 +118,7 @@ public class Schedule {
                     else{
                         min +=1000;
                     }
-                } 
-
+                }
             }
 
          for (Nurse nurse : nursesLowScore) {
@@ -223,6 +221,58 @@ public class Schedule {
 
         return (rate/4);
     }
+    
+    public ArrayList<Nurse> addaptSchedule (){
+        int [] amountsNurses = amountWithRates (nurses);
+        int [] amountsPatterns = amountWithRates (workPatterns);
+        int nurses100 = amountsNurses[0];
+        int nurses75 = amountsNurses[1];
+        int nurses50 = amountsNurses[2];
+        int nurses25 = amountsNurses[3];
+        int patterns100 = amountsPatterns [0];
+        int patterns75 = amountsPatterns [1];
+        int patterns50 = amountsPatterns [2];
+        int patterns25 = amountsPatterns [3];
+        
+        if(nurses100 < patterns100){    //als minder nurses met rate 100 dan patterns => split patterns
+            int difference = patterns100 - nurses100;
+            int extra75 = (int) Math.floor(difference / 3) *4;
+            patterns75 += extra75;
+            int rest = difference - (int) Math.floor(difference / 3) *3;
+            int extra50 = rest * 2;
+            patterns25 += extra50;
+        }
+        if(nurses75 < patterns75){
+            int difference = patterns75 - nurses75;
+            int extra50 = (int) Math.floor(difference/2) *3;
+            patterns50 += extra50;
+            int rest = difference - (int) Math.floor(difference/2) *2;
+            patterns25 += rest * 3;
+        }
+        if(nurses50 < patterns50){
+            int difference = patterns50 - nurses50;
+            patterns25 += difference*2;
+        }
+    }
+    
+    public int [] amountWithRates (ArrayList<Nurse> list){
+        int [] amounts = new int [4];
+        double j = 1.00;
+        int counter = 0;
+        while (j>0.24) {
+            int amount = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if(list.get(i).getEmploymentRate() == j)
+                    amount++; 
+            }
+            amounts[counter] = amount;
+            counter++;
+            j = j - 0.25;
+        }
+        return amounts;
+    }
+    
+
 
     public ArrayList<Nurse> getNurses() {
         return nurses;
