@@ -73,18 +73,15 @@ public class AppliedOR {
 //        }
       testSchedule.schedulingProcess();
       
-//      for(Nurse nurse : testSchedule.getNurses()){
-//        for (int i = 0; i < 47; i++) {
-//            for (int j = 0; j < 47; j++) {
-//                System.out.println(nurse.getNr());
-//                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
-//            }
-//            System.out.println("");
-//        }    
-      }
-      
-
-        
+    /*  for(Nurse nurse : testSchedule.getNurses()){
+        for (int i = 0; i < 47; i++) {
+            for (int j = 0; j < 47; j++) {
+                System.out.println(nurse.getNr());
+                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
+            }
+            System.out.println("");
+        }    
+      }*/
         
 //      ArrayList <Nurse> temp = testSchedule.listMinScore(prefScores, 0);
 //        
@@ -92,9 +89,10 @@ public class AppliedOR {
 //            
 //            System.out.println(nurse);
 //        }
-//      
+
+
     }
-    
+}
 
      
 
