@@ -34,7 +34,7 @@ public class Schedule {
                         }   
             }
             // deze nurse word gekoppeld aan het workpattern
-            nurses.get(IDToIndex(IDmax,nurses)).setBinaryDayPlanning(workPatterns.get(0).getBinaryDayPlanning());
+            nurses.get(IDToIndex(IDmax,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
 
             for (int i = 0; i < workPatterns.size(); i++) {
                 prefScores[i][IDToIndex(IDmax,nurses)] = 1000;
@@ -442,6 +442,13 @@ public class Schedule {
 
     public void setPrefScores(int[][] prefScores) {
         this.prefScores = prefScores;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "Schedule{" + "nurses=" + nurses + ", workPatterns=" + workPatterns + ", prefScores=" + prefScores + '}';
     }
     
     
