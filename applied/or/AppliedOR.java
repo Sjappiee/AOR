@@ -66,6 +66,8 @@ public class AppliedOR {
       int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
       testSchedule.schedulingProcess();
       
+      
+      
     /*  for(Nurse nurse : testSchedule.getNurses()){
         for (int i = 0; i < 47; i++) {
             for (int j = 0; j < 47; j++) {
