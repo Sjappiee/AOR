@@ -43,7 +43,7 @@ public class Nurse {
     public Nurse() {
     }
     
-    public String printBinaryPlanning () {
+    public String BinaryPlanningToString () {
         
         String temp = "";
         if (this.binaryDayPlanning != null) {
@@ -58,7 +58,7 @@ public class Nurse {
         return temp;
     }
     
-    public String printPrefs () {
+    public String PrefsToString () {
         String temp = "";
         if (this.preferences != null) {
         for (int i = 0; i < 7; i++) {
@@ -76,7 +76,7 @@ public class Nurse {
     
     @Override
     public String toString() {
-        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + printBinaryPlanning() + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + printPrefs() + '}';
+        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + BinaryPlanningToString() + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + PrefsToString() + '}';
     }
 
 
