@@ -72,10 +72,10 @@ public class AppliedOR {
 //            System.out.println("");
 //        }
       //testSchedule.schedulingProcess();
-      int [] rates = testSchedule.calcScheduleRateAmounts (1);
-        for (int i = 0; i < 4; i++) {
-            System.out.println(rates[i]);
-        }
+//      int [] rates = testSchedule.calcScheduleRateAmounts (1);
+//        for (int i = 0; i < 4; i++) {
+//            System.out.println(rates[i]);
+//        }
     /*  for(Nurse nurse : testSchedule.getNurses()){
         for (int i = 0; i < 47; i++) {
             for (int j = 0; j < 47; j++) {
