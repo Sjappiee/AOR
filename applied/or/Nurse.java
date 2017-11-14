@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Nurse {
     
     private String nr;
-    private int [] [] binaryDayPlanning;
+    private int [] [] binaryDayPlanning; //[shift][day]
     private float employmentRate;
     private int type;
     private String preferenceText;
