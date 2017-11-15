@@ -32,45 +32,31 @@ public class AppliedOR {
        test.giveType(1,14);
        test.givePref(1,14);
        test.giveNumbPref(1,14);
-       */
-//       
+       */    
       ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
       ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
       nursesD = test.readAllExceptCyclicSchedule(0);  
       workPatternsD = test.readWorkPatterns(0);
       
-//        for (Nurse nurse : nursesD) {
-//            System.out.println(nurse);
-//        }
-     
-      //System.out.println(nursesD.get(12).getPreferences());
-      
-        //workPatternsD.get(12).getBinaryDayPlanning();
-      
-//      workPatternsD = test.readWorkPatterns(1);
-//        System.out.println(nursesD.get(21).getSpecificPreference(0, 6));
-//        System.out.println(nursesD.get(21).getSpecificPreference(1, 6));
-//        System.out.println(nursesD.get(21).getSpecificPreference(2, 6));
-//        
-//      int[][] t = new int [2][7];
-//      Nurse nurse = new Nurse();
-//        for (Nurse nurse1 : workPatternsD) {
-//            System.out.println(nurse1);
-//        }
-//      nurse = workPatternsD.get(5); 
-//      t=nurse.getBinaryDayPlanning();
-//      System.out.println(t[1][5]);
 
       Schedule testSchedule = new Schedule (nursesD,workPatternsD);
-      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
-      
-//        for (int i = 0; i < 32; i++) {
-//            for (int j = 0; j < 32; j++) {
-//                System.out.print(temp[j][i] + " ");
+
+//      int [][]prefs = testSchedule.prefScoreCalculation();
+//        for (int i = 0; i < nursesD.size(); i++) {
+//            for (int j = 0; j < workPatternsD.size(); j++) {
+//                System.out.print(prefs[j][i] + " ");
 //            }
 //            System.out.println("");
 //        }
+
+      String [] splitList = new String[] {"WSA006", "WSA003", "WSA005"};
+      testSchedule.splitPatterns (splitList, 1, 0);
+        for (Nurse pattern : workPatternsD) {
+            System.out.println(pattern.getNr());
+            System.out.println(pattern.BinaryPlanningToString ());
+        }
+      
       //testSchedule.schedulingProcess();
 //      int [] rates = testSchedule.calcScheduleRateAmounts (1);
 //        for (int i = 0; i < 4; i++) {
@@ -85,13 +71,7 @@ public class AppliedOR {
             System.out.println("");
         }    
       }*/
-        
-//      ArrayList <Nurse> temp = testSchedule.listMinScore(prefScores, 0);
-//        
-//        for (Nurse nurse : temp) {
-//            
-//            System.out.println(nurse);
-//        }
+ 
 
 
     }

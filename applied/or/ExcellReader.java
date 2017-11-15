@@ -74,6 +74,7 @@ public class ExcellReader {
                 int [] [] dayPlanning = giveBinaryDayPlanning(sheetNr,i);
                 int type = givePatternType(sheetNr,i);
                 String nr = givePatternNumber (sheetNr, i);
+                float rate = calcPatternRate (dayPlanning);
                 
 //            for (int j = 0; j < 7; j++) {
 //                System.out.print(dayPlanning [0] [j]);
@@ -85,7 +86,7 @@ public class ExcellReader {
 //            System.out.println("");
 //                
                 
-                Nurse Temp = new Nurse (nr, dayPlanning, type);
+                Nurse Temp = new Nurse (nr, rate, dayPlanning, type);
                 workPatterns.add(Temp);
 //            }
 //            
@@ -344,7 +345,7 @@ public class ExcellReader {
         }
         
         public int [] [] giveBinaryDayPlanning (int sheetNr, int row) throws IOException {//retourneert de dagplanning van de nurse in de rij.
-            //OPGELET!!!! DIT WORDT GEGEVEN ALS STRING OMDAT IK ALS INTEGER HET NIET VOND!!!
+           
             
         File inputWorkbook = new File (inputFile);
         Workbook w;
@@ -453,6 +454,23 @@ public class ExcellReader {
         return preferences;
         }
         
+        public float calcPatternRate (int [] [] dayPlanning){
+            int rateInDays = 0;
+            double rate = 0;
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if(dayPlanning[j][i] == 1){
+                        rateInDays++;
+                    }
+                }
+            }
+            if(rateInDays == 4) rate = 0.1; // afhankelijk van SHIFTSYSTEM
+            if(rateInDays == 3) rate = 0.75;
+            if(rateInDays == 2) rate = 0.50;
+            if(rateInDays == 1) rate = 0.25;
+            
+            return (float)rate;
+        }
                
         
         /*

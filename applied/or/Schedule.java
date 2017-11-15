@@ -9,7 +9,7 @@ public class Schedule {
     //private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM
-    int [] rates = {100,75,50,25};
+    float [] rates = {(float)0.1,(float)0.75,(float)0.50,(float)0.25};
 
     public Schedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
@@ -247,65 +247,19 @@ public class Schedule {
                     int amountToSplit = amountsPatterns[i] - amountsNurses[i];
                     String [] patternsSplit = getPatternsToSplit (temp,k,i, amountToSplit);
                     //splits
-                    int [][] restPatterns = new int [14][0]; // [11111112222222][#nieuwe rest schedules]
-                    int shiftDays = rateInDays [i-1];
-                    for(String patternID : patternsSplit){
-                        int [][] newPattern = new int [2][7];
-                        int [][] splitPattern = workPatterns.get(IDToIndex(patternID,workPatterns)).getBinaryDayPlanning();
-                        int counter1 = 0;
-                        for (int j = 0; j < 7; j++) { //per dag de shift overlopen!!! (niet omgekeert)
-                            for (int l = 0; l < 2; l++) {
-                                if(splitPattern[l][j] == 1){
-                                    if (counter1 < shiftDays){
-                                        newPattern[l][j] = 1;
-                                        counter1++;
-                                    }
-                                    else{
-                                        if(l == 0){
-                                            int counter2 = 0;
-                                            while (restPatterns[j][counter2] == 1 || restPatterns[j+7][counter2] == 1 || getAmountShifts (restPatterns, counter2, 14) == shiftDays){
-                                                counter2++;
-                                            }
-                                            restPatterns[j][counter2] = 1;
-                                        }
-                                        if (l == 1){
-                                            int counter2 = 0;
-                                            while (restPatterns[j][counter2] == 1 || restPatterns[j+7][counter2] == 1 || getAmountShifts (restPatterns, counter2, 14) == shiftDays){
-                                                counter2++;
-                                            }
-                                        }
-                                       
-                                    }
-                                }
-                            }
-                        }
-                        Nurse pattern = new Nurse(getNewIDPattern (), newPattern, k);
-                        workPatterns.add(pattern);
-                        workPatterns.remove(IDToIndex(patternID,workPatterns));
-                    }
-                    //maak pattern uit de restjes
-                    for (int j = 0; j < getLengthArray(restPatterns,14); j++) {
-                        int [][] newPattern = new int [2][7];
-                        for (int l = 0; l < 7; l++) {
-                            newPattern [0][l] = restPatterns[l][j];
-                        }
-                        for (int l = 7; l < 14; l++) {
-                            newPattern [1][l-7] = restPatterns[l][j];
-                        }
-                        Nurse newPattern2 = new Nurse (getNewIDPattern (),newPattern,k);
-                        workPatterns.add(newPattern2);
-                    }
-                }
+                    splitPatterns(patternsSplit,k,i);
                     
                 //herbereken prefscores om volgende rate te kunnen splitsen
                 prefScoreCalculation ();
+                }
             }
         }
     }
     
     public void splitPatterns (String [] patternsSplit, int type, int rate){
-        int [][] restPatterns = new int [14][0]; // [11111112222222][#nieuwe rest schedules]
-        int shiftDays = rateInDays [rate-1];
+        int [][] restPatterns = new int [14][100]; // [11111112222222][#nieuwe rest schedules (gwn heel groot getal)]
+        int shiftDays = rateInDays [rate+1];
+        //maak splitsingen en sla restjes op
         for(String patternID : patternsSplit){
             int [][] newPattern = new int [2][7];
             int [][] splitPattern = workPatterns.get(IDToIndex(patternID,workPatterns)).getBinaryDayPlanning();
@@ -316,32 +270,42 @@ public class Schedule {
                         if (counter1 < shiftDays){
                             newPattern[l][j] = 1;
                             counter1++;
+
                         }
                         else{
                             if(l == 0){
                                 int counter2 = 0;
-                                while (restPatterns[j][counter2] == 1 || restPatterns[j+7][counter2] == 1 || getAmountShifts (restPatterns, counter2, 14) == shiftDays){
+                                System.out.println("s1= "+ restPatterns[j][counter2]);
+                                System.out.println("s2= "+ restPatterns[j+7][counter2]);
+                                System.out.println("already in rest= "+ getAmountShiftsRest (restPatterns, counter2, 14));
+                                while (restPatterns[j][counter2] == 1 || restPatterns[j+7][counter2] == 1 || getAmountShiftsRest (restPatterns, counter2, 14) == shiftDays){
                                     counter2++;
                                 }
                                 restPatterns[j][counter2] = 1;
+                                System.out.println("rest(" + j + "," + counter2 + ") = "+ restPatterns[j][counter2]);
                             }
                             if (l == 1){
                                 int counter2 = 0;
-                                while (restPatterns[j][counter2] == 1 || restPatterns[j+7][counter2] == 1 || getAmountShifts (restPatterns, counter2, 14) == shiftDays){
+                                System.out.println("s1= "+ restPatterns[j][counter2]);
+                                System.out.println("s2= "+ restPatterns[j+7][counter2]);
+                                System.out.println("already in rest= "+ getAmountShiftsRest (restPatterns, counter2, 14));
+                                while (restPatterns[j][counter2] == 1 || restPatterns[j+7][counter2] == 1 || getAmountShiftsRest (restPatterns, counter2, 14) == shiftDays){
                                     counter2++;
                                 }
+                                restPatterns[j+7][counter2] = 1;
+                                System.out.println("rest(" + j + "," + counter2 + ") = "+ restPatterns[j][counter2]);
                             }
                                        
                         }
                     }
                 }
             }
-            Nurse pattern = new Nurse(getNewIDPattern (), newPattern, type);
+            Nurse pattern = new Nurse(getNewIDPattern (),calcPatternRate(newPattern), newPattern, type);
             workPatterns.add(pattern);
             workPatterns.remove(IDToIndex(patternID,workPatterns));
         }
         //maak pattern uit de restjes
-        for (int j = 0; j < getLengthArray(restPatterns,14); j++) {
+        for (int j = 0; j < getLengthArray(restPatterns,14,100); j++) {
             int [][] newPattern = new int [2][7];
                 for (int l = 0; l < 7; l++) {
                     newPattern [0][l] = restPatterns[l][j];
@@ -349,7 +313,8 @@ public class Schedule {
                 for (int l = 7; l < 14; l++) {
                     newPattern [1][l-7] = restPatterns[l][j];
                 }
-                Nurse newPattern2 = new Nurse (getNewIDPattern (),newPattern,type);
+                
+                Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
                 workPatterns.add(newPattern2);
         }
     }
@@ -360,7 +325,7 @@ public class Schedule {
             int max = 0;       
             String IDmax = "none";
             for (Nurse pattern : workPatterns) {
-                if (getSumColumn(IDToIndex(pattern.getNr(),workPatterns),temp) > max && pattern.getType() == type && pattern.getEmploymentRate() == rates[rate]/100){
+                if (getSumColumn(IDToIndex(pattern.getNr(),workPatterns),temp) > max && pattern.getType() == type && pattern.getEmploymentRate() == rates[rate]){
                     max = getSumColumn(IDToIndex(pattern.getNr(),workPatterns),temp);
                     IDmax = pattern.getNr();
                     }   
@@ -373,7 +338,7 @@ public class Schedule {
          return patternsSplit;
     }
     
-    public int getAmountShifts (int [][] restPatterns, int row, int amountColummns){
+    public int getAmountShiftsRest (int [][] restPatterns, int row, int amountColummns){
         int counter = 0;
         for (int i = 0; i < amountColummns; i++) {
             if(restPatterns[i][row] == 1){
@@ -383,14 +348,20 @@ public class Schedule {
         return counter;
     }
     
-    public int getLengthArray (int [][] array, int amountColumns ){
-        int max = 0;
-        for (int i = 0; i < amountColumns; i++) {
-            if(array[i].length > max){
-                max = array[i].length;
+    public int getLengthArray (int [][] array, int amountColumns , int amountRows){
+        int counter1 = 0;
+        for (int i = 0; i < amountRows; i++) {
+            int counter2 = 0;
+            for (int j = 0; j < amountColumns; j++) {
+                if(array[j][i] == 1){
+                    counter2++;
+                }
+            }
+            if(counter2 != 0){
+                counter1++;
             }
         }
-        return max;
+        return counter1;
     }
     
     public String getNewIDPattern (){
@@ -418,6 +389,24 @@ public class Schedule {
         }
         return amounts;
     }
+    
+    public float calcPatternRate (int [] [] dayPlanning){
+            int rateInDays1 = 0;
+            double rate = 0;
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if(dayPlanning[j][i] == 1){
+                        rateInDays1++;
+                    }
+                }
+            }
+            if(rateInDays1 == 4) rate = rates[0];
+            if(rateInDays1 == 3) rate = rates[1];
+            if(rateInDays1 == 2) rate = rates[2];
+            if(rateInDays1 == 1) rate = rates[3];
+            
+            return (float)rate;
+        }
 
     public ArrayList<Nurse> getNurses() {
         return nurses;
