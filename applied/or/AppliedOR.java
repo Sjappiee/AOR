@@ -60,12 +60,16 @@ public class AppliedOR {
 //            System.out.println("");
 //        }
 
-      testSchedule.addaptSchedule ();
-        for (Nurse pattern : workPatternsD) {
-            System.out.println(pattern.getNr());
-            System.out.println(pattern.BinaryPlanningToString ());
-        }
-      
+//      testSchedule.addaptSchedule ();
+//        for (Nurse pattern : workPatternsD) {
+//            System.out.println(pattern.getNr());
+//            System.out.println(pattern.BinaryPlanningToString ());
+//        }
+//     
+       testSchedule.hireNurses();
+       for(Nurse nurse : nursesD){
+           System.out.println(nurse.toString());
+       }
       //testSchedule.schedulingProcess();
 //      int [] rates = testSchedule.calcScheduleRateAmounts (1);
 //        for (int i = 0; i < 4; i++) {

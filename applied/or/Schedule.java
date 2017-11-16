@@ -237,17 +237,27 @@ public class Schedule {
     }
     
     public void hireNurses (){
-        // NA addaptSchedule en recombinen
-        
+        int[][] preferences = new int [3][7];  // SHIFTSYSTEM
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 7; j++) {
+                preferences[i][j] = 5;
+            }
+        }
+        for (int k = 1; k < 3; k++) {
+            int [] amountsNurses = amountWithRates (nurses, k);
+            int [] amountsPatterns = amountWithRates (workPatterns, k);
+            for (int i = 0; i < 4; i++) {
+                if(amountsNurses[i] < amountsPatterns[i]){
+                    int amount = amountsPatterns[i] - amountsNurses[i];
+                    for (int j = 0; j < amount; j++){ 
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[i], k, " ",preferences);
+                        nurses.add(newNurse);
+                    }
+                }
+            }
+        }
     }
     
-    public float getTotalRates (ArrayList <Nurse> list){
-        float total = 0;
-        for(Nurse x : list){
-            total += x.getEmploymentRate();
-        }
-        return total;
-    }
     
     public void addaptSchedule () {
         prefScoreCalculation ();
@@ -426,6 +436,15 @@ public class Schedule {
         int lastNr = Integer.parseInt(lastID.substring(lastID.length()-2));
         int newNr = lastNr + 1;
         String prefix = lastID.substring(0,4); // bv: WSD0
+        String newID = prefix + newNr;
+        return newID;
+    }
+    
+    public String getNewIDNurse (int type){
+        String lastID = nurses.get(nurses.size()-1).getNr();
+        int lastNr = Integer.parseInt(lastID.substring(lastID.length()-2));
+        int newNr = lastNr + 1;
+        String prefix = "30" + type + lastID.substring(3, 5); // bv: WSD0
         String newID = prefix + newNr;
         return newID;
     }
