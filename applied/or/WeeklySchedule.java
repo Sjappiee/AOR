@@ -420,6 +420,12 @@ public class WeeklySchedule {
         return counter;
     }
     
+    public void recombineQuarterSchedules () {
+        ArrayList <Nurse> temp = new ArrayList <Nurse> ();
+        temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
+
+    }
+    
     public ArrayList <Nurse> searchQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
         for (Nurse workPattern : workPatterns) {
@@ -428,10 +434,10 @@ public class WeeklySchedule {
                 temp.add(workPattern);
             }
         }
-        for (Nurse nurse : temp) {
-            System.out.println(nurse);
-        }
-        return null;
+//        for (Nurse nurse : temp) {
+//            System.out.println(nurse);
+//        }
+        return temp;
     }
     
     public int getLengthArray (int [][] array, int amountColumns , int amountRows){

@@ -68,10 +68,8 @@ public class AppliedOR {
         System.out.println("EINDE MAIN DING");
         System.out.println("VANAF NU NIEUWE TESTCODE");
         
-        ArrayList< Nurse> testing = new ArrayList <Nurse> ();
-        testSchedule.searchQuarterSchedules();
-     //   testSchedule.recombineRestschedules();
-      
+        testSchedule.recombineQuarterSchedules();
+        
 //      testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
 //            System.out.println(pattern.getNr());
