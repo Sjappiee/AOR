@@ -236,7 +236,18 @@ public class Schedule {
         return (rate/4);
     }
     
+    public void hireNurses (){
+        // NA addaptSchedule en recombinen
+        
+    }
     
+    public float getTotalRates (ArrayList <Nurse> list){
+        float total = 0;
+        for(Nurse x : list){
+            total += x.getEmploymentRate();
+        }
+        return total;
+    }
     
     public void addaptSchedule () {
         prefScoreCalculation ();
