@@ -4,7 +4,7 @@ package applied.or;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class WeekleSchedule {
+public class WeeklySchedul {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     //private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
@@ -12,7 +12,7 @@ public class WeekleSchedule {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
 
-    public WeekleSchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
+    public WeeklySchedul(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
         this.workPatterns = workPatterns;
         this.prefScores = null;   
@@ -289,6 +289,8 @@ public class WeekleSchedule {
                 
             }
         }
+        System.out.println("EINDE ADAPT SCHEDULE");
+        System.out.println("");
     }
     
     public void splitPatterns (String [] patternsSplit, int type, int rate){
@@ -372,6 +374,9 @@ public class WeekleSchedule {
         for (Nurse pattern : workPatterns) {
             System.out.println(pattern.toString());
         }
+        
+                 System.out.println("EINDE PATTERNS SPLIT");
+                 System.out.println("");
     }
     
     public String [] getPatternsToSplit ( int [][] temp, int type, int rate, int amountToSplit){ //temp = prefScores, maar waarin word aangepast
@@ -413,6 +418,20 @@ public class WeekleSchedule {
             }
         }
         return counter;
+    }
+    
+    public ArrayList <Nurse> searchQuarterSchedules () {
+        ArrayList <Nurse> temp = new ArrayList <Nurse> ();
+        for (Nurse workPattern : workPatterns) {
+            if (workPattern.getEmploymentRate() == 0.25)
+            {
+                temp.add(workPattern);
+            }
+        }
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
+        return null;
     }
     
     public int getLengthArray (int [][] array, int amountColumns , int amountRows){

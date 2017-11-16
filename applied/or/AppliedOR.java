@@ -40,7 +40,7 @@ public class AppliedOR {
       workPatternsD = test.readWorkPatterns(0);
       
 
-      WeekleSchedule testSchedule = new WeekleSchedule (nursesD,workPatternsD);
+      WeeklySchedul testSchedule = new WeeklySchedul (nursesD,workPatternsD);
 
 //      int [][]prefs = testSchedule.prefScoreCalculation();
 //        for (int i = 0; i < nursesD.size(); i++) {
@@ -69,7 +69,8 @@ public class AppliedOR {
         System.out.println("VANAF NU NIEUWE TESTCODE");
         
         ArrayList< Nurse> testing = new ArrayList <Nurse> ();
-        testSchedule.recombineRestschedules();
+        testSchedule.searchQuarterSchedules();
+     //   testSchedule.recombineRestschedules();
       
 //      testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
@@ -77,6 +78,9 @@ public class AppliedOR {
 //            System.out.println(pattern.BinaryPlanningToString ());
 //        }
 //     
+
+        System.out.println("TINE HAAR GEPRUTS");
+        System.out.println("");
        testSchedule.hireNurses();
        for(Nurse nurse : nursesD){
            System.out.println(nurse.toString());
