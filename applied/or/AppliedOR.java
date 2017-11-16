@@ -46,11 +46,11 @@ public class AppliedOR {
 //        for (int i = 0; i < nursesD.size(); i++) {
 //            for (int j = 0; j < workPatternsD.size(); j++) {
 //                System.out.print(prefs[j][i] + " ");
- //     int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
- //     testSchedule.schedulingProcess();
-      
- //     Population testPop = new Population (testSchedule);
- //     testPop.ScheduleToString();
+//      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
+//      testSchedule.schedulingProcess();
+//      
+//      Population testPop = new Population (testSchedule);
+//      testPop.ScheduleToString();
       
       
 //        for (int i = 0; i < 32; i++) {
