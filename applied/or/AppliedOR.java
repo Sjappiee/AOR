@@ -60,12 +60,25 @@ public class AppliedOR {
 //            System.out.println("");
 //        }
 
+      testSchedule.addaptSchedule ();
+        for (Nurse pattern : workPatternsD) {
+            System.out.println(pattern.getNr());
+            System.out.println(pattern.BinaryPlanningToString ());
+        }
+        System.out.println("EINDE MAIN DING");
+        System.out.println("VANAF NU NIEUWE TESTCODE");
+        
+        testSchedule.recombineQuarterSchedules();
+        
 //      testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
 //            System.out.println(pattern.getNr());
 //            System.out.println(pattern.BinaryPlanningToString ());
 //        }
 //     
+
+        System.out.println("TINE HAAR GEPRUTS");
+        System.out.println("");
        testSchedule.hireNurses();
        for(Nurse nurse : nursesD){
            System.out.println(nurse.toString());
