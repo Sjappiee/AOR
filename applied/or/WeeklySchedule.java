@@ -4,7 +4,7 @@ package applied.or;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class WeekleSchedule {
+public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     //private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
@@ -12,7 +12,7 @@ public class WeekleSchedule {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
 
-    public WeekleSchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
+    public WeeklySchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
         this.workPatterns = workPatterns;
         this.prefScores = null;   
