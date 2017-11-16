@@ -40,7 +40,7 @@ public class AppliedOR {
       workPatternsD = test.readWorkPatterns(0);
       
 
-      WeeklySchedul testSchedule = new WeeklySchedul (nursesD,workPatternsD);
+      WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
 
 //      int [][]prefs = testSchedule.prefScoreCalculation();
 //        for (int i = 0; i < nursesD.size(); i++) {
