@@ -4,7 +4,7 @@ package applied.or;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Schedule {
+public class WeekleSchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     //private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
@@ -12,7 +12,7 @@ public class Schedule {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
 
-    public Schedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
+    public WeekleSchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
         this.workPatterns = workPatterns;
         this.prefScores = null;   
@@ -237,17 +237,27 @@ public class Schedule {
     }
     
     public void hireNurses (){
-        // NA addaptSchedule en recombinen
-        
+        int[][] preferences = new int [3][7];  // SHIFTSYSTEM
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 7; j++) {
+                preferences[i][j] = 5;
+            }
+        }
+        for (int k = 1; k < 3; k++) {
+            int [] amountsNurses = amountWithRates (nurses, k);
+            int [] amountsPatterns = amountWithRates (workPatterns, k);
+            for (int i = 0; i < 4; i++) {
+                if(amountsNurses[i] < amountsPatterns[i]){
+                    int amount = amountsPatterns[i] - amountsNurses[i];
+                    for (int j = 0; j < amount; j++){ 
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[i], k, " ",preferences);
+                        nurses.add(newNurse);
+                    }
+                }
+            }
+        }
     }
     
-    public float getTotalRates (ArrayList <Nurse> list){
-        float total = 0;
-        for(Nurse x : list){
-            total += x.getEmploymentRate();
-        }
-        return total;
-    }
     
     public void addaptSchedule () {
         prefScoreCalculation ();
@@ -279,8 +289,6 @@ public class Schedule {
                 
             }
         }
-        System.out.println("EINDE ADAPT SCHEDULE METHODE");
-        System.out.println("");
     }
     
     public void splitPatterns (String [] patternsSplit, int type, int rate){
@@ -364,28 +372,6 @@ public class Schedule {
         for (Nurse pattern : workPatterns) {
             System.out.println(pattern.toString());
         }
-        System.out.println("EINDE SPLIT METHODE");
-    }
-    
-    public void recombineRestschedules () {
-        ArrayList <Nurse> temp = new ArrayList <Nurse> ();
-        temp = searchQuarterRestSchedules(workPatterns);         //zoek alle workpatterns met 1 werkdag in
-        
-        
-        
-    }
-    
-    public ArrayList searchQuarterRestSchedules (ArrayList <Nurse> workpatterns) {
-        ArrayList <Nurse> temp = new ArrayList <Nurse> ();
-        for (Nurse workPattern : workPatterns) {
-            if (workPattern.getEmploymentRate() == 0.25) {
-                temp.add(workPattern);
-            }
-        }
-        for (Nurse nurse : temp) {
-            System.out.println(nurse);
-        }
-        return temp;
     }
     
     public String [] getPatternsToSplit ( int [][] temp, int type, int rate, int amountToSplit){ //temp = prefScores, maar waarin word aangepast
@@ -450,6 +436,15 @@ public class Schedule {
         int lastNr = Integer.parseInt(lastID.substring(lastID.length()-2));
         int newNr = lastNr + 1;
         String prefix = lastID.substring(0,4); // bv: WSD0
+        String newID = prefix + newNr;
+        return newID;
+    }
+    
+    public String getNewIDNurse (int type){
+        String lastID = nurses.get(nurses.size()-1).getNr();
+        int lastNr = Integer.parseInt(lastID.substring(lastID.length()-2));
+        int newNr = lastNr + 1;
+        String prefix = "30" + type + lastID.substring(3, 5); // bv: WSD0
         String newID = prefix + newNr;
         return newID;
     }

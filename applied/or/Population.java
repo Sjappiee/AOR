@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class Population {
      
-    private Schedule startSchedule;
+    private WeekleSchedule startSchedule;
     private ArrayList <String> wholepopulation;
 
-    public Population(Schedule startSchedule) {
+    public Population(WeekleSchedule startSchedule) {
         this.startSchedule = startSchedule;
         this.wholepopulation = null;
     }
@@ -59,7 +59,7 @@ public class Population {
     
 
 
-    public Schedule getStartSchedule() {
+    public WeekleSchedule getStartSchedule() {
         return startSchedule;
     }
 
@@ -67,7 +67,7 @@ public class Population {
         return wholepopulation;
     }
 
-    public void setStartSchedule(Schedule startSchedule) {
+    public void setStartSchedule(WeekleSchedule startSchedule) {
         this.startSchedule = startSchedule;
     }
 

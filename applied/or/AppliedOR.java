@@ -40,7 +40,7 @@ public class AppliedOR {
       workPatternsD = test.readWorkPatterns(0);
       
 
-      Schedule testSchedule = new Schedule (nursesD,workPatternsD);
+      WeekleSchedule testSchedule = new WeekleSchedule (nursesD,workPatternsD);
 
 //      int [][]prefs = testSchedule.prefScoreCalculation();
 //        for (int i = 0; i < nursesD.size(); i++) {
@@ -71,6 +71,16 @@ public class AppliedOR {
         ArrayList< Nurse> testing = new ArrayList <Nurse> ();
         testSchedule.recombineRestschedules();
       
+//      testSchedule.addaptSchedule ();
+//        for (Nurse pattern : workPatternsD) {
+//            System.out.println(pattern.getNr());
+//            System.out.println(pattern.BinaryPlanningToString ());
+//        }
+//     
+       testSchedule.hireNurses();
+       for(Nurse nurse : nursesD){
+           System.out.println(nurse.toString());
+       }
       //testSchedule.schedulingProcess();
 //      int [] rates = testSchedule.calcScheduleRateAmounts (1);
 //        for (int i = 0; i < 4; i++) {
