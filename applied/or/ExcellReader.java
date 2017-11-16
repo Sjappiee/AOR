@@ -464,7 +464,7 @@ public class ExcellReader {
                     }
                 }
             }
-            if(rateInDays == 4) rate = 0.1; // afhankelijk van SHIFTSYSTEM
+            if(rateInDays == 4) rate = 1.0; // afhankelijk van SHIFTSYSTEM
             if(rateInDays == 3) rate = 0.75;
             if(rateInDays == 2) rate = 0.50;
             if(rateInDays == 1) rate = 0.25;

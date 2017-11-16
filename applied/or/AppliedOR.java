@@ -51,7 +51,7 @@ public class AppliedOR {
 //        }
 
       String [] splitList = new String[] {"WSA006", "WSA003", "WSA005"};
-      testSchedule.splitPatterns (splitList, 1, 0);
+      testSchedule.addaptSchedule ();
         for (Nurse pattern : workPatternsD) {
             System.out.println(pattern.getNr());
             System.out.println(pattern.BinaryPlanningToString ());
