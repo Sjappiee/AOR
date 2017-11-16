@@ -279,6 +279,8 @@ public class Schedule {
                 
             }
         }
+        System.out.println("EINDE ADAPT SCHEDULE METHODE");
+        System.out.println("");
     }
     
     public void splitPatterns (String [] patternsSplit, int type, int rate){
@@ -362,6 +364,28 @@ public class Schedule {
         for (Nurse pattern : workPatterns) {
             System.out.println(pattern.toString());
         }
+        System.out.println("EINDE SPLIT METHODE");
+    }
+    
+    public void recombineRestschedules () {
+        ArrayList <Nurse> temp = new ArrayList <Nurse> ();
+        temp = searchQuarterRestSchedules(workPatterns);         //zoek alle workpatterns met 1 werkdag in
+        
+        
+        
+    }
+    
+    public ArrayList searchQuarterRestSchedules (ArrayList <Nurse> workpatterns) {
+        ArrayList <Nurse> temp = new ArrayList <Nurse> ();
+        for (Nurse workPattern : workPatterns) {
+            if (workPattern.getEmploymentRate() == 0.25) {
+                temp.add(workPattern);
+            }
+        }
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
+        return temp;
     }
     
     public String [] getPatternsToSplit ( int [][] temp, int type, int rate, int amountToSplit){ //temp = prefScores, maar waarin word aangepast

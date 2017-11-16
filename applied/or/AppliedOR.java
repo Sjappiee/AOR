@@ -65,6 +65,11 @@ public class AppliedOR {
             System.out.println(pattern.getNr());
             System.out.println(pattern.BinaryPlanningToString ());
         }
+        System.out.println("EINDE MAIN DING");
+        System.out.println("VANAF NU NIEUWE TESTCODE");
+        
+        ArrayList< Nurse> testing = new ArrayList <Nurse> ();
+        testSchedule.recombineRestschedules();
       
       //testSchedule.schedulingProcess();
 //      int [] rates = testSchedule.calcScheduleRateAmounts (1);
