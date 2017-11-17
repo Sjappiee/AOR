@@ -128,6 +128,14 @@ public class Nurse {
         this.binaryDayPlanning = binaryDayPlanning;
     }
     
+    public void setSpecificBinaryToOne (int shift, int index)
+    {
+        int [] [] temp = new int [2] [7];
+        temp = this.binaryDayPlanning;
+        
+        temp [shift] [index] = 1;
+    }
+    
         public int getIndexof1 () {
         int [] [] temp = new int [2][7];
         int counterShift1 = 0;
@@ -158,6 +166,37 @@ public class Nurse {
         }
         return index;
     }
+        public ArrayList <Integer> getAllIndexesOf1 ()
+        {
+            ArrayList <Integer> indexesOfOne = new ArrayList <Integer> ();
+            int [] [] temp = this.binaryDayPlanning;
+            int counterShift1 = 0;
+            int counterShift2 = 0;
+            
+            for (int i = 0; i < 7; i++) {
+                if (temp [0][i] == 0)
+                {
+                    counterShift1++;
+                    counterShift1++;
+                }
+                else
+                {
+                    indexesOfOne.add(counterShift1);
+                }
+            }
+            for (int i = 0; i < 7; i++) {
+                if(temp [1][i] == 0)
+                {
+                    counterShift2++;
+                }
+                else 
+                {
+                    indexesOfOne.add(counterShift2);
+                    counterShift2++;
+                }
+            }
+            return indexesOfOne;
+        }
     
         public int getShiftType () {
             if (BinaryPlanningToString().substring(0, 7).equalsIgnoreCase("0000000"))

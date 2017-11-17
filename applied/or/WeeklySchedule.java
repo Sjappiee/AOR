@@ -556,18 +556,26 @@ public class WeeklySchedule {
             System.out.println(nurse);
         }
         //lijst met .25 proberen hercombineren tot schema's
+        System.out.println("");
+        System.out.println("");
+        for (int j = 0; j < temp.size(); j++) {
+         
+            System.out.println("ALGORITME VOOR SCHEMA " + temp.get(j).getNr());
         
-        for (int i = 1; i < temp.size(); i++) {
-            System.out.println(temp.get(i).getNr() + " " + temp.get(i).getShiftType());
-            
-            if (temp.get(0).getIndexof1() != temp.get(i).getIndexof1() && temp.get(0).getShiftType() == temp.get(i).getShiftType())
+        for (int i = 1; i < temp.size(); i++) { //herkent al welke dat combinable zijn nu en past al aan + removed degene die dus gecombineerd is!
+            if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(0).getShiftType() == temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
             {
-                System.out.println(temp.get(i).getNr() + " DIFFERENT DAY, SAME SHIFT. COMBINEABLE!!");
+                System.out.println(temp.get(i).getNr() + " DIFFERENT DAY, SAME SHIFT. COMBINEABLE!!"); 
+                temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
+                System.out.println(temp.get(j));
+                temp.remove(i);
+                i--;
             }
             else
             {
                 System.out.println(temp.get(i).getNr() + " Not combinable :( ");
             }
+        }
         }
         
         
