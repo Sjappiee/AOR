@@ -60,45 +60,47 @@ public class AppliedOR {
 //            System.out.println("");
 //        }
 
-//      testSchedule.addaptSchedule ();
-//        for (Nurse pattern : workPatternsD) {
-//            System.out.println(pattern.getNr());
-//            System.out.println(pattern.BinaryPlanningToString ());
-//        }
-//        System.out.println("EINDE MAIN DING");
-//        System.out.println("VANAF NU NIEUWE TESTCODE");
-//        
-//        testSchedule.recombineQuarterSchedules();
+      testSchedule.addaptSchedule ();
+        for (Nurse pattern : workPatternsD) {
+            System.out.println(pattern.getNr());
+            System.out.println(pattern.BinaryPlanningToString ());
+        }
+        System.out.println("EINDE MAIN DING");
+        System.out.println("VANAF NU NIEUWE TESTCODE");
         
-//      testSchedule.addaptSchedule ();
-//        for (Nurse pattern : workPatternsD) {
-//            System.out.println(pattern.getNr());
-//            System.out.println(pattern.BinaryPlanningToString ());
-//        }
-//     
+        testSchedule.recombineQuarterSchedules();
+        
+      testSchedule.addaptSchedule ();
+        for (Nurse pattern : workPatternsD) {
+            System.out.println(pattern.getNr());
+            System.out.println(pattern.BinaryPlanningToString ());
+        }
+     
 
-//        System.out.println("TINE HAAR GEPRUTS");
-//        System.out.println("");
-//       testSchedule.hireNurses();
-//       for(Nurse nurse : nursesD){
-//           System.out.println(nurse.toString());
-//       }
-      testSchedule.schedulingProcess();
+        System.out.println("TINE HAAR GEPRUTS");
+        System.out.println("");
+       testSchedule.hireNurses();
+       for(Nurse nurse : nursesD){
+           System.out.println(nurse.toString());
+       }
+       
+       
+     // testSchedule.schedulingProcess();
 
-     for(Nurse nurse : testSchedule.getNurses()){
-        for (int i = 0; i < 47; i++) {
-            for (int j = 0; j < 47; j++) {
-                System.out.println(nurse.getNr());
-                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
-            }
-            System.out.println("");
-        }    
-      }
+//     for(Nurse nurse : testSchedule.getNurses()){
+//        for (int i = 0; i < 47; i++) {
+//            for (int j = 0; j < 47; j++) {
+//                System.out.println(nurse.getNr());
+//                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
+//            }
+//            System.out.println("");
+//        }    
+//      }
       
-     MonthlySchedule schedule = new MonthlySchedule(testSchedule.getNurses());
+    /* MonthlySchedule schedule = new MonthlySchedule(testSchedule.getNurses());
         System.out.println(schedule.getSchedule1());
         System.out.println(schedule.getSchedule2());
-
+*/
 
     }
 }

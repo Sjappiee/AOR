@@ -552,7 +552,26 @@ public class WeeklySchedule {
     public void recombineQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
-
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
+        //lijst met .25 proberen hercombineren tot schema's
+        
+        for (int i = 1; i < temp.size(); i++) {
+            System.out.println(temp.get(i).getNr() + " " + temp.get(i).getShiftType());
+            
+            if (temp.get(0).getIndexof1() != temp.get(i).getIndexof1() && temp.get(0).getShiftType() == temp.get(i).getShiftType())
+            {
+                System.out.println(temp.get(i).getNr() + " DIFFERENT DAY, SAME SHIFT. COMBINEABLE!!");
+            }
+            else
+            {
+                System.out.println(temp.get(i).getNr() + " Not combinable :( ");
+            }
+        }
+        
+        
+        
     }
     
     public ArrayList <Nurse> searchQuarterSchedules () {
@@ -563,11 +582,10 @@ public class WeeklySchedule {
                 temp.add(workPattern);
             }
         }
-//        for (Nurse nurse : temp) {
-//            System.out.println(nurse);
-//        }
         return temp;
     }
+    
+
     
     public int getLengthArray (int [][] array, int amountColumns , int amountRows){
         int counter1 = 0;

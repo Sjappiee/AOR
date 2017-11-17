@@ -34,7 +34,7 @@ public class MonthlySchedule {
         this.schedule2 =   monthSchedule2;
     }
     
-    public int calcCost (){
+  /*  public int calcCost (){
         
     }
     
@@ -57,7 +57,7 @@ public class MonthlySchedule {
     public String getSchedule2() {
         return schedule2;
     }
-
+*/
     public void setSchedule2(String schedule2) {
         this.schedule2 = schedule2;
     }

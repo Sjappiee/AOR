@@ -128,7 +128,45 @@ public class Nurse {
         this.binaryDayPlanning = binaryDayPlanning;
     }
     
+        public int getIndexof1 () {
+        int [] [] temp = new int [2][7];
+        int counterShift1 = 0;
+        int counterShift2 = 0;
+        int index = 0;
+        temp = this.binaryDayPlanning;
+        
+        for (int i = 0; i < 7; i++) {
+            if (temp [0][i] == 0)
+            {
+                counterShift1++;
+            }
+            else
+            {
+                index = counterShift1;
+            }
+        }
+        
+        for (int i = 0; i < 7; i++) {
+            if (temp [1][i] == 0)
+            {
+                counterShift2++;
+            }
+            else
+            {
+                index=counterShift2;
+            }
+        }
+        return index;
+    }
     
-    
-   
+        public int getShiftType () {
+            if (BinaryPlanningToString().substring(0, 7).equalsIgnoreCase("0000000"))
+            {
+                return 2;
+            }
+            else
+            {
+                return 1;
+            }
+        }
 }
