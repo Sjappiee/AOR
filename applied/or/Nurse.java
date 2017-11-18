@@ -208,4 +208,9 @@ public class Nurse {
                 return 1;
             }
         }
+
+    public void setEmploymentRate(float employmentRate) {
+        this.employmentRate = employmentRate;
+    }
+        
 }

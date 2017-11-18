@@ -57,16 +57,20 @@ public class AppliedOR {
 //            System.out.println("");
 //        }
 //
-//        testSchedule.addaptSchedule ();
+        testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
 //            System.out.println(pattern.getNr());
 //            System.out.println(pattern.BinaryPlanningToString ());
 //        }
-//        System.out.println("EINDE MAIN DING");
-//        System.out.println("VANAF NU NIEUWE TESTCODE");
-//        
-//        testSchedule.recombineQuarterSchedules();
-//        
+        
+        System.out.println("EINDE MAIN DING");
+        System.out.println("VANAF NU NIEUWE TESTCODE");
+
+        //testSchedule.recombineQuarterSchedules();
+        
+
+        System.out.println("EINDE TESTEN STEHAN");
+        
 //        testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
 //            System.out.println(pattern.getNr());
@@ -81,12 +85,12 @@ public class AppliedOR {
 //           System.out.println(nurse.toString());
 //        }
 
-        testSchedule.schedulingProcess();
-        
-        MonthlySchedule monthlySchedule = new MonthlySchedule(testSchedule);
-        System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println(monthlySchedule.calcCost(1));
+//        testSchedule.schedulingProcess();
+//        
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(testSchedule);
+//        System.out.println("type1:" + monthlySchedule.getSchedule1());
+//        System.out.println("type2: " + monthlySchedule.getSchedule2());
+//        System.out.println(monthlySchedule.calcCost(1));
 
 
     }

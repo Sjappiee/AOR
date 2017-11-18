@@ -242,6 +242,22 @@ public class WeeklySchedule {
         return (rate/4);
     }
     
+        public double EmploymentRateSchedule (ArrayList <Nurse> usedList, int scheduleNr) 
+    {
+        ArrayList <Nurse> temp = usedList; //we werken met de workpatterns dat ingeladen zijn bij bepaald department bij de creatie van het schedule.
+        double rate = 0 ; 
+        //door beide lijnen van de array kolom per kolom gaan en optellen en /4. Hoogste employment rate retourneren (dus telkens gaan we 0 en iets anders hebben)
+        for (int i = 0; i < 7; i++) { //in 2 afzonderlijke for lussen
+            rate += temp.get(scheduleNr).getBinaryDayPlanning() [0][i];   
+        }
+        
+        for (int i = 0; i < 7; i++) { //in 2 afzonderlijke for lussen
+            rate += temp.get(scheduleNr).getBinaryDayPlanning() [1][i];
+        }
+
+        return (rate/4);
+    }
+    
     public void hireNurses (){
         int[][] preferences = new int [3][7];  // SHIFTSYSTEM
         for (int i = 0; i < 3; i++) {
@@ -422,170 +438,43 @@ public class WeeklySchedule {
 //        System.out.println("EINDE ADAPT SCHEDULE");
 //        System.out.println("");
     }
-    
-//    public void splitPatterns (String [] patternsSplit, int type, int rate){
-//        int [][] restPatterns = new int [14][100]; // [11111112222222][#nieuwe rest schedules (gwn heel groot getal)]
-//        int shiftDays = rateInDays [rate+1];
-//        int [] days = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
-//        //maak splitsingen en sla restjes op
-//        for(String patternID : patternsSplit){
-//            int [][] newPattern = new int [2][7];
-////            int [][] splitPattern = workPatterns.get(IDToIndex(patternID,workPatterns)).getBinaryDayPlanning();
-//            String splitPattern = workPatterns.get(IDToIndex(patternID,workPatterns)).BinaryPlanningToString ();
-//            int counter1 = 0;
-//            int [] sequence = shuffleArray(days);
-//            for (int i = 0; i < sequence.length; i++) {
-//                if(Character.getNumericValue( splitPattern.charAt(sequence[i])) == 1){
-//                    if (sequence[i] < 7) {
-//                        int shift = 0;
-//                        if (counter1 < shiftDays){
-//                            newPattern[shift][sequence[i]] = 1;
-//                            counter1++;
-//                        }
-//                        else{
-//                            int counter2 = 0;
-////                            System.out.println("s1= "+ restPatterns[sequence[i]][counter2]);
-////                            System.out.println("s2= "+ restPatterns[sequence[i]][counter2]);
-////                            System.out.println("already in rest= "+ getAmountShiftsRest (restPatterns, counter2, 14));
-//                           while (restPatterns[sequence[i]][counter2] == 1 || restPatterns[sequence[i]][counter2] == 1 || getAmountShiftsRest (restPatterns, counter2, 14) == shiftDays){
-//                                counter2++;
-//                            }
-//                            restPatterns[sequence[i]][counter2] = 1;
-////                            System.out.println("rest(" + sequence[i] + "," + counter2 + ") = "+ restPatterns[sequence[i]][counter2]);
-// 
-//                        }
-//                    }
-//                    if (sequence[i] > 6) {
-//                        int shift = 1;
-//                        if (counter1 < shiftDays){
-//                            newPattern[shift][sequence[i]-7] = 1;
-//                            counter1++;
-//                        }
-//                        else{
-//                            int counter2 = 0;
-////                            System.out.println("s1= "+ restPatterns[sequence[i]][counter2]);
-////                            System.out.println("s2= "+ restPatterns[sequence[i]][counter2]);
-////                            System.out.println("already in rest= "+ getAmountShiftsRest (restPatterns, counter2, 14));
-//                            while (restPatterns[sequence[i]][counter2] == 1 || restPatterns[sequence[i]][counter2] == 1 || getAmountShiftsRest (restPatterns, counter2, 14) == shiftDays){
-//                                counter2++;
-//                            }
-//                            restPatterns[sequence[i]][counter2] = 1;
-////                            System.out.println("rest(" + sequence[i] + "," + counter2 + ") = "+ restPatterns[sequence[i]][counter2]);
-// 
-//                        }
-//                    }
-//                }
-//            }
-//
-//            Nurse pattern = new Nurse(getNewIDPattern (),calcPatternRate(newPattern), newPattern, type);
-//            workPatterns.add(pattern);
-//            workPatterns.remove(IDToIndex(patternID,workPatterns));
-//        }
-//        //maak pattern uit de restjes
-//        for (int j = 0; j < getLengthArray(restPatterns,14,100); j++) {
-//            int [][] newPattern = new int [2][7];
-//            for (int l = 0; l < 7; l++) {
-//                newPattern [0][l] = restPatterns[l][j];
-//            }
-//            for (int l = 7; l < 14; l++) {
-//                newPattern [1][l-7] = restPatterns[l][j];
-//            }
-//            for (int i = 0; i < 2; i++) {
-//                for (int k = 0; k < 7; k++) {
-//                    System.out.print(newPattern[i][k]);
-//                }
-//                System.out.println("");
-//            }
-//    
-//            Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
-//            System.out.println(newPattern2.getNr());
-//            workPatterns.add(newPattern2);
-//        }
-//        for (Nurse pattern : workPatterns) {
-//            System.out.println(pattern.toString());
-//        }
-//        
-//                 System.out.println("EINDE PATTERNS SPLIT");
-//                 System.out.println("");
-//    }
-    
-//    public String [] getPatternsToSplit ( int [][] temp, int type, int rate, int amountToSplit){ //temp = prefScores, maar waarin word aangepast
-//        System.out.println(rate + " " + amountToSplit); 
-//        String [] patternsSplit = new String [amountToSplit]; 
-//         for (int j = 0; j < amountToSplit; j++) {
-//            int max = 0;       
-//            String IDmax = "none";
-//            for (Nurse pattern : workPatterns) {
-//                System.out.println(IDToIndex(pattern.getNr(),workPatterns) + " " + pattern.getNr() + " "  + pattern.getEmploymentRate() + " " + getSumColumn(IDToIndex(pattern.getNr(),workPatterns),temp));
-//                if (getSumColumn(IDToIndex(pattern.getNr(),workPatterns),temp) > max && pattern.getType() == type && pattern.getEmploymentRate() == rates[rate])
-//                {
-//                    max = getSumColumn(IDToIndex(pattern.getNr(),workPatterns),temp);
-//                    System.out.println(max);
-//                    IDmax = pattern.getNr();
-//                    }   
-//                }
-//            
-//                patternsSplit[j] = IDmax;
-//                for (int m = 0; m < nurses.size(); m++) {
-//                    temp[IDToIndex(IDmax,workPatterns)][m] = 0;
-//                }
-////                for (int i = 0; i < nurses.size(); i++) {
-////                    for (int k = 0; k < workPatterns.size(); k++) {
-////                        System.out.print(temp[k][i] + " ");
-////                    }
-////                    System.out.println("");
-//                 
-////                }
-//            }
-//         return patternsSplit;
-//    }
-//    
-//    public int getAmountShiftsRest (int [][] restPatterns, int row, int amountColummns){
-//        int counter = 0;
-//        for (int i = 0; i < amountColummns; i++) {
-//            if(restPatterns[i][row] == 1){
-//                counter++;
-//            }
-//        }
-//        return counter;
-//    }
-    
+       
     public void recombineQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
+        int indexFirstRest = searchFirstIndexOfRestSchedules();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
-        for (Nurse nurse : temp) {
-            System.out.println(nurse);
-        }
+
         //lijst met .25 proberen hercombineren tot schema's
-        System.out.println("");
-        System.out.println("");
+
         for (int j = 0; j < temp.size()-1; j++) {
-            System.out.println("");
-            System.out.println("");
-            System.out.println("ALGORITME VOOR SCHEMA " + temp.get(j).getNr());
-        
-        for (int i = j+1; i < temp.size(); i++) { //herkent al welke dat combinable zijn nu en past al aan + removed degene die dus gecombineerd is!
+                   
+        for (int i = j+1; i < temp.size(); i++) { //herkennen wat er te combineren valt en dit dan doen (in de tijdelijke lijst
             if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
             {
-                System.out.println(temp.get(i).getNr() + " DIFFERENT DAY, SAME SHIFT. COMBINEABLE!!"); 
                 temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
-                System.out.println(temp.get(j));
                 temp.remove(i);
                 i--;
             }
             else
             {
-                System.out.println(temp.get(i).getNr() + " Not combinable :( ");
             }
         }
         }
-        System.out.println("");
-        System.out.println("");
-        for (Nurse nurse : temp) {
-            System.out.println(nurse);
+        
+        for (int i = 0; i < temp.size(); i++) { //juiste ER instellen dat data nog steeds klopt
+            temp.get(i).setEmploymentRate((float) EmploymentRateSchedule(temp, i));
         }
         
-    }
+        for (int j = indexFirstRest; j<workPatterns.size();j++) //de algemene worklijst aanpassen. Dus alle restschema's eruit smijten en dan de nieuwe gecombineerde temp list toevoegen
+        {
+            workPatterns.remove(j);
+            j--;
+            }
+        
+        for (int i = 0; i < temp.size(); i++) {
+                workPatterns.add(temp.get(i));
+            }
+        }   
     
     public ArrayList <Nurse> searchQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
@@ -596,6 +485,21 @@ public class WeeklySchedule {
             }
         }
         return temp;
+    }
+    
+    public int searchFirstIndexOfRestSchedules () {
+        int counter =0;
+        for (int i = 0; i < workPatterns.size(); i++) {
+            if (workPatterns.get(i).getEmploymentRate() == 0.25)
+            {
+                i+=100;
+            }
+            else
+            {
+                counter ++;
+            }
+        }
+        return counter;
     }
     
 
