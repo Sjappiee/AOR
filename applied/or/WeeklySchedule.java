@@ -563,7 +563,7 @@ public class WeeklySchedule {
             System.out.println("");
             System.out.println("ALGORITME VOOR SCHEMA " + temp.get(j).getNr());
         
-        for (int i = 1; i < temp.size(); i++) { //herkent al welke dat combinable zijn nu en past al aan + removed degene die dus gecombineerd is!
+        for (int i = j+1; i < temp.size(); i++) { //herkent al welke dat combinable zijn nu en past al aan + removed degene die dus gecombineerd is!
             if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
             {
                 System.out.println(temp.get(i).getNr() + " DIFFERENT DAY, SAME SHIFT. COMBINEABLE!!"); 
