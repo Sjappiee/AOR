@@ -558,12 +558,13 @@ public class WeeklySchedule {
         //lijst met .25 proberen hercombineren tot schema's
         System.out.println("");
         System.out.println("");
-        for (int j = 0; j < temp.size(); j++) {
-         
+        for (int j = 0; j < temp.size()-1; j++) {
+            System.out.println("");
+            System.out.println("");
             System.out.println("ALGORITME VOOR SCHEMA " + temp.get(j).getNr());
         
         for (int i = 1; i < temp.size(); i++) { //herkent al welke dat combinable zijn nu en past al aan + removed degene die dus gecombineerd is!
-            if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(0).getShiftType() == temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
+            if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
             {
                 System.out.println(temp.get(i).getNr() + " DIFFERENT DAY, SAME SHIFT. COMBINEABLE!!"); 
                 temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
@@ -577,8 +578,11 @@ public class WeeklySchedule {
             }
         }
         }
-        
-        
+        System.out.println("");
+        System.out.println("");
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
         
     }
     
@@ -722,15 +726,15 @@ public class WeeklySchedule {
             
             if (firstPart.equalsIgnoreCase("0000000")) {
                 //nu is het deel aangepast naar enkel het deel dat we nodig hebben. Next: codes aanpassen
-                String temp1 = secondPart.replace("0", "3");
-                String temp2 = temp1.replace("1", "2");
+//               String temp1 = secondPart.replace("0", "3");
+                String temp2 = secondPart.replace("1", "2");
                 
                 temp.set(i, temp2);
             }
-            else {
-                String temp1 = firstPart.replace("0", "3");
-                temp.set(i, temp1);
-            }
+//            else {
+//                String temp1 = firstPart.replace("0", "3");
+//                temp.set(i, temp1);
+//            }
         }
        
         
