@@ -730,10 +730,10 @@ public class WeeklySchedule {
                 
                 temp.set(i, temp2);
             }
-//            else {
-//                String temp1 = firstPart.replace("0", "3");
-//                temp.set(i, temp1);
-//            }
+            else {
+                String temp1 = firstPart;
+                temp.set(i, temp1);
+            }
         }
        
         
