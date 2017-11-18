@@ -16,8 +16,8 @@ public class AppliedOR {
        System.out.println(process.personelNr[x] + '\n');
        }*/
        
-       ExcellReader test = new ExcellReader ();
-       test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
+        ExcellReader test = new ExcellReader ();
+        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
       
       /*  System.out.println(test.searchFirstRowNurse(3));
         System.out.println(test.searchLastRowNurse(3));
@@ -33,14 +33,14 @@ public class AppliedOR {
        test.givePref(1,14);
        test.giveNumbPref(1,14);
        */    
-      ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
-      ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
+        ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+        ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-      nursesD = test.readAllExceptCyclicSchedule(0);  
-      workPatternsD = test.readWorkPatterns(0);
+        nursesD = test.readAllExceptCyclicSchedule(0);  
+        workPatternsD = test.readWorkPatterns(0);
       
 
-      WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+        WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
 
 //      int [][]prefs = testSchedule.prefScoreCalculation();
 //        for (int i = 0; i < nursesD.size(); i++) {
@@ -48,10 +48,7 @@ public class AppliedOR {
 //                System.out.print(prefs[j][i] + " ");
 //      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
 //      testSchedule.schedulingProcess();
-//      
-//      Population testPop = new Population (testSchedule);
-//      testPop.ScheduleToString();
-      
+//            
       
 //        for (int i = 0; i < 32; i++) {
 //            for (int j = 0; j < 32; j++) {
@@ -59,48 +56,38 @@ public class AppliedOR {
 //            }
 //            System.out.println("");
 //        }
+//
+//        testSchedule.addaptSchedule ();
+//        for (Nurse pattern : workPatternsD) {
+//            System.out.println(pattern.getNr());
+//            System.out.println(pattern.BinaryPlanningToString ());
+//        }
+//        System.out.println("EINDE MAIN DING");
+//        System.out.println("VANAF NU NIEUWE TESTCODE");
+//        
+//        testSchedule.recombineQuarterSchedules();
+//        
+//        testSchedule.addaptSchedule ();
+//        for (Nurse pattern : workPatternsD) {
+//            System.out.println(pattern.getNr());
+//            System.out.println(pattern.BinaryPlanningToString ());
+//        }
+//     
+//
+//        System.out.println("TINE HAAR GEPRUTS");
+//        System.out.println("");
+//        testSchedule.hireNurses();
+//        for(Nurse nurse : nursesD){
+//           System.out.println(nurse.toString());
+//        }
 
-      testSchedule.addaptSchedule ();
-        for (Nurse pattern : workPatternsD) {
-            System.out.println(pattern.getNr());
-            System.out.println(pattern.BinaryPlanningToString ());
-        }
-        System.out.println("EINDE MAIN DING");
-        System.out.println("VANAF NU NIEUWE TESTCODE");
+        testSchedule.schedulingProcess();
         
-        testSchedule.recombineQuarterSchedules();
-        
-      testSchedule.addaptSchedule ();
-        for (Nurse pattern : workPatternsD) {
-            System.out.println(pattern.getNr());
-            System.out.println(pattern.BinaryPlanningToString ());
-        }
-     
+        MonthlySchedule monthlySchedule = new MonthlySchedule(testSchedule);
+        System.out.println("type1:" + monthlySchedule.getSchedule1());
+        System.out.println("type2: " + monthlySchedule.getSchedule2());
+        System.out.println(monthlySchedule.calcCost(1));
 
-        System.out.println("TINE HAAR GEPRUTS");
-        System.out.println("");
-       testSchedule.hireNurses();
-       for(Nurse nurse : nursesD){
-           System.out.println(nurse.toString());
-       }
-       
-       
-     // testSchedule.schedulingProcess();
-
-//     for(Nurse nurse : testSchedule.getNurses()){
-//        for (int i = 0; i < 47; i++) {
-//            for (int j = 0; j < 47; j++) {
-//                System.out.println(nurse.getNr());
-//                System.out.print(nurse.getBinaryDayPlanning()[j][i] + " ");
-//            }
-//            System.out.println("");
-//        }    
-//      }
-      
-    /* MonthlySchedule schedule = new MonthlySchedule(testSchedule.getNurses());
-        System.out.println(schedule.getSchedule1());
-        System.out.println(schedule.getSchedule2());
-*/
 
     }
 }

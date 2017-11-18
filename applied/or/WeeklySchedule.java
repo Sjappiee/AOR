@@ -25,6 +25,7 @@ public class WeeklySchedule {
     }
     
     public void schedulingProcess (){
+        prefScoreCalculation ();
         //methode om workrate patterns en nurses te matchen
         for (int k = 0; k < workPatterns.size(); k++) {
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
@@ -718,8 +719,6 @@ public class WeeklySchedule {
         for (int i = 0; i < nurses.size() ; i++) { //alle schedules zitten nu dus in de temp lijst. Nu moeten we deze allemaal aan elkaar plakken, een 'lege week' niet meenemen. werken shift 1 = 1, werken shift 2 = 2, vrij = 3
             temp.add(nurses.get(i).BinaryPlanningToString());
         }
-        
-        
         for (int i = 0; i < temp.size(); i++) {
             String firstPart = temp.get(i).substring(0, 7);
             String secondPart = temp.get(i).substring(7, 14);
@@ -741,9 +740,7 @@ public class WeeklySchedule {
         for (String string : temp) { 
             output += string + "*";
         }
-        
-        
-        System.out.println(output);
+
         return output;
     }
     
