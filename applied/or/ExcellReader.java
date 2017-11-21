@@ -472,7 +472,53 @@ public class ExcellReader {
             return (float)rate;
         }
                
+        public int[][] giveMonthPref (int sheetNr, int row) throws IOException {
+            
+        File inputWorkbook = new File (inputFile);
+        Workbook w;
+        int [][] monthPreferences = new int [5][28];
         
+        int counter1 = 0;
+        int counter2 = 0;
+        int counter3 = 0;
+        int counter4 = 0;
+        int counter5 = 0;
+        
+        try{
+            w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
+            Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
+            for (int k=42;k<181;k++){
+               Cell cell = sheet.getCell(k, row);
+               
+               if (k%5==2){ //42 early
+                   monthPreferences[0][counter1] = Integer.parseInt(cell.getContents());
+                   counter1+=1;
+               }
+               else if (k%5==3){ //43 day
+                  monthPreferences[1][counter2] = Integer.parseInt(cell.getContents()); 
+                   counter2+=1;
+                } 
+               else if (k%5==4){ //44 late
+                  monthPreferences[2][counter3] = Integer.parseInt(cell.getContents()); 
+                   counter2+=1;
+                } 
+               else if (k%5==0){ //45 night
+                  monthPreferences[3][counter4] = Integer.parseInt(cell.getContents()); 
+                   counter2+=1;
+                } 
+               else { //46 free
+                  monthPreferences[4][counter5] = Integer.parseInt(cell.getContents());    
+                   counter3+=1;
+                }
+               
+            }
+        }
+        catch (BiffException e) {
+              e.printStackTrace();
+        }
+        return monthPreferences;
+    }
+
         /*
         
         TE MAKEN

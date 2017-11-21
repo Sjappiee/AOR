@@ -59,7 +59,7 @@ public class MonthlySchedule {
         int counter = 0;
         for (int w = 0; w < 5; w++) {     
             for (int i = 0; i < 6; i++) { //week
-                if(!schedule.substring(i, i+1).equals("*")){
+                //if(!schedule.substring(i, i+1).equals("*")){
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -69,10 +69,10 @@ public class MonthlySchedule {
                     }
                      counter++;
                 
-                }
+                //}
             }
             for (int i = 6; i < 8; i++) { //weekend
-                if(!schedule.substring(i, i+1).equals("*")){
+                //if(!schedule.substring(i, i+1).equals("*")){
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0 ){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -82,7 +82,7 @@ public class MonthlySchedule {
                     }
                     counter++;
                 } 
-            }
+            //}
         }
         System.out.println("labourHoursWeek: " + labourHoursWeek);
         System.out.println("labourHoursWeekend: " + labourHoursWeekend);
