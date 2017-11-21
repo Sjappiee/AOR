@@ -40,7 +40,8 @@ public class MonthlySchedule {
     
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
         double cost = 0;
-        int labourHours = 0;
+        int labourHoursWeek = 0;
+        int labourHoursWeekend = 0;
         String schedule = null;
         double [][] wages = null;
         if(type == 1){
@@ -58,28 +59,35 @@ public class MonthlySchedule {
         int counter = 0;
         for (int w = 0; w < 5; w++) {     
             for (int i = 0; i < 6; i++) { //week
-                System.out.println(counter);
-                if(!schedule.substring(i, i+1).equals("*") && Character.getNumericValue(schedule.charAt(counter)) != 3){
-                   cost += wages[0][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[0][0] ,if type=2, wages[0][1]
-                   labourHours += shiftHours;
-                   System.out.println(" " + cost);
-                }
-                counter++;
+                if(!schedule.substring(i, i+1).equals("*")){
+                    System.out.println(counter);
+                    if(Character.getNumericValue(schedule.charAt(counter)) > 0){
+                        System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
+                        cost += wages[0][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[0][0] ,if type=2, wages[0][1]
+                        labourHoursWeek += shiftHours;
+                        System.out.println(" " + cost);
+                    }
+                     counter++;
                 
+                }
             }
             for (int i = 6; i < 8; i++) { //weekend
-                System.out.println(counter);
-                if(!schedule.substring(i, i+1).equals("*") && Character.getNumericValue(schedule.charAt(counter)) != 3){
-                   cost += wages[1][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[1][0] ,if type=2, wages[1][1]
-                   labourHours += shiftHours;
-                   System.out.println(" " + cost);
-                }
-                counter++;
-                
+                if(!schedule.substring(i, i+1).equals("*")){
+                    System.out.println(counter);
+                    if(Character.getNumericValue(schedule.charAt(counter)) > 0 ){
+                        System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
+                        cost += wages[1][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[1][0] ,if type=2, wages[1][1]
+                        labourHoursWeekend += shiftHours;
+                        System.out.println(" " + cost);
+                    }
+                    counter++;
+                } 
             }
         }
+        System.out.println("labourHoursWeek: " + labourHoursWeek);
+        System.out.println("labourHoursWeekend: " + labourHoursWeekend);
         //administrative costs
-        //cost += fixedAdmCost + labourHours;
+        cost += fixedAdmCost + labourHoursWeek + labourHoursWeekend;
         return cost;
     }
  /*   
