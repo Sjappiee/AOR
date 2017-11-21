@@ -449,7 +449,7 @@ public class WeeklySchedule {
         for (int j = 0; j < temp.size()-1; j++) {
                    
         for (int i = j+1; i < temp.size(); i++) { //herkennen wat er te combineren valt en dit dan doen (in de tijdelijke lijst
-            if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
+            if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType() && temp.get(j).getType()== temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
             {
                 temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
                 temp.remove(i);
