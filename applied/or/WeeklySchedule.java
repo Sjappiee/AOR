@@ -259,10 +259,16 @@ public class WeeklySchedule {
     }
     
     public void hireNurses (){
-        int[][] preferences = new int [3][7];  // SHIFTSYSTEM
+        int[][] preferencesWeek = new int [3][7];  // SHIFTSYSTEM
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 7; j++) {
-                preferences[i][j] = 5;
+                preferencesWeek[i][j] = 5;
+            }
+        }
+        int[][] preferencesMonth = new int [5][28];  // SHIFTSYSTEM
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 28; j++) {
+                preferencesMonth[i][j] = 5;
             }
         }
         for (int k = 1; k < 3; k++) {
@@ -272,7 +278,7 @@ public class WeeklySchedule {
                 if(amountsNurses[i] < amountsPatterns[i]){
                     int amount = amountsPatterns[i] - amountsNurses[i];
                     for (int j = 0; j < amount; j++){ 
-                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[i], k, " ",preferences);
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[i], k, " ",preferencesWeek, preferencesMonth);
                         nurses.add(newNurse);
                     }
                 }
@@ -584,6 +590,21 @@ public class WeeklySchedule {
             array[i] = temp;
         }
         return array;
+    }
+    
+    public int [] amountWithType (ArrayList<Nurse> list){
+        int counter; 
+        int [] amounts = new int [2];
+        for (int i = 1; i < 3; i++) {
+            counter=0;
+            for(Nurse nurse: list){
+                if(nurse.getType() == i){
+                    counter++;
+                }
+            }
+            amounts[i-1] = counter;
+        }
+        return amounts;
     }
     
     public ArrayList<Nurse> getNurses() {
