@@ -95,6 +95,12 @@ public class MonthlySchedule {
     }
  /*   
     public int calcNurseSat (){
+       
+    eerst vermeningvudigen met hun schema X hun specifieke monthly pref
+    dan ook nog nog met de verschillende regels: 
+        vrije dagen na elkaar?
+        alle dagen werken dat je wil? Dus schema = ER? 
+        veranderen in shiften?
         
     }
     
