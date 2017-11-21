@@ -12,6 +12,7 @@ public class Nurse {
     private int type;
     private String preferenceText;
     private int [][] preferences;
+    private int [] [] MonthlyPreferences; //dit is een 2D array bestaande uit 5 rijen. Elke shift is een rij (vroeg, dag, laat, nacht, vrij) en 28 kolommen (voor elke dag in het schema)
 
 
     public Nurse(String nr, float employmentRate, int type, String preferenceText, int[][] preferences) {
@@ -21,6 +22,7 @@ public class Nurse {
         this.type = type;
         this.preferenceText = preferenceText;
         this.preferences = preferences;
+        this.MonthlyPreferences = null;
     }
 
     public Nurse(String nr, float employmentRate, int[][] binaryDayPlanning, int type) {
@@ -28,6 +30,7 @@ public class Nurse {
         this.type = type;
         this.nr = nr;
         this.employmentRate = employmentRate;
+        this.MonthlyPreferences = null;
     }
 
     public Nurse(String nr, int[][] binaryDayPlanning, float employmentRate, int type, String preferenceText, int[][] preferences) {
@@ -37,11 +40,21 @@ public class Nurse {
         this.type = type;
         this.preferenceText = preferenceText;
         this.preferences = preferences;
+        this.MonthlyPreferences = null;
     }
-    
-    
 
-    public Nurse() {
+    public Nurse(String nr, float employmentRate, int type, String preferenceText, int[][] preferences, int[][] MonthlyPreferences) {
+        this.nr = nr;
+        this.employmentRate = employmentRate;
+        this.type = type;
+        this.preferenceText = preferenceText;
+        this.preferences = preferences;
+        this.MonthlyPreferences = MonthlyPreferences;
+    }
+
+    
+    
+        public Nurse() {
     }
     
     public String BinaryPlanningToString () {
@@ -59,6 +72,8 @@ public class Nurse {
         return temp;
     }
     
+    
+    
     public String PrefsToString () {
         String temp = "";
         if (this.preferences != null) {
@@ -75,12 +90,36 @@ public class Nurse {
         return temp;
     }
     
+    public String MonthlyPrefsToString () {
+        String temp = "";
+        if (this.MonthlyPreferences != null)
+        {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 28; j++) {
+                    temp = temp + this.MonthlyPreferences[i][j] + " ";
+                }
+            }
+        }
+            return temp;
+            }
+    
     @Override
     public String toString() {
-        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + BinaryPlanningToString() + ", employmentRate=" + employmentRate + ", type=" + type + ", preferenceText=" + preferenceText + ", preferences=" + PrefsToString() + '}';
+        return "Nurse{" + "nr=" + nr + ", binaryDayPlanning=" + BinaryPlanningToString() + ", employmentRate=" + employmentRate + ", type=" + type + 
+                ", preferenceText=" + preferenceText + ", preferences=" + PrefsToString() +
+                ", monthlyPreferences =" + MonthlyPrefsToString() + '}';
+        
     }
 
+    public int[][] getMonthlyPreferences() {
+        return MonthlyPreferences;
+    }
 
+    public void setMonthlyPreferences(int[][] MonthlyPreferences) {
+        this.MonthlyPreferences = MonthlyPreferences;
+    }
+
+    
 
     public String getNr() {
         return nr;

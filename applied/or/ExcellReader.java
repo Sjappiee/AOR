@@ -24,6 +24,7 @@ public class ExcellReader {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     
+    
     public void setInputFile (String inputFile) { //nodig voor inlezen excel document
         this.inputFile = inputFile;
     }
@@ -44,8 +45,10 @@ public class ExcellReader {
                 int type = giveType(sheetNr,i);
                 String prefString = givePref(sheetNr,i);
                 int [] [] prefNum = giveNumbPref(sheetNr,i);
+                int [] [] monthPreferences = giveMonthPref(sheetNr, i);
+
                 
-                Nurse Temp = new Nurse (nr, emplRate,type,prefString,prefNum);
+                Nurse Temp = new Nurse (nr, emplRate,type,prefString, prefNum, monthPreferences);
                 nurses.add(Temp);
             }
             
@@ -471,6 +474,8 @@ public class ExcellReader {
             
             return (float)rate;
         }
+        
+        //checken!!!
                
         public int[][] giveMonthPref (int sheetNr, int row) throws IOException {
             
@@ -486,36 +491,47 @@ public class ExcellReader {
         
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
-            Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            for (int k=42;k<181;k++){
+            Sheet sheet = w.getSheet(sheetNr); 
+            
+            //om eerste sheet te nemen van excel bestand
+            for (int k= 41;k<181;k++){
                Cell cell = sheet.getCell(k, row);
                
-               if (k%5==2){ //42 early
+               if (k%5==1){ //41 early
                    monthPreferences[0][counter1] = Integer.parseInt(cell.getContents());
                    counter1+=1;
                }
-               else if (k%5==3){ //43 day
+               else if (k%5==2){ //42 day
                   monthPreferences[1][counter2] = Integer.parseInt(cell.getContents()); 
                    counter2+=1;
                 } 
-               else if (k%5==4){ //44 late
+               else if (k%5==3){ //43 late
                   monthPreferences[2][counter3] = Integer.parseInt(cell.getContents()); 
-                   counter2+=1;
-                } 
-               else if (k%5==0){ //45 night
-                  monthPreferences[3][counter4] = Integer.parseInt(cell.getContents()); 
-                   counter2+=1;
-                } 
-               else { //46 free
-                  monthPreferences[4][counter5] = Integer.parseInt(cell.getContents());    
                    counter3+=1;
+                } 
+               else if (k%5==4){ //44 night
+                  monthPreferences[3][counter4] = Integer.parseInt(cell.getContents()); 
+                   counter4+=1;
+                } 
+               else { //45 free
+                  monthPreferences[4][counter5] = Integer.parseInt(cell.getContents());    
+                   counter5+=1;
                 }
                
-            }
+            } 
         }
         catch (BiffException e) {
               e.printStackTrace();
         }
+//            for (int j = 0; j < 5; j++) {
+//                
+//            
+//            for (int i = 0; i < 28; i++) {
+//                
+//                System.out.print(monthPreferences [j] [i] + " ");
+//            }  System.out.println("");
+//            }
+        
         return monthPreferences;
     }
 

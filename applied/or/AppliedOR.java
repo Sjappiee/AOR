@@ -38,6 +38,10 @@ public class AppliedOR {
       
         nursesD = test.readAllExceptCyclicSchedule(0);  
         workPatternsD = test.readWorkPatterns(0);
+        test.giveMonthPref(0, 3);
+        for (Nurse nurse : nursesD) {
+            System.out.println(nurse);
+        }
       
 
         WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
