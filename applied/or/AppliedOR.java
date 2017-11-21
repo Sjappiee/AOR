@@ -85,12 +85,12 @@ public class AppliedOR {
 //           System.out.println(nurse.toString());
 //        }
 
-//        testSchedule.schedulingProcess();
-//        
-//        MonthlySchedule monthlySchedule = new MonthlySchedule(testSchedule);
-//        System.out.println("type1:" + monthlySchedule.getSchedule1());
-//        System.out.println("type2: " + monthlySchedule.getSchedule2());
-//        System.out.println(monthlySchedule.calcCost(1));
+        testSchedule.schedulingProcess();
+        
+        MonthlySchedule monthlySchedule = new MonthlySchedule(testSchedule);
+        System.out.println("type1:" + monthlySchedule.getSchedule1());
+        System.out.println("type2: " + monthlySchedule.getSchedule2());
+        System.out.println(monthlySchedule.calcCost(1));
 
 
     }
