@@ -67,9 +67,7 @@ public class AppliedOR {
         System.out.println("VANAF NU NIEUWE TESTCODE");
 
         testSchedule.recombineQuarterSchedules();
-        for (Nurse nurse : workPatternsD) {
-            System.out.println(nurse);
-        }
+
 
         System.out.println("EINDE TESTEN STEHAN");
         
