@@ -9,9 +9,12 @@ public class MonthlySchedule {
     private double [][] wages2 = {{243,180},{328.05,243}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
     private double fixedAdmCost = 100000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
     private int shiftHours = 12;  //!!SHIFTSYSTEM
-    
+    private int amountNurses1 = 0;
+    private int amountNurses2 = 0;
     
     public MonthlySchedule (WeeklySchedule weeklySchedule){ // weekly schedule waar alle nurses al assigned zijn aan patterns
+        this.amountNurses1 = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
+        this.amountNurses2 = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
         String monthSchedule1 = "";
         String monthSchedule2 = "";
         ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
@@ -44,22 +47,25 @@ public class MonthlySchedule {
         int labourHoursWeekend = 0;
         String schedule = null;
         double [][] wages = null;
+        int amountNurses = 0;
         if(type == 1){
             schedule = schedule1;
             wages = wages1;
+            amountNurses = amountNurses1;
         }
         else if (type == 2){
             schedule = schedule2;
             wages = wages2;
+            amountNurses = amountNurses2;
         }
         System.out.println("schedule: " + schedule);
         System.out.println("wages: " + wages[0][0] + ","+ wages[0][1] + ","+ wages[1][0] + ","+ wages[1][1]);
         
         //wages
         int counter = 0;
-        for (int w = 0; w < 5; w++) {     
-            for (int i = 0; i < 6; i++) { //week
-                //if(!schedule.substring(i, i+1).equals("*")){
+        for (int w = 0; w < 5; w++) {  
+            for (int n = 0; n < amountNurses; n++) { // nurses
+                for (int i = 0; i < 6; i++) { //week
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -68,11 +74,8 @@ public class MonthlySchedule {
                         System.out.println(" " + cost);
                     }
                      counter++;
-                
-                //}
-            }
-            for (int i = 6; i < 8; i++) { //weekend
-                //if(!schedule.substring(i, i+1).equals("*")){
+                }
+                for (int i = 6; i < 8; i++) { //weekend
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0 ){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -82,7 +85,7 @@ public class MonthlySchedule {
                     }
                     counter++;
                 } 
-            //}
+            }
         }
         System.out.println("labourHoursWeek: " + labourHoursWeek);
         System.out.println("labourHoursWeekend: " + labourHoursWeekend);
