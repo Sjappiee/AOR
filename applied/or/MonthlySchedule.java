@@ -1,6 +1,7 @@
 package applied.or;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MonthlySchedule {
     private String schedule1; //type1
@@ -12,34 +13,65 @@ public class MonthlySchedule {
     private int amountNurses1 = 0;
     private int amountNurses2 = 0;
     
-    public MonthlySchedule (WeeklySchedule weeklySchedule){ // weekly schedule waar alle nurses al assigned zijn aan patterns
-        this.amountNurses1 = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
-        this.amountNurses2 = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
+    public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
+        int amount1 = 0;
+        int amount2 = 0;
+        WeeklySchedule [] schedules = new WeeklySchedule [4];
+        WeeklySchedule weeklySchedule1 = new WeeklySchedule (nurses,workPatterns);
+        //week 1
+        weeklySchedule1.allProcesses();
+        schedules[0] = weeklySchedule1;
+        amount1 += weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[0];
+        amount2 += weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[1];
+        //week2,3,4
+        for (int i = 1; i < 4; i++) {
+            WeeklySchedule weeklySchedulei = new WeeklySchedule (nurses,workPatterns);
+            int changeOrNot = randomBoolean(0);  //100% kans dat week 2 gwn idem aan week 1 is, 0%kans dat voor week 2 een nieuw schema word opgesteld
+            if(changeOrNot == 0){
+                weeklySchedulei = schedules[i-1];
+            }
+            else{
+                weeklySchedulei.allProcesses();
+            }
+            schedules[i] = weeklySchedulei;
+            amount1 += weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[0];
+            amount2 += weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[1];
+        }
+        
+        this.amountNurses1 = amount1;
+        this.amountNurses2 = amount2;
         String monthSchedule1 = "";
         String monthSchedule2 = "";
-        ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
-        ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
-        String string1;
-        String string2;
-        for (Nurse nurse : weeklySchedule.getNurses()) { //types opsplitsen
-            if(nurse.getType() == 1){
-                scheduleType1.add(nurse);
+        for (int i = 0; i < 4; i++) {  //per week: add nurses of each type to a different list + make a string of the schedules
+            ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
+            ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
+            for (Nurse nurse : schedules[i].getNurses()) { //types opsplitsen
+                if(nurse.getType() == 1){
+                    scheduleType1.add(nurse);
+                }
+                if(nurse.getType() == 2){
+                    scheduleType2.add(nurse);
+                }
             }
-            if(nurse.getType() == 2){
-                scheduleType2.add(nurse);
-            }
-        }
-        WeeklySchedule weeklySchedule1 = new WeeklySchedule(scheduleType1); //type 1
-        WeeklySchedule weeklySchedule2 = new WeeklySchedule(scheduleType2); //type 2
-        string1 = weeklySchedule1.ScheduleToString();
-        string2 = weeklySchedule2.ScheduleToString();
-        for (int i = 0; i < 4; i++) {
-            monthSchedule1 = monthSchedule1 +  string1;
-            monthSchedule2 = monthSchedule2 +  string2;
+            WeeklySchedule temp1 = new WeeklySchedule(scheduleType1); //type 1
+            WeeklySchedule temp2 = new WeeklySchedule(scheduleType2); //type 2
+            monthSchedule1 += temp1.ScheduleToString();
+            monthSchedule2 += temp2.ScheduleToString();
         }
         this.schedule1 =   monthSchedule1;
         this.schedule2 =   monthSchedule2;
     }
+    
+    public int randomBoolean (int probOnOne){
+        int randomBit = 0;
+        float prob1 = probOnOne/10;
+        int temp = new Random().nextInt(10);
+        if(temp < prob1){
+            randomBit = 1;
+        }
+        return randomBit;
+    }
+    
     
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
         double cost = 0;
@@ -63,9 +95,9 @@ public class MonthlySchedule {
         
         //wages
         int counter = 0;
-        for (int w = 0; w < 5; w++) {  
+        for (int w = 0; w < 4; w++) {  
             for (int n = 0; n < amountNurses; n++) { // nurses
-                for (int i = 0; i < 6; i++) { //week
+                for (int i = 0; i < 5; i++) { //week
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -75,7 +107,7 @@ public class MonthlySchedule {
                     }
                      counter++;
                 }
-                for (int i = 6; i < 8; i++) { //weekend
+                for (int i = 5; i < 8; i++) { //weekend
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0 ){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
