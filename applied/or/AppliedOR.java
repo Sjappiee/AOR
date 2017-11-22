@@ -36,11 +36,11 @@ public class AppliedOR {
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-        nursesD = test.readAllExceptCyclicSchedule(0);  
-        workPatternsD = test.readWorkPatterns(0);
-        for (Nurse nurse : nursesD) {
-            System.out.println(nurse);
-        }
+        nursesD = test.readAllExceptCyclicSchedule(3);  
+        workPatternsD = test.readWorkPatterns(3);
+//        for (Nurse nurse : nursesD) {
+//            System.out.println(nurse);
+//        }
       
 
         WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
@@ -60,19 +60,19 @@ public class AppliedOR {
 //            System.out.println("");
 //        }
 //
-        testSchedule.addaptSchedule ();
+       // testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
 //            System.out.println(pattern.getNr());
 //            System.out.println(pattern.BinaryPlanningToString ());
 //        }
-        
-        System.out.println("EINDE MAIN DING");
-        System.out.println("VANAF NU NIEUWE TESTCODE");
+//        
+//        System.out.println("EINDE MAIN DING");
+//        System.out.println("VANAF NU NIEUWE TESTCODE");
 
-        testSchedule.recombineQuarterSchedules();
+       // testSchedule.recombineQuarterSchedules();
 
-
-        System.out.println("EINDE TESTEN STEHAN");
+//
+//        System.out.println("EINDE TESTEN STEHAN");
         
 //        testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
@@ -93,9 +93,9 @@ public class AppliedOR {
         MonthlySchedule monthlySchedule = new MonthlySchedule(testSchedule);
         System.out.println("type1:" + monthlySchedule.getSchedule1());
         System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println(monthlySchedule.calcCost(1));
-
-
+       // System.out.println(monthlySchedule.calcCost(1));
+       
+       monthlySchedule.calcNurseSat(1);
     }
 }
 
