@@ -23,8 +23,8 @@ public class MonthlySchedule {
         //week 1
         weeklySchedule1.allProcesses();
         schedules[0] = weeklySchedule1;
-        amount1 += weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[0];
-        amount2 += weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[1];
+        amount1 = weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[0];
+        amount2 = weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[1];
         //week2,3,4
         for (int i = 1; i < 4; i++) {
             WeeklySchedule weeklySchedulei = new WeeklySchedule (nurses,workPatterns);
@@ -36,8 +36,7 @@ public class MonthlySchedule {
                 weeklySchedulei.allProcesses();
             }
             schedules[i] = weeklySchedulei;
-            amount1 += weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[0];
-            amount2 += weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[1];
+            //check of er in deze week meer nurses zijn dan in de vorige, if so, reset amounts EN add "00000000*" aan string vorige week / nurse
         }
         
         this.amountNurses1 = amount1;
@@ -307,6 +306,22 @@ public class MonthlySchedule {
     }
     public void setSchedule2(String schedule2) {
         this.schedule2 = schedule2;
+    }
+
+    public int getAmountNurses1() {
+        return amountNurses1;
+    }
+
+    public void setAmountNurses1(int amountNurses1) {
+        this.amountNurses1 = amountNurses1;
+    }
+
+    public int getAmountNurses2() {
+        return amountNurses2;
+    }
+
+    public void setAmountNurses2(int amountNurses2) {
+        this.amountNurses2 = amountNurses2;
     }
     
     
