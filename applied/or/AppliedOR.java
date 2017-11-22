@@ -64,9 +64,9 @@ public class AppliedOR {
         
         MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
         System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("amount nurses" + monthlySchedule.getAmountNurses1());
+        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
         System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses" + monthlySchedule.getAmountNurses2());
+        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
         System.out.println(monthlySchedule.calcCost(1));
        
  //      monthlySchedule.calcNurseSat(1);
