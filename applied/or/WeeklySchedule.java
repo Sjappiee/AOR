@@ -38,7 +38,7 @@ public class WeeklySchedule {
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             String IDNurse = "";
-            int randomOrNot = randomBoolean(20); //20% kans op een random schedule
+            int randomOrNot = randomBoolean(50); //20% kans op een random schedule
             if(randomOrNot == 1){
                 ArrayList <Nurse> temp= possibleNursesList(k);
                 int randomIndex = 0;
@@ -50,15 +50,13 @@ public class WeeklySchedule {
                     randomIndex = new Random().nextInt(temp.size());
                 }
                 IDNurse = temp.get(randomIndex).getNr();
-                System.out.println("complete random nurse: " + IDNurse);
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
-                int subRandomOrNot = randomBoolean(35); //35% kans op een random schedule
+                int subRandomOrNot = randomBoolean(50); //35% kans op een random schedule
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();
-                    System.out.println("sub random nurse: " + IDNurse);
                 }
                 else{
                 //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
@@ -70,7 +68,6 @@ public class WeeklySchedule {
                             IDNurse = nurse.getNr();
                         }   
                 }
-                System.out.println("optimal nurse: " + IDNurse);
                 }
                 
                 // deze nurse word gekoppeld aan het workpattern
@@ -128,10 +125,6 @@ public class WeeklySchedule {
                         }
                     }
             }
-         for (Nurse nurse : possibleNursesList) {
-                System.out.println(nurse);
-            }
-         System.out.println("");
         return possibleNursesList;
     }
        
@@ -169,10 +162,6 @@ public class WeeklySchedule {
                     }
                 }
             }
-         for (Nurse nurse : nursesLowScore) {
-                System.out.println(nurse);
-            }
-         System.out.println("");
         return nursesLowScore;
     }
     
@@ -341,13 +330,6 @@ public class WeeklySchedule {
                     //herbereken prefscores om volgende rate te kunnen splitsen
                  prefScoreCalculation ();
                 temp = prefScores;                   
-                    for (int j = 0; j < nurses.size(); j++) {
-                        for (int l = 0; l < workPatterns.size(); l++) {
-                            System.out.print(temp[l][j] + " ");
-                        }
-                        System.out.println("");
-                 
-                    }
                     
                 }
                 
@@ -422,20 +404,11 @@ public class WeeklySchedule {
             for (int l = 7; l < 14; l++) {
                 newPattern [1][l-7] = restPatterns[l][j];
             }
-            for (int i = 0; i < 2; i++) {
-                for (int k = 0; k < 7; k++) {
-                    System.out.print(newPattern[i][k]);
-                }
-                System.out.println("");
-            }
     
             Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
-            System.out.println(newPattern2.getNr());
             workPatterns.add(newPattern2);
         }
-        for (Nurse pattern : workPatterns) {
-            System.out.println(pattern.toString());
-        }
+
     }
     
     public String [] getPatternsToSplit ( int [][] temp, int type, int rate, int amountToSplit){ //temp = prefScores, maar waarin word aangepast
@@ -458,13 +431,6 @@ public class WeeklySchedule {
                 for (int m = 0; m < nurses.size(); m++) {
                     temp[IDToIndex(IDmax,workPatterns)][m] = 0;
                 }
-//                for (int i = 0; i < nurses.size(); i++) {
-//                    for (int k = 0; k < workPatterns.size(); k++) {
-//                        System.out.print(temp[k][i] + " ");
-//                    }
-//                    System.out.println("");
-                 
-//                }
             }
          return patternsSplit;
     }
