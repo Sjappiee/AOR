@@ -686,40 +686,7 @@ public class WeeklySchedule {
             output += "*";
         }
         return output;
-    }
-<<<<<<< HEAD
-=======
-    
-    
-    
-    public String ScheduleToString () {
-        String output = "";
-        ArrayList<String> temp = new ArrayList <String> ();
-        for (int i = 0; i < nurses.size(); i++) {
-            temp.add(nurses.get(i).BinaryPlanningToString());
-        }
-        
-        for (int i = 0; i < temp.size(); i++) { //nu voor elke string van 14 delen juist toevoegen
-        //beide = 0, eerste = 0 en tweede niet, tweede = 0 en eerste niet
-            for (int j = 0; j < 7; j++) {
-               if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0')
-               {
-                   output+= "0";
-               }
-               else if (temp.get(i).charAt(j) == '1' && temp.get(i).charAt(j+7) == '0') 
-               {
-                   output+= "1";
-               }
-               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '1') 
-               {
-                   output+= "2";
-               }
-            }
-            output += "*";
-        }
-        return output;
-    }
-    
+    }  
         public int randomBoolean (int probOnOne){
         int randomBit = 0;
         float prob1 = probOnOne/10;
@@ -729,8 +696,7 @@ public class WeeklySchedule {
         }
         return randomBit;
     }
-    
->>>>>>> origin/master
+
 }
     
     
