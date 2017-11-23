@@ -1,6 +1,7 @@
 package applied.or;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MonthlySchedule {
     private String schedule1; //type1
@@ -13,48 +14,78 @@ public class MonthlySchedule {
     private int amountNurses2 = 0;
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
+    private int [] objectiveFunctions = new int [3];
+    private double [] objectiveWeights = {0.5,0.5,0};
     
-    public MonthlySchedule (WeeklySchedule weeklySchedule){ // weekly schedule waar alle nurses al assigned zijn aan patterns
-        this.amountNurses1 = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
-        this.amountNurses2 = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
-        for (int i = 0; i < weeklySchedule.getNurses().size(); i++) {
-            if (weeklySchedule.getNurses().get(i).getType() == 1)
-            {
-                nursesType1.add(weeklySchedule.getNurses().get(i));
-            }
-            else 
-            {
-                nursesType2.add(weeklySchedule.getNurses().get(i));
-            }
-        }
-        
-        
-        
-        String monthSchedule1 = "";
-        String monthSchedule2 = "";
-        ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
-        ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
-        String string1;
-        String string2;
-        for (Nurse nurse : weeklySchedule.getNurses()) { //types opsplitsen
-            if(nurse.getType() == 1){
-                scheduleType1.add(nurse);
-            }
-            if(nurse.getType() == 2){
-                scheduleType2.add(nurse);
-            }
-        }
-        WeeklySchedule weeklySchedule1 = new WeeklySchedule(scheduleType1); //type 1
-        WeeklySchedule weeklySchedule2 = new WeeklySchedule(scheduleType2); //type 2
-        string1 = weeklySchedule1.ScheduleToString();
-        string2 = weeklySchedule2.ScheduleToString();
+    public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
+        int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
+        String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week
+        String [] monthSchedule = new String [2];
+        WeeklySchedule [] schedules = new WeeklySchedule [4];
+        WeeklySchedule weeklySchedule1 = new WeeklySchedule (nurses,workPatterns);
+        //week1,2,3,4
         for (int i = 0; i < 4; i++) {
-            monthSchedule1 = monthSchedule1 +  string1;
-            monthSchedule2 = monthSchedule2 +  string2;
+            if(i==0){ //week 1
+                weeklySchedule1.allProcesses();
+                schedules[0] = weeklySchedule1;
+                amountPerTypePerWeek [0][i] = weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[0];
+                amountPerTypePerWeek [1][i] = weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[1];  
+            }
+            else{   //week 2,3,4
+                WeeklySchedule weeklySchedulei = new WeeklySchedule (nurses,workPatterns);
+                int changeOrNot = randomBoolean(100);  //0% kans dat week 2 gwn idem aan week 1 is, 100%kans dat voor week 2 een nieuw schema word opgesteld
+                if(changeOrNot == 0) weeklySchedulei = schedules[i-1];
+                else weeklySchedulei.allProcesses();
+                schedules[i] = weeklySchedulei;
+                amountPerTypePerWeek [0][i] = weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[0];
+                amountPerTypePerWeek [1][i] = weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[1]; 
+            }
+            //opsplitsing per type
+            ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
+            ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
+            for (Nurse nurse : schedules[i].getNurses()) { //types opsplitsen
+                if(nurse.getType() == 1) scheduleType1.add(nurse);
+                if(nurse.getType() == 2) scheduleType2.add(nurse);
+            }
+            WeeklySchedule temp1 = new WeeklySchedule(scheduleType1); //type 1
+            WeeklySchedule temp2 = new WeeklySchedule(scheduleType2); //type 2
+            monthScheduleArray [0][i] = temp1.ScheduleToString();
+            monthScheduleArray [1][i] = temp2.ScheduleToString();
         }
-        this.schedule1 =   monthSchedule1;
-        this.schedule2 =   monthSchedule2;
+        //check differences in amount nurses / week
+        int [] amount = new int [2];
+        for (int i = 0; i < 2; i++) {
+            int max = 0;
+            for (int j = 0; j < 4; j++) {   //find max amount of nurses in a week
+                if(amountPerTypePerWeek[i][j] > max) max = amountPerTypePerWeek[i][j]; 
+            }
+            amount [i] = max;
+            for (int j = 0; j < 4; j++) { // add empty nurse schedules to the weeks with les nurses than max
+                if(amountPerTypePerWeek[i][j] < max){
+                    for (int k = 0; k < max - amountPerTypePerWeek[i][j]; k++) {
+                        monthScheduleArray[i][j] += "0000000*";
+                    }
+                }
+                if(j==0) monthSchedule [i] = monthScheduleArray[i][j]; 
+                else monthSchedule [i] += monthScheduleArray[i][j];
+            }
+        }
+        this.amountNurses1 = amount[0];
+        this.amountNurses2 = amount[1];
+        this.schedule1 =   monthSchedule [0];
+        this.schedule2 =   monthSchedule [1];
     }
+    
+    public int randomBoolean (int probOnOne){
+        int randomBit = 0;
+        float prob1 = probOnOne/10;
+        int temp = new Random().nextInt(10);
+        if(temp < prob1){
+            randomBit = 1;
+        }
+        return randomBit;
+    }
+    
     
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
         double cost = 0;
@@ -78,9 +109,9 @@ public class MonthlySchedule {
         
         //wages
         int counter = 0;
-        for (int w = 0; w < 5; w++) {  
+        for (int w = 0; w < 4; w++) {  
             for (int n = 0; n < amountNurses; n++) { // nurses
-                for (int i = 0; i < 6; i++) { //week
+                for (int i = 0; i < 5; i++) { //week
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -90,7 +121,7 @@ public class MonthlySchedule {
                     }
                      counter++;
                 }
-                for (int i = 6; i < 8; i++) { //weekend
+                for (int i = 5; i < 8; i++) { //weekend
                     System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0 ){
                         System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
@@ -108,11 +139,7 @@ public class MonthlySchedule {
         cost += fixedAdmCost + labourHoursWeek + labourHoursWeekend;
         return cost;
     }
-  
-    
-    
-    
-    
+
     public int calcNurseSat (int type){ //later opdelen in verschillende methodes. Don't be a Tine
         ArrayList <String> monthScheduleNurse = new ArrayList <String> ();
         int breakFreeDaysPunishment = 5;
@@ -122,83 +149,66 @@ public class MonthlySchedule {
         //GIGA FOR LUS VOOR ALLE NURSES!!! OM TOTALE SCORE TE BERKENEN
         //eerst degelijk berekenen oor 1 nurse
         for (int k = 0; k < 1; k++) {
-        
-        
-        monthScheduleNurse = schedulesSpecificNurse (k,type);
+            monthScheduleNurse = schedulesSpecificNurse (k,type);
             System.out.println("METHODE VOOR ONDERBREKINGEN ");
         //berekening aantal onderbrekingen! Getest en OK
-        int amountOfInteruptions=0; //onderbreking = '101' of '202' OF opt einde '10' en maandag ook '1'
-        for (int i = 0; i < monthScheduleNurse.size(); i++) { 
-            String shift = monthScheduleNurse.get(i);
+            int amountOfInteruptions=0; //onderbreking = '101' of '202' OF opt einde '10' en maandag ook '1'
+            for (int i = 0; i < monthScheduleNurse.size(); i++) { 
+                String shift = monthScheduleNurse.get(i);
 //            System.out.println(shift);
-            if(shift.substring(5).equalsIgnoreCase("10") && shift.charAt(0) == '1') //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
-            {
-                amountOfInteruptions++;
-            }
-            if (shift.substring(0, 1).equalsIgnoreCase("01") && shift.charAt(6) == '1') //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
-            {
-                amountOfInteruptions++;
-            }
-            
-            if(shift.substring(5).equalsIgnoreCase("20") && shift.charAt(0) == '2') //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
-            {
-                amountOfInteruptions++;
-            }
-            if (shift.substring(0, 1).equalsIgnoreCase("02") && shift.charAt(6) == '2') //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
-            {
-                amountOfInteruptions++;
-            }
-            
-            int index = shift.indexOf("101"); //kijken of er 101 of 202 is in weekschema
-            int count = 0;
-            while (index != -1) {
-            count++;
-            shift = shift.substring(index + 1);
-            index = shift.indexOf("101");
-            
-            }
-            
-            int index2 = shift.indexOf("202"); //kijken of er 101 of 202 is in weekschema
-            int count2 = 0;
-            while (index2 != -1) {
-            count2++;
-            shift = shift.substring(index2 + 1);
-            index2 = shift.indexOf("202");
-            
-            }
-            amountOfInteruptions+= count;
-            amountOfInteruptions+= count2;
-        }
-        System.out.println("total interuptions " + amountOfInteruptions);
-        
-            System.out.println("METHODE VOOR EMPLOYMENT RATES");
-        //bekijken of elke nurse wel even veel werkt als ze wil. Zoniet: penalty score!!
-        ArrayList<Nurse> usedNurses = new ArrayList <Nurse> ();
-        if (type ==1 )
-        {
-            usedNurses = nursesType1;
-        }
-        else
-        {
-            usedNurses = nursesType2;
-        }
-        int differenceWorkingDays = 0;
-        for (int i = 0; i < monthScheduleNurse.size(); i++) //met nurse x, type x alle 4 de weken doorlopen!
-        {
-            
-            int counter=0;
-            String shift = monthScheduleNurse.get(i);
-            for (int j = 0; j < shift.length(); j++) { //aantal werkdagen in een week berekenen.
-                if (shift.charAt(j) != '0')
-                {
-                    counter++;
+                if(shift.substring(5).equalsIgnoreCase("10") && shift.charAt(0) == '1'){ //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
+                    amountOfInteruptions++;
                 }
+                if (shift.substring(0, 1).equalsIgnoreCase("01") && shift.charAt(6) == '1'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
+                    amountOfInteruptions++;
+                }
+                if(shift.substring(5).equalsIgnoreCase("20") && shift.charAt(0) == '2'){ //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
+                    amountOfInteruptions++;
+                }
+                if (shift.substring(0, 1).equalsIgnoreCase("02") && shift.charAt(6) == '2'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
+                    amountOfInteruptions++;
+                }
+                int index = shift.indexOf("101"); //kijken of er 101 of 202 is in weekschema
+                int count = 0;
+                while (index != -1) {
+                    count++;
+                    shift = shift.substring(index + 1);
+                    index = shift.indexOf("101");
+                }
+            
+                int index2 = shift.indexOf("202"); //kijken of er 101 of 202 is in weekschema
+                int count2 = 0;
+                while (index2 != -1) {
+                    count2++;
+                    shift = shift.substring(index2 + 1);
+                    index2 = shift.indexOf("202");
+                }
+                amountOfInteruptions+= count;
+                amountOfInteruptions+= count2;
             }
-            differenceWorkingDays += (int) ((usedNurses.get(k).getEmploymentRate()*4) - counter);
-        }
+            System.out.println("total interuptions " + amountOfInteruptions);
+            System.out.println("METHODE VOOR EMPLOYMENT RATES");
+            //bekijken of elke nurse wel even veel werkt als ze wil. Zoniet: penalty score!!
+            ArrayList<Nurse> usedNurses = new ArrayList <Nurse> ();
+            if (type ==1 ){
+                usedNurses = nursesType1;
+            }
+            else{
+                usedNurses = nursesType2;
+            }
+            int differenceWorkingDays = 0;
+            for (int i = 0; i < monthScheduleNurse.size(); i++){ //met nurse x, type x alle 4 de weken doorlopen!
+                int counter=0;
+                String shift = monthScheduleNurse.get(i);
+                for (int j = 0; j < shift.length(); j++) { //aantal werkdagen in een week berekenen.
+                    if (shift.charAt(j) != '0'){
+                        counter++;
+                    }
+                }
+                differenceWorkingDays += (int) ((usedNurses.get(k).getEmploymentRate()*4) - counter);
+            }
         
-        System.out.println("Total working days less than nurse wanted: " + differenceWorkingDays);
-        
+            System.out.println("Total working days less than nurse wanted: " + differenceWorkingDays);
             System.out.println("METHODE VOOR SHIFTWISSELS ");
             int AmountOfShiftChanges=0;
         //aantal keer een shiftwissel in dezelfde week (berekenen hoeveel keer 1 in een week, hoeveel keer 2 en het min daarvan is #shiftwissels
@@ -223,23 +233,20 @@ public class MonthlySchedule {
                 AmountOfShiftChanges  += Integer.min(count, count2);
             }
             System.out.println("Amont of shift changes" + AmountOfShiftChanges);
-        
-        
-        
 
-        int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment;
-        System.out.println(ScoreNurse);
-        totalScore += ScoreNurse;
-        System.out.println(totalScore);
+            int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment;
+            System.out.println(ScoreNurse);
+            totalScore += ScoreNurse;
+            System.out.println(totalScore);
         }
         
-//       
+//       //nu nog vermenigvudigen met alle specifieke wensen!
 //    eerst vermeningvudigen met hun schema X hun specifieke monthly pref
 //    dan ook nog nog met de verschillende regels: 
 //        vrije dagen na elkaar? OK
 //        alle dagen werken dat je wil? Dus schema = ER?  OK 
 //        veranderen in shiften?
-        return 0;
+        return totalScore;
     }
     
     
@@ -271,10 +278,20 @@ public class MonthlySchedule {
 //    public int calcPatientSat (){
 //        
 //    }
-//    public int [] calcObjectiveFunctions () {
-//        alle 3 berekenen en in een array zetten
-//    }
-
+    public int [] calcObjectiveFunctions (int type) {
+        objectiveFunctions [0] = (int) calcCost (type);
+        objectiveFunctions [1] = calcNurseSat (type);
+        objectiveFunctions [2] = objectiveFunctions [1]; // VOORLOPIG
+        return objectiveFunctions;
+    }
+    
+    public double calcTotalObjectiveFunction (int type){
+        calcObjectiveFunctions(type);
+        double total = objectiveWeights[0]*objectiveFunctions[0] + objectiveWeights[1]*objectiveFunctions[1] + objectiveWeights[2]*objectiveFunctions[2];
+        return total;
+    }
+    
+    
     public String getSchedule1() {
         return schedule1;
     }
@@ -288,6 +305,22 @@ public class MonthlySchedule {
     }
     public void setSchedule2(String schedule2) {
         this.schedule2 = schedule2;
+    }
+
+    public int getAmountNurses1() {
+        return amountNurses1;
+    }
+
+    public void setAmountNurses1(int amountNurses1) {
+        this.amountNurses1 = amountNurses1;
+    }
+
+    public int getAmountNurses2() {
+        return amountNurses2;
+    }
+
+    public void setAmountNurses2(int amountNurses2) {
+        this.amountNurses2 = amountNurses2;
     }
     
     

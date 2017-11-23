@@ -24,6 +24,13 @@ public class WeeklySchedule {
         this.prefScores = null;   
     }
     
+    public void allProcesses (){
+        recombineQuarterSchedules();
+        addaptSchedule ();
+        hireNurses();
+        schedulingProcess();
+    }
+    
     public void schedulingProcess (){
         prefScoreCalculation ();
         //methode om workrate patterns en nurses te matchen
