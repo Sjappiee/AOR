@@ -44,7 +44,7 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(100);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                int changeOrNot = randomBoolean(0);  //0%kans dat voor week 2 een nieuw schema word opgesteld
                 if(changeOrNot == 1){
                     weeklySchedule.resetBinarySchedule();
                     weeklySchedule.schedulingProcess();
@@ -119,37 +119,27 @@ public class MonthlySchedule {
             wages = wages2;
             amountNurses = amountNurses2;
         }
-        System.out.println("schedule: " + schedule);
-        System.out.println("wages: " + wages[0][0] + ","+ wages[0][1] + ","+ wages[1][0] + ","+ wages[1][1]);
         
         //wages
         int counter = 0;
         for (int w = 0; w < 4; w++) {  
             for (int n = 0; n < amountNurses; n++) { // nurses
                 for (int i = 0; i < 5; i++) { //week
-                    System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0){
-                        System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
                         cost += wages[0][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[0][0] ,if type=2, wages[0][1]
                         labourHoursWeek += shiftHours;
-                        System.out.println(" " + cost);
                     }
                      counter++;
                 }
                 for (int i = 5; i < 8; i++) { //weekend
-                    System.out.println(counter);
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0 ){
-                        System.out.println("shift: " + Character.getNumericValue(schedule.charAt(counter)));
                         cost += wages[1][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[1][0] ,if type=2, wages[1][1]
                         labourHoursWeekend += shiftHours;
-                        System.out.println(" " + cost);
                     }
                     counter++;
                 } 
             }
         }
-        System.out.println("labourHoursWeek: " + labourHoursWeek);
-        System.out.println("labourHoursWeekend: " + labourHoursWeekend);
         //administrative costs
         cost += fixedAdmCost + labourHoursWeek + labourHoursWeekend;
         return cost;
@@ -164,6 +154,10 @@ public class MonthlySchedule {
         ArrayList <Nurse> usedNurses = new ArrayList <Nurse> ();
         if (type == 1) {usedNurses = this.nursesType1;}
         else {usedNurses = this.nursesType2;}
+        
+        for (Nurse usedNurse : usedNurses) {
+            System.out.println(usedNurse);
+        }
         
         System.out.println(usedNurses.size());
             
