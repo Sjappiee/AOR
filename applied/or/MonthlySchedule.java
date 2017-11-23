@@ -84,7 +84,7 @@ public class MonthlySchedule {
         this.schedule1 =   monthSchedule [0];
         this.schedule2 =   monthSchedule [1];
         this.nursesType1 = temp1.getNurses();
-        this.nursesType2 = temp1.getNurses();
+        this.nursesType2 = temp2.getNurses();
     }
     
     public int randomBoolean (int probOnOne){

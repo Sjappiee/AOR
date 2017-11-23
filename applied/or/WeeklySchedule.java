@@ -673,34 +673,31 @@ public class WeeklySchedule {
     
     
     
-    public String ScheduleToString () { //aanpassen!!
+    public String ScheduleToString () {
         String output = "";
-        ArrayList <String> temp = new ArrayList <String> (); //temp arrayList maken die exact gelijk is aan de nurses die uit het schedule komen
-        for (int i = 0; i < nurses.size() ; i++) { //alle schedules zitten nu dus in de temp lijst. Nu moeten we deze allemaal aan elkaar plakken, een 'lege week' niet meenemen. werken shift 1 = 1, werken shift 2 = 2, vrij = 3
+        ArrayList<String> temp = new ArrayList <String> ();
+        for (int i = 0; i < nurses.size(); i++) {
             temp.add(nurses.get(i).BinaryPlanningToString());
         }
-        for (int i = 0; i < temp.size(); i++) {
-            String firstPart = temp.get(i).substring(0, 7);
-            String secondPart = temp.get(i).substring(7, 14);
-            
-            if (firstPart.equalsIgnoreCase("0000000")) {
-                //nu is het deel aangepast naar enkel het deel dat we nodig hebben. Next: codes aanpassen
-//               String temp1 = secondPart.replace("0", "3");
-                String temp2 = secondPart.replace("1", "2");
-                
-                temp.set(i, temp2);
-            }
-            else {
-                String temp1 = firstPart;
-                temp.set(i, temp1);
-            }
-        }
-       
         
-        for (String string : temp) { 
-            output += string + "*";
+        for (int i = 0; i < temp.size(); i++) { //nu voor elke string van 14 delen juist toevoegen
+        //beide = 0, eerste = 0 en tweede niet, tweede = 0 en eerste niet
+            for (int j = 0; j < 7; j++) {
+               if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0')
+               {
+                   output+= "0";
+               }
+               else if (temp.get(i).charAt(j) == '1' && temp.get(i).charAt(j+7) == '0') 
+               {
+                   output+= "1";
+               }
+               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '1') 
+               {
+                   output+= "2";
+               }
+            }
+            output += "*";
         }
-
         return output;
     }
     
