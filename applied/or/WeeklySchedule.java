@@ -712,9 +712,8 @@ public class WeeklySchedule {
     }
     
     public void resetBinarySchedule(){
-        int [][] empty = new int [2][7];
         for(Nurse nurse:nurses){
-            nurse.setBinaryDayPlanning(empty);
+            nurse.setBinaryDayPlanning(null);
         }
     }
         
