@@ -654,7 +654,6 @@ public class WeeklySchedule {
         
         for (int i = 0; i < temp.size(); i++) { //nu voor elke string van 14 delen juist toevoegen
         //beide = 0, eerste = 0 en tweede niet, tweede = 0 en eerste niet
-            System.out.println(temp.get(i));
             for (int j = 0; j < 7; j++) {
                if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0')
                {
