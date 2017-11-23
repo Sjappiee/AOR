@@ -37,44 +37,58 @@ public class WeeklySchedule {
         for (int k = 0; k < workPatterns.size(); k++) {
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
-            ArrayList <Nurse> temp= listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
-            //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
-            int max = getSumRow(IDToIndex(temp.get(0).getNr(),nurses));       
-            String IDmax = temp.get(0).getNr();
-
-            for (Nurse nurse : temp) {
-                if (getSumRow(IDToIndex(nurse.getNr(),nurses)) > max)
-                        {
+            String IDNurse = "";
+            int randomOrNot = randomBoolean(20); //20% kans op een random schedule
+            if(randomOrNot == 1){
+                ArrayList <Nurse> temp= possibleNursesList(k);
+                int randomIndex = new Random().nextInt(temp.size());
+                IDNurse = temp.get(randomIndex).getNr();
+            }
+            else{
+                ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
+                int subRandomOrNot = randomBoolean(35); //35% kans op een random schedule
+                if(subRandomOrNot == 1){
+                    int randomIndex2 = new Random().nextInt(temp.size());
+                    IDNurse = temp.get(randomIndex2).getNr();
+                }
+                
+                //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
+                int max = getSumRow(IDToIndex(temp.get(0).getNr(),nurses));       
+                IDNurse = temp.get(0).getNr();
+                for (Nurse nurse : temp) {
+                    if (getSumRow(IDToIndex(nurse.getNr(),nurses)) > max){
                             max = getSumRow(IDToIndex(nurse.getNr(),nurses));
-                            IDmax = nurse.getNr();
+                            IDNurse = nurse.getNr();
                         }   
+                }
+                // deze nurse word gekoppeld aan het workpattern
             }
-            // deze nurse word gekoppeld aan het workpattern
-            nurses.get(IDToIndex(IDmax,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
-
+            nurses.get(IDToIndex(IDNurse,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
             for (int i = 0; i < workPatterns.size(); i++) {
-                prefScores[i][IDToIndex(IDmax,nurses)] = 1000;
+                prefScores[i][IDToIndex(IDNurse,nurses)] = 1000;
             }
-            for (int i = 0; i < nurses.size(); i++) {
-                for (int j = 0; j < workPatterns.size(); j++) {
-                System.out.print(prefScores[j][i] +" ");
-                }
-                System.out.println("");
-            }
-            int [][] binaryPlanning = nurses.get(IDToIndex(IDmax,nurses)).getBinaryDayPlanning();
-            for (int j = 0; j < 7; j++) {
-                    System.out.print(binaryPlanning [0] [j]);
-                }
-                System.out.println("");
-                for (int j = 0; j < 7; j++) {
-                    System.out.print(binaryPlanning [1] [j]);
-                }
-            System.out.println("");
-            System.out.println(IDmax);
-            System.out.println(max);
+            
+            //SOUT's
+//            for (int i = 0; i < nurses.size(); i++) {
+//                for (int j = 0; j < workPatterns.size(); j++) {
+//                System.out.print(prefScores[j][i] +" ");
+//                }
+//                System.out.println("");
+//            }
+//            int [][] binaryPlanning = nurses.get(IDToIndex(IDNurse,nurses)).getBinaryDayPlanning();
+//            for (int j = 0; j < 7; j++) {
+//                    System.out.print(binaryPlanning [0] [j]);
+//                }
+//                System.out.println("");
+//                for (int j = 0; j < 7; j++) {
+//                    System.out.print(binaryPlanning [1] [j]);
+//                }
+//            System.out.println("");
+//            System.out.println(IDNurse);
+//            
         }
     }
-
+    
     public int IDToIndex (String ID, ArrayList <Nurse> list){     // de laatste 2 string elementen uit het ID omzetten naar een int, dit getal - 1 is dan de index van die nurse in de nurses lijst
         int index = 0;
         for(Nurse nurse: list){
@@ -85,20 +99,27 @@ public class WeeklySchedule {
         return index;
     }
     
-    public ArrayList <Nurse> listMinScore (int scheduleNr,  int [][] prefScores) { 
-//te maken: een if zodat enkel nurse into consideration komen die ook dezelfde OF MEER employment rate hebben!        
-//lijst van nurses die allen dezelfde min prefscore hebben bij een geg patroon
-        ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
-        int min = getMinOfColumn (scheduleNr);
-
-        for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
-                    && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
-                nursesLowScore.add(nurses.get(i));
+    public ArrayList <Nurse> possibleNursesList(int scheduleNr){
+        ArrayList <Nurse> possibleNursesList = new ArrayList <Nurse> ();
+                for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+                    if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() == EmploymentRateSchedule(scheduleNr)
+                            && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+                        possibleNursesList.add(nurses.get(i));
+                    }
+                }
+        // als er geen zijn met zelfde, zoek nurses met hogere  
+            if (possibleNursesList.isEmpty()) {
+                    for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+                        if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
+                                && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+                            possibleNursesList.add(nurses.get(i));
+                        }
+                    }
             }
-        }
-        
-        return nursesLowScore;
+         for (Nurse nurse : possibleNursesList) {
+                System.out.println(nurse);
+            }
+        return possibleNursesList;
     }
        
     public ArrayList <Nurse> listMinScore (int scheduleNr) { 
@@ -111,9 +132,7 @@ public class WeeklySchedule {
                         nursesLowScore.add(nurses.get(i));
                     }
                 }
-
-                if (nursesLowScore.isEmpty())
-                {
+                if (nursesLowScore.isEmpty()){
                     System.out.println("old min: " + min);
                 }
                 else{
@@ -129,9 +148,7 @@ public class WeeklySchedule {
                             nursesLowScore.add(nurses.get(i));
                         }
                     }
-
-                    if (nursesLowScore.isEmpty())
-                    {
+                    if (nursesLowScore.isEmpty()){
                         System.out.println("old min: " + min);
                     }
                     else{
@@ -139,9 +156,7 @@ public class WeeklySchedule {
                     }
                 }
             }
-
          for (Nurse nurse : nursesLowScore) {
-
                 System.out.println(nurse);
             }
         return nursesLowScore;
@@ -670,13 +685,55 @@ public class WeeklySchedule {
             }
             output += "*";
         }
-        //over elke index gaan in beide arrays. Als beide 0 is, 0 toevoegen aan string
-        //als 1 van de 2 niet gelijk is aan 0 voegt ge die waarde toe! 
-        //zo kunnen we ook 2 verschillende shiften erin steken
+        return output;
+    }
+<<<<<<< HEAD
+=======
+    
+    
+    
+    public String ScheduleToString () { //aanpassen!!
+        String output = "";
+        ArrayList <String> temp = new ArrayList <String> (); //temp arrayList maken die exact gelijk is aan de nurses die uit het schedule komen
+        for (int i = 0; i < nurses.size() ; i++) { //alle schedules zitten nu dus in de temp lijst. Nu moeten we deze allemaal aan elkaar plakken, een 'lege week' niet meenemen. werken shift 1 = 1, werken shift 2 = 2, vrij = 3
+            temp.add(nurses.get(i).BinaryPlanningToString());
+        }
+        for (int i = 0; i < temp.size(); i++) {
+            String firstPart = temp.get(i).substring(0, 7);
+            String secondPart = temp.get(i).substring(7, 14);
+            
+            if (firstPart.equalsIgnoreCase("0000000")) {
+                //nu is het deel aangepast naar enkel het deel dat we nodig hebben. Next: codes aanpassen
+//               String temp1 = secondPart.replace("0", "3");
+                String temp2 = secondPart.replace("1", "2");
+                
+                temp.set(i, temp2);
+            }
+            else {
+                String temp1 = firstPart;
+                temp.set(i, temp1);
+            }
+        }
+       
         
+        for (String string : temp) { 
+            output += string + "*";
+        }
 
         return output;
     }
+    
+        public int randomBoolean (int probOnOne){
+        int randomBit = 0;
+        float prob1 = probOnOne/10;
+        int temp = new Random().nextInt(10);
+        if(temp < prob1){
+            randomBit = 1;
+        }
+        return randomBit;
+    }
+    
+>>>>>>> origin/master
 }
     
     

@@ -36,8 +36,8 @@ public class AppliedOR {
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-        nursesD = test.readAllExceptCyclicSchedule(3);  
-        workPatternsD = test.readWorkPatterns(3);
+        nursesD = test.readAllExceptCyclicSchedule(0);  
+        workPatternsD = test.readWorkPatterns(0);
 //        for (Nurse nurse : nursesD) {
 //            System.out.println(nurse);
 //        }
@@ -47,12 +47,12 @@ public class AppliedOR {
       WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
       testSchedule.allProcesses();
       
+        WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+        testSchedule.allProcesses();
         for (Nurse nurse : testSchedule.getNurses()) {
             System.out.println(nurse.toString());
         }
 
-      
-        System.out.println("EINDE CHECK");*/
 //        testSchedule.scheduleToString();
 //      int [][]prefs = testSchedule.prefScoreCalculation();
 //        for (int i = 0; i < nursesD.size(); i++) {
