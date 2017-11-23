@@ -44,8 +44,15 @@ public class MonthlySchedule {
             ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
             ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
             for (Nurse nurse : schedules[i].getNurses()) { //types opsplitsen
-                if(nurse.getType() == 1) scheduleType1.add(nurse);
-                if(nurse.getType() == 2) scheduleType2.add(nurse);
+                if(nurse.getType() == 1){
+                    scheduleType1.add(nurse);
+                    nursesType1.add(nurse);
+                }
+                if(nurse.getType() == 2){
+                    scheduleType2.add(nurse);
+                    nursesType2.add(nurse);
+                }
+                
             }
             WeeklySchedule temp1 = new WeeklySchedule(scheduleType1); //type 1
             WeeklySchedule temp2 = new WeeklySchedule(scheduleType2); //type 2
@@ -146,9 +153,16 @@ public class MonthlySchedule {
         int lowerWorkratePunishment = 5;
         int changeInShiftsPunishment = 5;
         int totalScore = 0;
+        ArrayList <Nurse> usedNurses = new ArrayList <Nurse> ();
+        if (type == 1) {usedNurses = nursesType1;}
+        else {usedNurses = nursesType2;}
+            
+            
+        
+        
         //GIGA FOR LUS VOOR ALLE NURSES!!! OM TOTALE SCORE TE BERKENEN
         //eerst degelijk berekenen oor 1 nurse
-        for (int k = 0; k < 1; k++) {
+        for (int k = 0; k < usedNurses.size(); k++) {
             monthScheduleNurse = schedulesSpecificNurse (k,type);
             System.out.println("METHODE VOOR ONDERBREKINGEN ");
         //berekening aantal onderbrekingen! Getest en OK
@@ -189,13 +203,7 @@ public class MonthlySchedule {
             System.out.println("total interuptions " + amountOfInteruptions);
             System.out.println("METHODE VOOR EMPLOYMENT RATES");
             //bekijken of elke nurse wel even veel werkt als ze wil. Zoniet: penalty score!!
-            ArrayList<Nurse> usedNurses = new ArrayList <Nurse> ();
-            if (type ==1 ){
-                usedNurses = nursesType1;
-            }
-            else{
-                usedNurses = nursesType2;
-            }
+
             int differenceWorkingDays = 0;
             for (int i = 0; i < monthScheduleNurse.size(); i++){ //met nurse x, type x alle 4 de weken doorlopen!
                 int counter=0;
