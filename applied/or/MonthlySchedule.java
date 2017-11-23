@@ -156,7 +156,9 @@ public class MonthlySchedule {
         else {usedNurses = this.nursesType2;}
         
         System.out.println(usedNurses.size());
-            
+        for(Nurse nurse: usedNurses){
+            System.out.println(nurse);
+        }    
             
         
 //        for (int i = 0; i < 4; i++) {

@@ -43,10 +43,14 @@ public class AppliedOR {
 //        }
 
 
-      /*  System.out.println("ALL PROCESSES CHECK");
-      WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
-      testSchedule.allProcesses();
-      
+      //  System.out.println("ALL PROCESSES CHECK");
+//      WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+//
+//      testSchedule.allProcesses();
+//      for(Nurse nurse:testSchedule.getNurses()){
+//          System.out.println(nurse);
+//      }
+      /*
         WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
         testSchedule.allProcesses();
         for (Nurse nurse : testSchedule.getNurses()) {
@@ -104,8 +108,9 @@ public class AppliedOR {
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
         System.out.println("type2: " + monthlySchedule.getSchedule2());
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
-        System.out.println(monthlySchedule.calcCost(1));
-
+        System.out.println(monthlySchedule.calcCost(2));
+        monthlySchedule.calcNurseSat(2);
+        
     }
 }
 
