@@ -21,36 +21,45 @@ public class MonthlySchedule {
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
         String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week
         String [] monthSchedule = new String [2];
-        WeeklySchedule [] schedules = new WeeklySchedule [4];
-        WeeklySchedule weeklySchedule1 = new WeeklySchedule (nurses,workPatterns);
+        WeeklySchedule temp1 = null;
+        WeeklySchedule temp2 = null;
+        WeeklySchedule weeklySchedule = new WeeklySchedule (nurses,workPatterns);
         //week1,2,3,4
         for (int i = 0; i < 4; i++) {
             if(i==0){ //week 1
-                weeklySchedule1.allProcesses();
-                schedules[0] = weeklySchedule1;
-                amountPerTypePerWeek [0][i] = weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[0];
-                amountPerTypePerWeek [1][i] = weeklySchedule1.amountWithType(weeklySchedule1.getNurses())[1];  
+                weeklySchedule.schedulingProcess();
+                amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
+                amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
+                //opsplitsing per type
+                ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
+                ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
+                for (Nurse nurse : weeklySchedule.getNurses()) { //types opsplitsen
+                    if(nurse.getType() == 1) scheduleType1.add(nurse);
+                    if(nurse.getType() == 2) scheduleType2.add(nurse);
+                }
+                temp1 = new WeeklySchedule(scheduleType1); //type 1
+                temp2 = new WeeklySchedule(scheduleType2); //type 2
+                monthScheduleArray [0][i] = temp1.ScheduleToString();
+                monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                WeeklySchedule weeklySchedulei = new WeeklySchedule (nurses,workPatterns);
-                int changeOrNot = randomBoolean(100);  //0% kans dat week 2 gwn idem aan week 1 is, 100%kans dat voor week 2 een nieuw schema word opgesteld
-                if(changeOrNot == 0) weeklySchedulei = schedules[i-1];
-                else weeklySchedulei.allProcesses();
-                schedules[i] = weeklySchedulei;
-                amountPerTypePerWeek [0][i] = weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[0];
-                amountPerTypePerWeek [1][i] = weeklySchedulei.amountWithType(weeklySchedulei.getNurses())[1]; 
+                int changeOrNot = randomBoolean(0);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                if(changeOrNot == 1) weeklySchedule.allProcesses();
+                amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
+                amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
+                //opsplitsing per type
+                ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
+                ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
+                for (Nurse nurse : weeklySchedule.getNurses()) { //types opsplitsen
+                    if(nurse.getType() == 1) scheduleType1.add(nurse);
+                    if(nurse.getType() == 2) scheduleType2.add(nurse);
+                }
+                temp1 = new WeeklySchedule(scheduleType1); //type 1
+                temp2 = new WeeklySchedule(scheduleType2); //type 2
+                monthScheduleArray [0][i] = temp1.ScheduleToString();
+                monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
-            //opsplitsing per type
-            ArrayList <Nurse> scheduleType1 = new ArrayList <Nurse>();
-            ArrayList <Nurse> scheduleType2 = new ArrayList <Nurse>();
-            for (Nurse nurse : schedules[i].getNurses()) { //types opsplitsen
-                if(nurse.getType() == 1) scheduleType1.add(nurse);
-                if(nurse.getType() == 2) scheduleType2.add(nurse);
-            }
-            WeeklySchedule temp1 = new WeeklySchedule(scheduleType1); //type 1
-            WeeklySchedule temp2 = new WeeklySchedule(scheduleType2); //type 2
-            monthScheduleArray [0][i] = temp1.ScheduleToString();
-            monthScheduleArray [1][i] = temp2.ScheduleToString();
+            
         }
         //check differences in amount nurses / week
         int [] amount = new int [2];
@@ -74,6 +83,8 @@ public class MonthlySchedule {
         this.amountNurses2 = amount[1];
         this.schedule1 =   monthSchedule [0];
         this.schedule2 =   monthSchedule [1];
+        this.nursesType1 = temp1.getNurses();
+        this.nursesType2 = temp1.getNurses();
     }
     
     public int randomBoolean (int probOnOne){
