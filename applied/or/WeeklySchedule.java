@@ -41,8 +41,16 @@ public class WeeklySchedule {
             int randomOrNot = randomBoolean(20); //20% kans op een random schedule
             if(randomOrNot == 1){
                 ArrayList <Nurse> temp= possibleNursesList(k);
-                int randomIndex = new Random().nextInt(temp.size());
+                int randomIndex = 0;
+                if(temp.size() == 1){
+                    randomIndex = 0;
+                }
+                //else if (temp.size() == 0)
+                else{
+                    randomIndex = new Random().nextInt(temp.size());
+                }
                 IDNurse = temp.get(randomIndex).getNr();
+                System.out.println("complete random nurse: " + IDNurse);
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
@@ -50,8 +58,9 @@ public class WeeklySchedule {
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();
+                    System.out.println("sub random nurse: " + IDNurse);
                 }
-                
+                else{
                 //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
                 int max = getSumRow(IDToIndex(temp.get(0).getNr(),nurses));       
                 IDNurse = temp.get(0).getNr();
@@ -61,6 +70,9 @@ public class WeeklySchedule {
                             IDNurse = nurse.getNr();
                         }   
                 }
+                System.out.println("optimal nurse: " + IDNurse);
+                }
+                
                 // deze nurse word gekoppeld aan het workpattern
             }
             nurses.get(IDToIndex(IDNurse,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
@@ -119,6 +131,7 @@ public class WeeklySchedule {
          for (Nurse nurse : possibleNursesList) {
                 System.out.println(nurse);
             }
+         System.out.println("");
         return possibleNursesList;
     }
        
@@ -159,6 +172,7 @@ public class WeeklySchedule {
          for (Nurse nurse : nursesLowScore) {
                 System.out.println(nurse);
             }
+         System.out.println("");
         return nursesLowScore;
     }
     
@@ -659,7 +673,7 @@ public class WeeklySchedule {
     public String toString() {
         return "Schedule{" + "nurses=" + nurses + ", workPatterns=" + workPatterns + ", prefScores=" + prefScores + '}';
     }
-
+    
     public String ScheduleToString () {
         String output = "";
         ArrayList<String> temp = new ArrayList <String> ();
@@ -686,8 +700,7 @@ public class WeeklySchedule {
             output += "*";
         }
         return output;
-    }
-    
+    }  
         public int randomBoolean (int probOnOne){
         int randomBit = 0;
         float prob1 = probOnOne/10;
@@ -698,4 +711,15 @@ public class WeeklySchedule {
         return randomBit;
     }
     
+    public void resetBinarySchedule(){
+        int [][] empty = new int [2][7];
+        for(Nurse nurse:nurses){
+            nurse.setBinaryDayPlanning(empty);
+        }
+    }
+        
 }
+    
+    
+    
+    

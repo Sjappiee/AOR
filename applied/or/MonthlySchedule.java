@@ -24,10 +24,11 @@ public class MonthlySchedule {
         WeeklySchedule temp1 = null;
         WeeklySchedule temp2 = null;
         WeeklySchedule weeklySchedule = new WeeklySchedule (nurses,workPatterns);
+        
         //week1,2,3,4
         for (int i = 0; i < 4; i++) {
             if(i==0){ //week 1
-                weeklySchedule.schedulingProcess();
+                weeklySchedule.allProcesses();
                 amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
                 amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
                 //opsplitsing per type
@@ -43,8 +44,11 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(0);  //0%kans dat voor week 2 een nieuw schema word opgesteld
-                if(changeOrNot == 1) weeklySchedule.allProcesses();
+                int changeOrNot = randomBoolean(20);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                if(changeOrNot == 1){
+                    weeklySchedule.resetBinarySchedule();
+                    weeklySchedule.schedulingProcess();
+                }
                 amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
                 amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
                 //opsplitsing per type
@@ -157,9 +161,21 @@ public class MonthlySchedule {
         int lowerWorkratePunishment = 5;
         int changeInShiftsPunishment = 5;
         int totalScore = 0;
+        ArrayList <Nurse> usedNurses = new ArrayList <Nurse> ();
+        if (type == 1) {usedNurses = this.nursesType1;}
+        else {usedNurses = this.nursesType2;}
+        
+        System.out.println(usedNurses.size());
+            
+            
+        
+//        for (int i = 0; i < 4; i++) {
+//            System.out.println(monthScheduleNurse.get(i));
+//        }
+        
         //GIGA FOR LUS VOOR ALLE NURSES!!! OM TOTALE SCORE TE BERKENEN
         //eerst degelijk berekenen oor 1 nurse
-        for (int k = 0; k < 1; k++) {
+        for (int k = 0; k < usedNurses.size(); k++) {
             monthScheduleNurse = schedulesSpecificNurse (k,type);
             System.out.println("METHODE VOOR ONDERBREKINGEN ");
         //berekening aantal onderbrekingen! Getest en OK
@@ -200,13 +216,7 @@ public class MonthlySchedule {
             System.out.println("total interuptions " + amountOfInteruptions);
             System.out.println("METHODE VOOR EMPLOYMENT RATES");
             //bekijken of elke nurse wel even veel werkt als ze wil. Zoniet: penalty score!!
-            ArrayList<Nurse> usedNurses = new ArrayList <Nurse> ();
-            if (type ==1 ){
-                usedNurses = nursesType1;
-            }
-            else{
-                usedNurses = nursesType2;
-            }
+
             int differenceWorkingDays = 0;
             for (int i = 0; i < monthScheduleNurse.size(); i++){ //met nurse x, type x alle 4 de weken doorlopen!
                 int counter=0;
@@ -238,12 +248,12 @@ public class MonthlySchedule {
                 int count2 = 0;
                 while (index2 != -1) {
                 count2++;
-                shift = shift.substring(index + 1);
+                shift = shift.substring(index2 + 1);
                 index2 = shift.indexOf("2");
                 }
                 AmountOfShiftChanges  += Integer.min(count, count2);
             }
-            System.out.println("Amont of shift changes" + AmountOfShiftChanges);
+            System.out.println("Amount of shift changes" + AmountOfShiftChanges);
 
             int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment;
             System.out.println(ScoreNurse);
@@ -279,9 +289,11 @@ public class MonthlySchedule {
            amountOfNurses = this.amountNurses2;
            schedule = this.schedule2;
         }
-        
+
         for (int i = 0; i < 4; i++) {
-            temp.add(schedule.substring(nurseNumber*8 + i*8*amountOfNurses, nurseNumber*8 + i*amountOfNurses*8+7));
+            temp.add(schedule.substring(nurseNumber*8 + i*8*(amountOfNurses), nurseNumber*8 + i*(amountOfNurses)*8+7));
+            System.out.println(schedule.substring(nurseNumber*8 + i*8*(amountOfNurses), nurseNumber*8 + i*(amountOfNurses)*8+7));
+
         }
         
         return temp;
