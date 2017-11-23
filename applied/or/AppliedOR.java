@@ -106,7 +106,7 @@ public class AppliedOR {
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
         System.out.println(monthlySchedule.calcCost(1));
        
-       monthlySchedule.calcNurseSat(2);
+       monthlySchedule.calcNurseSat(1);
     }
 }
 

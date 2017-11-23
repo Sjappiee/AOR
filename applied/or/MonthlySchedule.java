@@ -43,7 +43,7 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(0);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                int changeOrNot = randomBoolean(20);  //0%kans dat voor week 2 een nieuw schema word opgesteld
                 if(changeOrNot == 1) weeklySchedule.allProcesses();
                 amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
                 amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
