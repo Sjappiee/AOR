@@ -659,20 +659,7 @@ public class WeeklySchedule {
     public String toString() {
         return "Schedule{" + "nurses=" + nurses + ", workPatterns=" + workPatterns + ", prefScores=" + prefScores + '}';
     }
-    
-    public String scheduleToString () {
-        String output = "";
-        
-        //over elke index gaan in beide arrays. Als beide 0 is, 0 toevoegen aan string
-        //als 1 van de 2 niet gelijk is aan 0 voegt ge die waarde toe! 
-        //zo kunnen we ook 2 verschillende shiften erin steken
-        
 
-        return output;
-    }
-    
-    
-    
     public String ScheduleToString () {
         String output = "";
         ArrayList<String> temp = new ArrayList <String> ();
