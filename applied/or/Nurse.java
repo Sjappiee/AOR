@@ -216,7 +216,6 @@ public class Nurse {
                 if (temp [0][i] == 0)
                 {
                     counterShift1++;
-                    counterShift1++;
                 }
                 else
                 {

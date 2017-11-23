@@ -35,6 +35,7 @@ public class WeeklySchedule {
         prefScoreCalculation ();
         //methode om workrate patterns en nurses te matchen
         for (int k = 0; k < workPatterns.size(); k++) {
+            System.out.println(workPatterns.get(k));
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             String IDNurse = "";
@@ -48,8 +49,10 @@ public class WeeklySchedule {
                 //else if (temp.size() == 0)
                 else{
                     randomIndex = new Random().nextInt(temp.size());
+                    System.out.println(randomIndex);
                 }
                 IDNurse = temp.get(randomIndex).getNr();
+                System.out.println("completely random: ");
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
@@ -57,6 +60,7 @@ public class WeeklySchedule {
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();
+                    System.out.println("sub random: ");
                 }
                 else{
                 //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
@@ -68,11 +72,15 @@ public class WeeklySchedule {
                             IDNurse = nurse.getNr();
                         }   
                 }
+                System.out.println("optimal: ");
                 }
                 
                 // deze nurse word gekoppeld aan het workpattern
             }
             nurses.get(IDToIndex(IDNurse,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
+            System.out.print(nurses.get(IDToIndex(IDNurse,nurses)).toString());
+            System.out.println("");
+            System.out.println("");
             for (int i = 0; i < workPatterns.size(); i++) {
                 prefScores[i][IDToIndex(IDNurse,nurses)] = 1000;
             }
@@ -125,6 +133,11 @@ public class WeeklySchedule {
                         }
                     }
             }
+        for (Nurse nurse: possibleNursesList){
+            System.out.println(nurse.toString());
+        }
+        System.out.println("");    
+        
         return possibleNursesList;
     }
        
@@ -162,6 +175,12 @@ public class WeeklySchedule {
                     }
                 }
             }
+        for (Nurse nurse: nursesLowScore){
+            System.out.println(nurse.toString());
+        }
+        System.out.println("");
+            
+            
         return nursesLowScore;
     }
     
@@ -309,6 +328,9 @@ public class WeeklySchedule {
                 }
             }
         }
+        for (Nurse nurse: nurses) {
+            System.out.println(nurse);
+        }
     }
     
     
@@ -408,6 +430,11 @@ public class WeeklySchedule {
             Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
             workPatterns.add(newPattern2);
         }
+        System.out.println("AFTER SPLIT FOR RATE: " + rate);
+        for(Nurse nurse: workPatterns){
+            System.out.println(nurse);
+        }
+        System.out.println("");
 
     }
     
@@ -451,35 +478,51 @@ public class WeeklySchedule {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
         int indexFirstRest = searchFirstIndexOfRestSchedules();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
-
+        
+        System.out.println("LIJST MET RESTSCHEMA'S");
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
+        System.out.println("");
         //lijst met .25 proberen hercombineren tot schema's
 
-        for (int j = 0; j < temp.size()-1; j++) {
-            for (int i = j+1; i < temp.size(); i++) { //herkennen wat er te combineren valt en dit dan doen (in de tijdelijke lijst
-
-                if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType() && temp.get(j).getType()== temp.get(i).getShiftType()) //indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
-                {
-                temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
-                temp.remove(i);
-                i--;
-                }
+        for (int j = 0; j < temp.size(); j++) {
+            if(j == temp.size()-1){
+                System.out.println("last");
             }
-        }
-        
+            System.out.println("TOEVOEGNAAN: " + temp.get(j));
+            
+            System.out.println("shiftType: "+ temp.get(j).getShiftType());
+            for (int i = j+1; i < temp.size(); i++) { //herkennen wat er te combineren valt en dit dan doen (in de tijdelijke lijst               
+                System.out.println("opties: "+ temp.get(i));
+                System.out.println("indexes: " + temp.get(i).getIndexof1());
+                System.out.println("shiftType: " + temp.get(i).getShiftType());
+                System.out.println("indexes of TOETEVOEGEN: " + temp.get(j).getAllIndexesOf1());
+                if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType() && temp.get(j).getType()== temp.get(i).getType() && temp.get(j).getAllIndexesOf1().size() < 4) {//indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
+                    
+                    
+                    temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
+                    temp.remove(i);
+                    System.out.println("recombine");
+                    System.out.println("new: " + temp.get(j));
+                    i--;}
+            }
+            
+        } 
         for (int i = 0; i < temp.size(); i++) { //juiste ER instellen dat data nog steeds klopt
             temp.get(i).setEmploymentRate((float) EmploymentRateSchedule(temp, i));
         }
-        
-        for (int j = indexFirstRest; j<workPatterns.size();j++) //de algemene worklijst aanpassen. Dus alle restschema's eruit smijten en dan de nieuwe gecombineerde temp list toevoegen
-        {
+        for (int j = indexFirstRest; j<workPatterns.size();j++){ //de algemene worklijst aanpassen. Dus alle restschema's eruit smijten en dan de nieuwe gecombineerde temp list toevoegen
             workPatterns.remove(j);
             j--;
-            }
-        
+        }
         for (int i = 0; i < temp.size(); i++) {
-                workPatterns.add(temp.get(i));
-            }
-        }   
+            workPatterns.add(temp.get(i));
+        }
+        for(Nurse nurse:temp){
+            System.out.println(nurse);
+        }
+    }   
     
     public ArrayList <Nurse> searchQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
@@ -538,7 +581,7 @@ public class WeeklySchedule {
         String lastID = nurses.get(nurses.size()-1).getNr();
         int lastNr = Integer.parseInt(lastID.substring(lastID.length()-2));
         int newNr = lastNr + 1;
-        String prefix = "30" + type + lastID.substring(3, 5); // bv: WSD0
+        String prefix = "H30" + type + lastID.substring(3, 5); // bv: WSD0
         String newID = prefix + newNr;
         return newID;
     }
