@@ -25,8 +25,8 @@ public class WeeklySchedule {
     }
     
     public void allProcesses (){
-        recombineQuarterSchedules();
         addaptSchedule ();
+        recombineQuarterSchedules();
         hireNurses();
         schedulingProcess();
     }
