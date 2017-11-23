@@ -638,7 +638,20 @@ public class WeeklySchedule {
         return "Schedule{" + "nurses=" + nurses + ", workPatterns=" + workPatterns + ", prefScores=" + prefScores + '}';
     }
     
-    public String ScheduleToString () {
+    public String scheduleToString () {
+        String output = "";
+        
+        //over elke index gaan in beide arrays. Als beide 0 is, 0 toevoegen aan string
+        //als 1 van de 2 niet gelijk is aan 0 voegt ge die waarde toe! 
+        //zo kunnen we ook 2 verschillende shiften erin steken
+        
+
+        return output;
+    }
+    
+    
+    
+    public String ScheduleToString () { //aanpassen!!
         String output = "";
         ArrayList <String> temp = new ArrayList <String> (); //temp arrayList maken die exact gelijk is aan de nurses die uit het schedule komen
         for (int i = 0; i < nurses.size() ; i++) { //alle schedules zitten nu dus in de temp lijst. Nu moeten we deze allemaal aan elkaar plakken, een 'lege week' niet meenemen. werken shift 1 = 1, werken shift 2 = 2, vrij = 3
