@@ -36,17 +36,17 @@ public class AppliedOR {
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
       
-        nursesD = test.readAllExceptCyclicSchedule(3);  
-        workPatternsD = test.readWorkPatterns(3);
+        nursesD = test.readAllExceptCyclicSchedule(0);  
+        workPatternsD = test.readWorkPatterns(0);
 //        for (Nurse nurse : nursesD) {
 //            System.out.println(nurse);
 //        }
       
- //       WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
-
-
-
-//        WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+        WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+        testSchedule.allProcesses();
+        for (Nurse nurse : testSchedule.getNurses()) {
+            System.out.println(nurse.toString());
+        }
 
 //        testSchedule.scheduleToString();
 //      int [][]prefs = testSchedule.prefScoreCalculation();
@@ -94,13 +94,13 @@ public class AppliedOR {
 
 //        testSchedule.allProcesses ();
         
-        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
-        System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-        System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
-        System.out.println(monthlySchedule.calcCost(1));
-       
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
+//        System.out.println("type1:" + monthlySchedule.getSchedule1());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
+//        System.out.println("type2: " + monthlySchedule.getSchedule2());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
+//        System.out.println(monthlySchedule.calcCost(1));
+//       
  //      monthlySchedule.calcNurseSat(1);
     }
 }
