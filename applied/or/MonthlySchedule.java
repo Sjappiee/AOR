@@ -24,10 +24,11 @@ public class MonthlySchedule {
         WeeklySchedule temp1 = null;
         WeeklySchedule temp2 = null;
         WeeklySchedule weeklySchedule = new WeeklySchedule (nurses,workPatterns);
+        
         //week1,2,3,4
         for (int i = 0; i < 4; i++) {
             if(i==0){ //week 1
-                weeklySchedule.schedulingProcess();
+                weeklySchedule.allProcesses();
                 amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
                 amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
                 //opsplitsing per type
@@ -43,8 +44,11 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(20);  //0%kans dat voor week 2 een nieuw schema word opgesteld
-                if(changeOrNot == 1) weeklySchedule.allProcesses();
+                int changeOrNot = randomBoolean(100);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                if(changeOrNot == 1){
+                    weeklySchedule.resetBinarySchedule();
+                    weeklySchedule.schedulingProcess();
+                }
                 amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
                 amountPerTypePerWeek [1][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[1];
                 //opsplitsing per type
