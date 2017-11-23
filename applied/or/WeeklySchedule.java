@@ -39,7 +39,7 @@ public class WeeklySchedule {
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             String IDNurse = "";
-            int randomOrNot = randomBoolean(00); //20% kans op een random schedule
+            int randomOrNot = randomBoolean(50); //20% kans op een random schedule
             if(randomOrNot == 1){
                 ArrayList <Nurse> temp= possibleNursesList(k);
                 int randomIndex = 0;
@@ -56,7 +56,7 @@ public class WeeklySchedule {
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
-                int subRandomOrNot = randomBoolean(0); //35% kans op een random schedule
+                int subRandomOrNot = randomBoolean(50); //35% kans op een random schedule
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();
