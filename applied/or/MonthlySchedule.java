@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MonthlySchedule {
+    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
+    float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
+    int amountShifts = 2;
     private String schedule1; //type1
     private double [][] wages1 = {{324,240},{437.4,324}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
     private String schedule2; //type2
@@ -19,8 +22,8 @@ public class MonthlySchedule {
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
-        String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week
-        String [] monthSchedule = new String [2];
+        String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week/type
+        String [] monthSchedule = new String [2]; // per type
         WeeklySchedule temp1 = null;
         WeeklySchedule temp2 = null;
         WeeklySchedule weeklySchedule = new WeeklySchedule (nurses,workPatterns);
@@ -66,8 +69,8 @@ public class MonthlySchedule {
             
         }
         //check differences in amount nurses / week
-        int [] amount = new int [2];
-        for (int i = 0; i < 2; i++) {
+        int [] amount = new int [2]; //per type
+        for (int i = 0; i < 2; i++) { // per type
             int max = 0;
             for (int j = 0; j < 4; j++) {   //find max amount of nurses in a week
                 if(amountPerTypePerWeek[i][j] > max) max = amountPerTypePerWeek[i][j]; 

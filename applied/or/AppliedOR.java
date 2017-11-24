@@ -120,7 +120,7 @@ public class AppliedOR {
         
 
         
-        WeeklySchedule testSchedule = new WeeklySchedule(nursesD, workPatternsD);
+ //       WeeklySchedule testSchedule = new WeeklySchedule(nursesD, workPatternsD);
 //        testSchedule.addaptSchedule();
 //        testSchedule.recombineQuarterSchedules();
 //        testSchedule.hireNurses();
