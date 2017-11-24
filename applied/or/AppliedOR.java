@@ -35,74 +35,104 @@ public class AppliedOR {
        */    
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
+        
+
       
         nursesD = test.readAllExceptCyclicSchedule(0);  
         workPatternsD = test.readWorkPatterns(0);
-//        for (Nurse nurse : nursesD) {
+        
+//        for (Nurse nurse : workPatternsD) {
 //            System.out.println(nurse);
-//        }
-
-
-      //  System.out.println("ALL PROCESSES CHECK");
-//      WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
-//
-//      testSchedule.allProcesses();
-//      for(Nurse nurse:testSchedule.getNurses()){
-//          System.out.println(nurse);
-//      }
-      /*
-        WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
-        testSchedule.allProcesses();
-        for (Nurse nurse : testSchedule.getNurses()) {
-            System.out.println(nurse.toString());
-        }*/
-
-//        testSchedule.scheduleToString();
-//      int [][]prefs = testSchedule.prefScoreCalculation();
-//        for (int i = 0; i < nursesD.size(); i++) {
-//            for (int j = 0; j < workPatternsD.size(); j++) {
-//                System.out.print(prefs[j][i] + " ");
-//      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
-//      testSchedule.schedulingProcess();
-//            
-      
-//        for (int i = 0; i < 32; i++) {
-//            for (int j = 0; j < 32; j++) {
-//                System.out.print(temp[j][i] + " ");
-//            }
-//            System.out.println("");
-//        }
-//
-       // testSchedule.addaptSchedule ();
-//        for (Nurse pattern : workPatternsD) {
-//            System.out.println(pattern.getNr());
-//            System.out.println(pattern.BinaryPlanningToString ());
+//            System.out.println(nurse.getShiftType());
 //        }
 //        
-//        System.out.println("EINDE MAIN DING");
-//        System.out.println("VANAF NU NIEUWE TESTCODE");
-
-       // testSchedule.recombineQuarterSchedules();
-
+//        
+//        for (Nurse nurse : nursesD) {
+//            System.out.println(nurse);
+//        } System.out.println("");
+//        
+////        for (Nurse nurse : nursesD) {
+////            System.out.println(nurse);
+////        }
 //
-//        System.out.println("EINDE TESTEN STEHAN");
-        
+//
+//        System.out.println("ALL PROCESSES CHECK");
+//      WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+//////
+////      testSchedule.allProcesses();
+////      for(Nurse nurse:testSchedule.getNurses()){
+////          System.out.println(nurse);
+//  //    }
+//      /*
+//        WeeklySchedule testSchedule = new WeeklySchedule (nursesD,workPatternsD);
+//        testSchedule.allProcesses();
+//        for (Nurse nurse : testSchedule.getNurses()) {
+//            System.out.println(nurse.toString());
+//        }*/
+//
+////        testSchedule.scheduleToString();
+////      int [][]prefs = testSchedule.prefScoreCalculation();
+////        for (int i = 0; i < nursesD.size(); i++) {
+////            for (int j = 0; j < workPatternsD.size(); j++) {
+////                System.out.print(prefs[j][i] + " ");
+////      int [][] temp = testSchedule.prefScoreCalculation();      //ALTIJD, [workpattern][nurse]
+////      testSchedule.schedulingProcess();
+////            
+//      
+////        for (int i = 0; i < 32; i++) {
+////            for (int j = 0; j < 32; j++) {
+////                System.out.print(temp[j][i] + " ");
+////            }
+////            System.out.println("");
+////        }
+////
+////        
+////        System.out.println("EINDE MAIN DING");
+////        System.out.println("VANAF NU NIEUWE TESTCODE");
+//
+//
+//
+////
+////        System.out.println("EINDE TESTEN STEHAN");
+//        
 //        testSchedule.addaptSchedule ();
 //        for (Nurse pattern : workPatternsD) {
 //            System.out.println(pattern.getNr());
 //            System.out.println(pattern.BinaryPlanningToString ());
-//        }
-//     
-//
-//        System.out.println("TINE HAAR GEPRUTS");
+//        } System.out.println("");
+////  
+//           testSchedule.recombineQuarterSchedules();
+//           
+//           for (Nurse nurse : workPatternsD) {
+//               System.out.println(nurse);
+//        } System.out.println("");
+////
+////        System.out.println("TINE HAAR GEPRUTS");
 //        System.out.println("");
- //       testSchedule.hireNurses();
+//        testSchedule.hireNurses();
 //        for(Nurse nurse : nursesD){
 //           System.out.println(nurse.toString());
-//        }
-
-//        testSchedule.allProcesses ();
+//        } System.out.println("");
+//        
+//        testSchedule.schedulingProcess();
         
+        
+        
+
+        
+        WeeklySchedule testSchedule = new WeeklySchedule(nursesD, workPatternsD);
+//        testSchedule.addaptSchedule();
+//        testSchedule.recombineQuarterSchedules();
+//        testSchedule.hireNurses();
+//        testSchedule.schedulingProcess();
+//        
+//        testSchedule.allProcesses ();
+//        
+//        testSchedule.getNurses();
+//        for (int i = 0; i < testSchedule.getNurses().size(); i++) {
+//            System.out.println(testSchedule.getNurses().get(i));
+//        }
+////        
         MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
         System.out.println("type1:" + monthlySchedule.getSchedule1());
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
@@ -110,6 +140,8 @@ public class AppliedOR {
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
         //System.out.println(monthlySchedule.calcCost(2));
         //monthlySchedule.calcNurseSat(2);
+        
+        
         
     }
 }
