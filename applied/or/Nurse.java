@@ -237,13 +237,28 @@ public class Nurse {
         }
     
         public int getShiftType () {
-            if (BinaryPlanningToString().substring(0, 7).equalsIgnoreCase("0000000"))
+            int counter1 =0;
+            int counter2 = 0;
+            for (int i = 0; i < 7; i++) {
+                if (BinaryPlanningToString().charAt(i) == '1') //tellen hoeveel x 1 en 2 in een werkschema staat
+                {
+                counter1++;
+                }
+            }
+            for (int i = 8; i < 14; i++) {
+                if (BinaryPlanningToString().charAt(i) == '1')
+                {
+                    counter2++;
+                }
+            }
+            
+            if (counter1 > counter2)
             {
-                return 2;
+                return 1;
             }
             else
             {
-                return 1;
+                return 2;
             }
         }
 

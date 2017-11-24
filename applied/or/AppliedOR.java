@@ -35,9 +35,17 @@ public class AppliedOR {
        */    
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
+        
+
       
         nursesD = test.readAllExceptCyclicSchedule(0);  
         workPatternsD = test.readWorkPatterns(0);
+        
+        for (Nurse nurse : workPatternsD) {
+            System.out.println(nurse);
+            System.out.println(nurse.getShiftType());
+        }
+        
         
         for (Nurse nurse : nursesD) {
             System.out.println(nurse);

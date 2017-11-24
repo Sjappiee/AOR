@@ -171,11 +171,12 @@ public class MonthlySchedule {
         
         //GIGA FOR LUS VOOR ALLE NURSES!!! OM TOTALE SCORE TE BERKENEN
         //eerst degelijk berekenen oor 1 nurse
-        for (int k = 0; k < usedNurses.size(); k++) {
+        for (int k = 0; k < usedNurses.size(); k++) { 
             monthScheduleNurse = schedulesSpecificNurse (k,type);
             System.out.println("METHODE VOOR ONDERBREKINGEN ");
         //berekening aantal onderbrekingen! Getest en OK
-            int amountOfInteruptions=0; //onderbreking = '101' of '202' OF opt einde '10' en maandag ook '1'
+            int amountOfInteruptions=0; //onderbreking = '101' of '202' OF opt einde '10' en maandag ook '1' 
+            //HOUDEN NOG GEEN REKENING MET 102, 201, 20   1 ETC...
             for (int i = 0; i < monthScheduleNurse.size(); i++) { 
                 String shift = monthScheduleNurse.get(i);
 //            System.out.println(shift);
@@ -226,12 +227,14 @@ public class MonthlySchedule {
             }
         
             System.out.println("Total working days less than nurse wanted: " + differenceWorkingDays);
-            System.out.println("METHODE VOOR SHIFTWISSELS ");
+            System.out.println("METHODE VOOR SHIFTWISSELS "); //ok
             int AmountOfShiftChanges=0;
         //aantal keer een shiftwissel in dezelfde week (berekenen hoeveel keer 1 in een week, hoeveel keer 2 en het min daarvan is #shiftwissels
             for (int i = 0; i < monthScheduleNurse.size(); i++) {
                 
                 String shift = monthScheduleNurse.get(i);
+                String shift2 = monthScheduleNurse.get(i);
+                
                 int index = shift.indexOf("1"); //kijken of er 101 of 202 is in weekschema
                 int count = 0;
                 while (index != -1) {
@@ -240,18 +243,64 @@ public class MonthlySchedule {
                 index = shift.indexOf("1");
                 }
                 
-                int index2 = shift.indexOf("2"); //kijken of er 101 of 202 is in weekschema
+                
+                int index2 = shift2.indexOf("2"); //kijken of er 101 of 202 is in weekschema
                 int count2 = 0;
                 while (index2 != -1) {
                 count2++;
-                shift = shift.substring(index2 + 1);
-                index2 = shift.indexOf("2");
+                shift2 = shift2.substring(index2 + 1);
+                index2 = shift2.indexOf("2");
+                    
                 }
                 AmountOfShiftChanges  += Integer.min(count, count2);
             }
             System.out.println("Amount of shift changes" + AmountOfShiftChanges);
+            System.out.println("");
+            
+            System.out.println("methode voor Wissels TUSSEN schema's in opeenvolgende weken. ENKEL OPEENVOLGEND!! dus 1-2 2-3 3-4 4-1");
+            
+            String shift1 = monthScheduleNurse.get(0);
+            String shift2 = monthScheduleNurse.get(1);
+            String shift3 = monthScheduleNurse.get(2);
+            String shift4 = monthScheduleNurse.get(3);
+           
+            //eerste situatie instellen. Dus max 1 = max value van schema 1 
+            //OK
+            //beter: de meeste parameter opzoeken!! Dus als er 1x1 is en 3x2, dan is type shift == 2. GetShiftType is ook nog fout (in Nurse klasse)
+            int differences = 0;
+            int typeWeekFirst = getShiftTypeFromString(shift1);
+            int typeWeekSecond = getShiftTypeFromString(shift2);
+            int typeWeekThird = getShiftTypeFromString(shift3);
+            int typeWeekFourth = getShiftTypeFromString(shift4) ;
+            
+            if (typeWeekFirst != typeWeekSecond)
+            {
+                differences ++;
+            }
+            if(typeWeekSecond != typeWeekThird)
+            {
+                differences++;
+            }
+            if (typeWeekThird != typeWeekFourth)
+            {
+                differences++;
+            }
+            if(typeWeekFourth!= typeWeekFirst)
+            {
+                differences++;
+            }
+            
+            System.out.println("DIFFERENT SHIFTS IN SUCCESSIVE WEEKS: " + differences);
+            
+            
+            //door schema i gaan en kijken of deze hetzelfde max waarde heeft als het schema ervoor. Zo niet is het sws slect met zware penalty!!
+            
+            
+            
+            
 
-            int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment;
+            int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment
+                    + changeInShiftsPunishment*differences;
             System.out.println(ScoreNurse);
             totalScore += ScoreNurse;
             System.out.println(totalScore);
@@ -342,6 +391,29 @@ public class MonthlySchedule {
         this.amountNurses2 = amountNurses2;
     }
     
+     public int getShiftTypeFromString (String shift) {
+            int counter1 =0;
+            int counter2 = 0;
+            
+            for (int i = 0; i < 7; i++) {
+             if (shift.charAt(i) == '1')
+             {
+                 counter1 ++;
+             }
+             else if (shift.charAt(i) == '2')
+             {
+                 counter2 ++;
+             }
+         }
+            if (counter1 > counter2)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+     }
     
     
 }
