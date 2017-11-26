@@ -132,15 +132,17 @@ public class AppliedOR {
 //        for (int i = 0; i < testSchedule.getNurses().size(); i++) {
 //            System.out.println(testSchedule.getNurses().get(i));
 //        }
-////        
-        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
-        System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-        System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
-        //System.out.println(monthlySchedule.calcCost(2));
-        //monthlySchedule.calcNurseSat(2);
+//      
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
+//        System.out.println("type1:" + monthlySchedule.getSchedule1());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
+//        System.out.println("type2: " + monthlySchedule.getSchedule2());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
+//        System.out.println(monthlySchedule.calcCost(2));
+//        monthlySchedule.calcNurseSat(2);
         
+        Population population = new Population (nursesD,workPatternsD);
+        population.giveOptimal();
         
         
     }

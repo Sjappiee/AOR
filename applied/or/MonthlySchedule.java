@@ -17,7 +17,7 @@ public class MonthlySchedule {
     private int amountNurses2 = 0;
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
-    private int [] objectiveFunctions = new int [3];
+    private int [][] objectiveFunctions = new int [2][3]; //per type, 3obj functions
     private double [] objectiveWeights = {0.5,0.5,0};
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
@@ -349,16 +349,23 @@ public class MonthlySchedule {
 //    public int calcPatientSat (){
 //        
 //    }
-    public int [] calcObjectiveFunctions (int type) {
-        objectiveFunctions [0] = (int) calcCost (type);
-        objectiveFunctions [1] = calcNurseSat (type);
-        objectiveFunctions [2] = objectiveFunctions [1]; // VOORLOPIG
+    public int [][] calcObjectiveFunctions () {
+        for (int i = 0; i < 2; i++) {
+           objectiveFunctions [i][0] = (int) calcCost (i+1); //als i=0 dan type 1, als i=1 dan type 2
+            objectiveFunctions [i][1] = calcNurseSat (i+1);
+            objectiveFunctions [i][2] = objectiveFunctions [i][1]; // VOORLOPIG 
+        }
         return objectiveFunctions;
     }
     
-    public double calcTotalObjectiveFunction (int type){
-        calcObjectiveFunctions(type);
-        double total = objectiveWeights[0]*objectiveFunctions[0] + objectiveWeights[1]*objectiveFunctions[1] + objectiveWeights[2]*objectiveFunctions[2];
+    public double calcTotalObjectiveFunction (){
+        calcObjectiveFunctions();
+        double total = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                total += objectiveFunctions [i][j] * objectiveWeights[j];
+            }
+        }
         return total;
     }
     
