@@ -137,12 +137,10 @@ public class AppliedOR {
         System.out.println("type1:" + monthlySchedule.getSchedule1());
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
         System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
+        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());System.out.println("");
         System.out.println(monthlySchedule.calcCost(2));
         monthlySchedule.calcNurseSat(2);
-        
-        
-        
+ 
     }
 }
 
