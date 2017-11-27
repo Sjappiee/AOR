@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Nurse {
-    
+    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 en getShiftType () AANPASSEN
+    float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
+    int amountShifts = 2;
     private String nr;
     private int [] [] binaryDayPlanning; //[shift][day]
     private float employmentRate;
@@ -51,9 +53,6 @@ public class Nurse {
         this.preferences = preferences;
         this.MonthlyPreferences = MonthlyPreferences;
     }
-
-    
-    
         public Nurse() {
     }
     
@@ -61,31 +60,23 @@ public class Nurse {
         
         String temp = "";
         if (this.binaryDayPlanning != null) {
-        for (int i = 0; i < 7; i++) {
-            temp += this.binaryDayPlanning [0][i];
+            for (int s = 0; s < amountShifts; s++) {
+                for (int i = 0; i < 7; i++) {
+                    temp += this.binaryDayPlanning [s][i];
+                }
+            }
         }
-        for (int i = 0; i < 7; i++) {
-            temp += this.binaryDayPlanning [1][i];
-        }
-        }
-        
         return temp;
     }
-    
-    
-    
+
     public String PrefsToString () {
         String temp = "";
         if (this.preferences != null) {
-        for (int i = 0; i < 7; i++) {
-            temp += this.preferences [0][i];
-        }
-        for (int i = 0; i < 7; i++) {
-            temp += this.preferences [1][i];
-        }
-        for (int i = 0; i < 7; i++) {
-            temp += this.preferences [2][i];
-        }
+            for (int s = 0; s < amountShifts+1; s++) { //"+1" = free
+                for (int i = 0; i < 7; i++) {
+                    temp += this.preferences [s][i];
+                }
+            }
         }
         return temp;
     }
@@ -119,19 +110,11 @@ public class Nurse {
         this.MonthlyPreferences = MonthlyPreferences;
     }
 
-    
-
     public String getNr() {
         return nr;
     }
 
     public int[][] getBinaryDayPlanning() {
-        /*for (int i = 0; i < 7; i++) {
-            System.out.print(this.binaryDayPlanning [0][i]);
-        } System.out.println("");
-        for (int i = 0; i < 7; i++) {
-            System.out.print(this.binaryDayPlanning [1] [i]);   
-        }System.out.println("");*/
         return binaryDayPlanning;
     }
 
@@ -148,15 +131,6 @@ public class Nurse {
     }
 
     public int[][] getPreferences() {
-        /*for (int i = 0; i < 7; i++) {
-            System.out.print(this.preferences [0][i]);
-        } System.out.println("");
-        for (int i = 0; i < 7; i++) {
-            System.out.print(this.preferences [1] [i]);   
-        } System.out.println("");
-        for (int i = 0; i < 7; i++) {
-            System.out.print(this.preferences [2] [i]);
-        } System.out.println(""); */
         return preferences;
     }
     public int getSpecificPreference(int shift, int day){
@@ -167,102 +141,63 @@ public class Nurse {
         this.binaryDayPlanning = binaryDayPlanning;
     }
     
-    public void setSpecificBinaryToOne (int shift, int index)
-    {
-        int [] [] temp = new int [2] [7];
-        temp = this.binaryDayPlanning;
-        
-        temp [shift] [index] = 1;
+    public void setSpecificBinaryToOne (int shift, int index){
+        this.binaryDayPlanning [shift] [index] = 1;
     }
     
-        public int getIndexof1 () {
-        int [] [] temp = new int [2][7];
-        int counterShift1 = 0;
-        int counterShift2 = 0;
+    public int getIndexof1 () {
         int index = 0;
-        temp = this.binaryDayPlanning;
-        
-        for (int i = 0; i < 7; i++) {
-            if (temp [0][i] == 0)
-            {
-                counterShift1++;
-            }
-            else
-            {
-                index = counterShift1;
-            }
-        }
-        
-        for (int i = 0; i < 7; i++) {
-            if (temp [1][i] == 0)
-            {
-                counterShift2++;
-            }
-            else
-            {
-                index=counterShift2;
+        for (int s = 0; s < amountShifts; s++) {
+            int counterShift = 0;
+            for (int i = 0; i < 7; i++) {
+                if (this.binaryDayPlanning [s][i] == 0){
+                    counterShift++;
+                }
+                else{
+                    index = counterShift;
+                }
             }
         }
         return index;
     }
-        public ArrayList <Integer> getAllIndexesOf1 ()
-        {
-            ArrayList <Integer> indexesOfOne = new ArrayList <Integer> ();
-            int [] [] temp = this.binaryDayPlanning;
-            int counterShift1 = 0;
-            int counterShift2 = 0;
-            
+    
+    public ArrayList <Integer> getAllIndexesOf1 (){
+        ArrayList <Integer> indexesOfOne = new ArrayList <Integer> ();
+        int counterShift1 = 0;
+        for (int s = 0; s < amountShifts; s++) {
+            counterShift1 = 0;
             for (int i = 0; i < 7; i++) {
-                if (temp [0][i] == 0)
-                {
+                if (this.binaryDayPlanning [s][i] == 0){
                     counterShift1++;
                 }
-                else
-                {
+                else{
                     indexesOfOne.add(counterShift1);
                 }
             }
-            for (int i = 0; i < 7; i++) {
-                if(temp [1][i] == 0)
-                {
-                    counterShift2++;
-                }
-                else 
-                {
-                    indexesOfOne.add(counterShift2);
-                    counterShift2++;
-                }
-            }
-            return indexesOfOne;
         }
+        return indexesOfOne;
+    }
     
-        public int getShiftType () {
-            int counter1 =0;
-            int counter2 = 0;
-            for (int i = 0; i < 7; i++) {
-                   
-                if (BinaryPlanningToString().charAt(i) == '1') //tellen hoeveel x 1 en 2 in een werkschema staat
-                {
-                    
-                counter1++;
-                }
-            }
-            for (int i = 7; i < 14; i++) {
-                if (BinaryPlanningToString().charAt(i) == '1')
-                {
-                    
-                    counter2++;
-                }
-            }            
-            if (counter1 > counter2)
-            {
-                return 1;
-            }
-            else
-            {
-                return 2;
+    public int getShiftType () {
+        int counter1 =0;
+        int counter2 = 0;
+        for (int i = 0; i < 7; i++) {
+            if (BinaryPlanningToString().charAt(i) == '1'){ //tellen hoeveel x 1 en 2 in een werkschema staat
+            counter1++;
             }
         }
+        for (int i = 7; i < 14; i++) {
+            if (BinaryPlanningToString().charAt(i) == '1'){
+                counter2++;
+            }
+        }            
+        if (counter1 > counter2){
+            return 1;
+        }
+        else{
+            return 2;
+        }
+    }
 
     public void setEmploymentRate(float employmentRate) {
         this.employmentRate = employmentRate;
