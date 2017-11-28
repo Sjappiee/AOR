@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class Population {
     
-    private int amountReplications = 1;
+    private int amountReplications = 2;
     private int amountSchedules = 1;
-    private ArrayList <MonthlySchedule> wholepopulation;
+    private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
 
     public Population(ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns) {
         for (int i = 0; i < amountReplications; i++) {

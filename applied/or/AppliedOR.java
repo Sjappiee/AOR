@@ -134,35 +134,30 @@ public class AppliedOR {
 //            System.out.println(testSchedule.getNurses().get(i));
 //        }
 ////        
-        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
-        System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-        System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());System.out.println("");
-        System.out.println(monthlySchedule.calcCost(2));
-        monthlySchedule.calcNurseSat(2);
- 
+
 //      
-        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
-        System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-        System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
-        String schema1 = monthlySchedule.getSchedule1();
-        String schema2 = monthlySchedule.getSchedule2();
-        ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
-        nursesType1 = monthlySchedule.getNursesType1();
-        ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
-        nursesType2 = monthlySchedule.getNursesType2();
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
+//        System.out.println("type1:" + monthlySchedule.getSchedule1());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
+//        System.out.println("type2: " + monthlySchedule.getSchedule2());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
+//        String schema1 = monthlySchedule.getSchedule1();
+//        String schema2 = monthlySchedule.getSchedule2();
+//        ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
+//        nursesType1 = monthlySchedule.getNursesType1();
+//        ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
+//        nursesType2 = monthlySchedule.getNursesType2();
         
-        ExcellWriter PrintOplossing = new ExcellWriter();
-        PrintOplossing.writeScheduleToExcel(nursesType1, nursesType2, schema1, schema2, 0);
-        PrintOplossing.writeShiftToExcel(nursesType1, nursesType2, schema1, schema2, 0);
+
 //        System.out.println(monthlySchedule.calcCost(2));
 //        monthlySchedule.calcNurseSat(2);
         
-//        Population population = new Population (nursesD,workPatternsD);
-//        population.giveOptimal();
+        Population population = new Population (nursesD,workPatternsD);
+        population.giveOptimal();
+            
+//        ExcellWriter PrintOplossing = new ExcellWriter();
+//        PrintOplossing.writeScheduleToExcel(nursesType1, nursesType2, schema1, schema2, 0);
+//        PrintOplossing.writeShiftToExcel(nursesType1, nursesType2, schema1, schema2, 0);
         
         
     }
