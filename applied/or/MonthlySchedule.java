@@ -333,7 +333,7 @@ public class MonthlySchedule {
                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [3] [j + (i*7)];
                 }
                 else if (currentValue == 2) {
-                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [0] [j + (i*7)];
+                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [1] [j + (i*7)];
                 }           
             }
             score += weeklyScore;

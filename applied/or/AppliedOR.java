@@ -150,8 +150,8 @@ public class AppliedOR {
 //        System.out.println(monthlySchedule.calcCost(2));
 //        monthlySchedule.calcNurseSat(2);
         
-        Population population = new Population (nursesD,workPatternsD);
-        population.giveOptimal();
+        //Population population = new Population (nursesD,workPatternsD);
+        //population.giveOptimal();
         
         
     }
