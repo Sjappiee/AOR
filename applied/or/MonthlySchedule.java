@@ -161,21 +161,14 @@ public class MonthlySchedule {
         for (Nurse usedNurse : usedNurses) {
             System.out.println(usedNurse);
         }
-        
-        System.out.println(usedNurses.size());
-        for(Nurse nurse: usedNurses){
-            System.out.println(nurse);
-        }    
-            
-        
-//        for (int i = 0; i < 4; i++) {
-//            System.out.println(monthScheduleNurse.get(i));
-//        }
-        
+               
         //GIGA FOR LUS VOOR ALLE NURSES!!! OM TOTALE SCORE TE BERKENEN
-        //eerst degelijk berekenen oor 1 nurse
         for (int k = 0; k < usedNurses.size(); k++) { 
+            System.out.println(usedNurses.get(k));
             monthScheduleNurse = schedulesSpecificNurse (k,type);
+            for (String string : monthScheduleNurse) {
+                System.out.println(string);
+            }
             System.out.println("METHODE VOOR ONDERBREKINGEN ");
         //berekening aantal onderbrekingen! Getest en OK
             int amountOfInteruptions=0; //onderbreking = '101' of '202' OF opt einde '10' en maandag ook '1' 
@@ -297,13 +290,15 @@ public class MonthlySchedule {
             
             
             //door schema i gaan en kijken of deze hetzelfde max waarde heeft als het schema ervoor. Zo niet is het sws slect met zware penalty!!
+            int monthScoreNurse = MonthlyPreferenceCalculation(k, type);
+            
             
             
             
             
 
             int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment
-                    + changeInShiftsPunishment*differences;
+                    + changeInShiftsPunishment*differences + monthScoreNurse;
             System.out.println(ScoreNurse);
             totalScore += ScoreNurse;
             System.out.println(totalScore);
@@ -320,7 +315,33 @@ public class MonthlySchedule {
     
     
     
-    
+    public int MonthlyPreferenceCalculation (int nurseNumber, int type) {
+        ArrayList <Nurse> usedNurses = new ArrayList <Nurse> ();
+        if (type == 1) {usedNurses = this.nursesType1;}
+        else {usedNurses = this.nursesType2;}
+        
+        int score = 0;
+        ArrayList <String> monthlySchedule = schedulesSpecificNurse (nurseNumber,type);      
+        for (int i = 0; i < monthlySchedule.size(); i++) { //voor weekly schedule 1-4
+            int weeklyScore = 0;
+            for (int j = 0; j < 7; j++) { //voor elke dag in de week!
+                int currentValue = Character.getNumericValue(monthlySchedule.get(i).charAt(j));                
+                if (currentValue == 0) {
+                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences()[4][j+(i*7)];
+                }
+                else if (currentValue == 1) { //we werken enkel met free, early en 
+                   weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [3] [j + (i*7)];
+                }
+                else if (currentValue == 2) {
+                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [0] [j + (i*7)];
+                }           
+            }
+            score += weeklyScore;
+            
+        }
+        System.out.println("Month score of nurse: " + score);
+        return score;
+    }
     
     public ArrayList <String> schedulesSpecificNurse (int nurseNumber, int type) { //geeft de 4 weekschema's van de nurse die ingegeven is
         int amountOfNurses;
@@ -340,8 +361,6 @@ public class MonthlySchedule {
 
         for (int i = 0; i < 4; i++) {
             temp.add(schedule.substring(nurseNumber*8 + i*8*(amountOfNurses), nurseNumber*8 + i*(amountOfNurses)*8+7));
-            System.out.println(schedule.substring(nurseNumber*8 + i*8*(amountOfNurses), nurseNumber*8 + i*(amountOfNurses)*8+7));
-
         }
         
         return temp;
