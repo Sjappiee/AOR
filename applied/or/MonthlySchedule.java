@@ -21,6 +21,13 @@ public class MonthlySchedule {
     private double [] objectiveWeights = {0.5,0.5,0};
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
+        this.objectiveFunctions = null;
+        this.amountNurses1 = 0;
+        this.amountNurses2 = 0;
+        this.nursesType1 = null;
+        this.nursesType2 = null;
+        this.schedule1 = null;
+        this.schedule2 = null;
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
         String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week/type
         String [] monthSchedule = new String [2]; // per type
@@ -104,6 +111,63 @@ public class MonthlySchedule {
         return randomBit;
     }
     
+    public void fireNurses (){
+        ArrayList <Nurse> nurses = new ArrayList <Nurse>();
+        int amountNurses = 0;
+        String schedule ;
+        ArrayList <Integer> indexesToFire = new ArrayList <Integer>();
+        for (int i = 0; i < 2; i++) { //per type
+             if(i == 0){ //type 1
+                nurses = nursesType1;
+                amountNurses = amountNurses1;
+                schedule = schedule1;
+            }
+            else if (i == 1){ //type 2
+                nurses = nursesType2;
+                amountNurses = amountNurses2;
+                schedule = schedule2;
+            }
+            for (int j = 0; j < amountNurses; j++) {
+                Nurse nurse = nurses.get(j);
+                ArrayList <String> nurseSchedule = schedulesSpecificNurse (j, i);
+                int counter = 0;
+                int k = 0;
+                while(k < 4) {
+                    String weekSchedule = nurseSchedule.get(k);
+                    for (int l = 0; l < weekSchedule.length(); l++) {
+                        if(weekSchedule.charAt(l) == 1 || weekSchedule.charAt(l) == 2 || weekSchedule.charAt(l) == 3){
+                            counter++;
+                            k += 5; //when you find a nurse's first 1/2/3 you can stop the loop cause she can't be fired
+                        }
+                    }
+                    k++;
+                }
+                if(counter == 0){ //fire
+                    indexesToFire.add(j);
+                }
+            }
+            for (int index: indexesToFire) {
+                if(i==0){//type 1
+                    nursesType1.remove(index);
+                    amountNurses1 --;
+                    for (int j = 0; j < 4; j++) {
+                    String temp1 = schedule1.substring(0,index*8 + j*8*(amountNurses1));
+                    String temp2 = schedule1.substring(index*8 + j*(amountNurses1)*8+8,schedule1.length());
+                    schedule1 = temp1 + temp2;
+                    }
+                }
+                if(i==1){//type 2
+                    nursesType2.remove(index);
+                    amountNurses2 --;
+                    for (int j = 0; j < 4; j++) {
+                    String temp1 = schedule2.substring(0,index*8 + j*8*(amountNurses2));
+                    String temp2 = schedule2.substring(index*8 + j*(amountNurses2)*8+8,schedule2.length());
+                    schedule2 = temp1 + temp2;
+                    }
+                }
+            }
+        }
+    }
     
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
         double cost = 0;
@@ -122,7 +186,6 @@ public class MonthlySchedule {
             wages = wages2;
             amountNurses = amountNurses2;
         }
-        
         //wages
         int counter = 0;
         for (int w = 0; w < 4; w++) {  
@@ -145,6 +208,7 @@ public class MonthlySchedule {
         }
         //administrative costs
         cost += fixedAdmCost + labourHoursWeek + labourHoursWeekend;
+//        System.out.println("COST: " + cost);
         return cost;
     }
 
@@ -160,18 +224,18 @@ public class MonthlySchedule {
         if (type == 1) {usedNurses = this.nursesType1;}
         else {usedNurses = this.nursesType2;}
         
-        for (Nurse usedNurse : usedNurses) {
-            System.out.println(usedNurse);
-        }
+//        for (Nurse usedNurse : usedNurses) {
+//            System.out.println(usedNurse);
+//        }
                
         //GIGA FOR LUS VOOR ALLE NURSES!!! OM TOTALE SCORE TE BERKENEN
         for (int k = 0; k < usedNurses.size(); k++) { 
-            System.out.println(usedNurses.get(k));
+//            System.out.println(usedNurses.get(k));
             monthScheduleNurse = schedulesSpecificNurse (k,type);
-            for (String string : monthScheduleNurse) {
-                System.out.println(string);
-            }
-            System.out.println("METHODE VOOR ONDERBREKINGEN ");
+//            for (String string : monthScheduleNurse) {
+//                System.out.println(string);
+//            }
+//            System.out.println("METHODE VOOR ONDERBREKINGEN ");
         //berekening aantal onderbrekingen! Getest en OK
             int amountOfInteruptions=0; //onderbreking = '101' of '202' OF opt einde '10' en maandag ook '1' 
             //HOUDEN NOG GEEN REKENING MET 102, 201, 20   1 ETC...
@@ -208,8 +272,8 @@ public class MonthlySchedule {
                 amountOfInteruptions+= count;
                 amountOfInteruptions+= count2;
             }
-            System.out.println("total interuptions " + amountOfInteruptions);
-            System.out.println("METHODE VOOR EMPLOYMENT RATES");
+//            System.out.println("total interuptions " + amountOfInteruptions);
+//            System.out.println("METHODE VOOR EMPLOYMENT RATES");
             //bekijken of elke nurse wel even veel werkt als ze wil. Zoniet: penalty score!!
 
             int differenceWorkingDays = 0;
@@ -224,8 +288,8 @@ public class MonthlySchedule {
                 differenceWorkingDays += (int) ((usedNurses.get(k).getEmploymentRate()*4) - counter);
             }
         
-            System.out.println("Total working days less than nurse wanted: " + differenceWorkingDays);
-            System.out.println("METHODE VOOR SHIFTWISSELS "); //ok
+//            System.out.println("Total working days less than nurse wanted: " + differenceWorkingDays);
+//            System.out.println("METHODE VOOR SHIFTWISSELS "); //ok
             int AmountOfShiftChanges=0;
         //aantal keer een shiftwissel in dezelfde week (berekenen hoeveel keer 1 in een week, hoeveel keer 2 en het min daarvan is #shiftwissels
             for (int i = 0; i < monthScheduleNurse.size(); i++) {
@@ -252,10 +316,10 @@ public class MonthlySchedule {
                 }
                 AmountOfShiftChanges  += Integer.min(count, count2);
             }
-            System.out.println("Amount of shift changes" + AmountOfShiftChanges);
-            System.out.println("");
-            
-            System.out.println("methode voor Wissels TUSSEN schema's in opeenvolgende weken. ENKEL OPEENVOLGEND!! dus 1-2 2-3 3-4 4-1");
+//            System.out.println("Amount of shift changes" + AmountOfShiftChanges);
+//            System.out.println("");
+//            
+//            System.out.println("methode voor Wissels TUSSEN schema's in opeenvolgende weken. ENKEL OPEENVOLGEND!! dus 1-2 2-3 3-4 4-1");
             
             String shift1 = monthScheduleNurse.get(0);
             String shift2 = monthScheduleNurse.get(1);
@@ -288,7 +352,7 @@ public class MonthlySchedule {
                 differences++;
             }
             
-            System.out.println("DIFFERENT SHIFTS IN SUCCESSIVE WEEKS: " + differences);
+//            System.out.println("DIFFERENT SHIFTS IN SUCCESSIVE WEEKS: " + differences);
             
             
             //door schema i gaan en kijken of deze hetzelfde max waarde heeft als het schema ervoor. Zo niet is het sws slect met zware penalty!!
@@ -303,7 +367,7 @@ public class MonthlySchedule {
                     + changeInShiftsBetweenWeeks*differences + monthScoreNurse;
             System.out.println(ScoreNurse);
             totalScore += ScoreNurse;
-            System.out.println(totalScore);
+//            System.out.println(totalScore);
         }
         
 //       //nu nog vermenigvudigen met alle specifieke wensen!
@@ -312,6 +376,7 @@ public class MonthlySchedule {
 //        vrije dagen na elkaar? OK
 //        alle dagen werken dat je wil? Dus schema = ER?  OK 
 //        veranderen in shiften?
+//        System.out.println("NURSESAT: " + totalScore);
         return totalScore;
     }
     
@@ -341,7 +406,7 @@ public class MonthlySchedule {
             score += weeklyScore;
             
         }
-        System.out.println("Month score of nurse: " + score);
+        //System.out.println("Month score of nurse: " + score);
         return score;
     }
     
@@ -427,10 +492,14 @@ public class MonthlySchedule {
 //        
 //    }
     public int [][] calcObjectiveFunctions () {
-        for (int i = 0; i < 2; i++) {
-           objectiveFunctions [i][0] = (int) calcCost (i+1); //als i=0 dan type 1, als i=1 dan type 2
+        for (int i = 0; i < 2; i++) { //per type
+            System.out.println("TYPE:" + i);
+            objectiveFunctions [i][0] = (int) calcCost (i+1); //als i=0 dan type 1, als i=1 dan type 2
+            System.out.println("Cost: " + objectiveFunctions [i][0]);
             objectiveFunctions [i][1] = calcNurseSat (i+1);
-            objectiveFunctions [i][2] = objectiveFunctions [i][1]; // VOORLOPIG 
+            System.out.println("NurseSat: " + objectiveFunctions [i][1]);
+            objectiveFunctions [i][2] = objectiveFunctions [i][1]; // VOORLOPIG
+            System.out.println("PatientSat: " + objectiveFunctions [i][2]);
         }
         return objectiveFunctions;
     }
@@ -438,11 +507,12 @@ public class MonthlySchedule {
     public double calcTotalObjectiveFunction (){
         calcObjectiveFunctions();
         double total = 0;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) { //per type
             for (int j = 0; j < 3; j++) {
                 total += objectiveFunctions [i][j] * objectiveWeights[j];
             }
         }
+        System.out.println("TOTALSCORE: " + total);
         return total;
     }
     
