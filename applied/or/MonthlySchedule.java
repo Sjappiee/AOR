@@ -443,6 +443,14 @@ public class MonthlySchedule {
                 return 2;
             }
      }
+
+    public ArrayList<Nurse> getNursesType1() {
+        return nursesType1;
+    }
+
+    public ArrayList<Nurse> getNursesType2() {
+        return nursesType2;
+    }
     
     
 }
