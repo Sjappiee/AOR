@@ -150,9 +150,11 @@ public class MonthlySchedule {
 
     public int calcNurseSat (int type){ //later opdelen in verschillende methodes. Don't be a Tine
         ArrayList <String> monthScheduleNurse = new ArrayList <String> ();
-        int breakFreeDaysPunishment = 5;
+        int breakFreeDaysPunishment = 20;
         int lowerWorkratePunishment = 5;
-        int changeInShiftsPunishment = 5;
+        int changeInShiftsPunishment = 50; //willen echt niet dat veel nurses 2 verschillende shiften in dezelfde week heeft
+        int changeInShiftsBetweenWeeks = 10;
+        
         int totalScore = 0;
         ArrayList <Nurse> usedNurses = new ArrayList <Nurse> ();
         if (type == 1) {usedNurses = this.nursesType1;}
@@ -298,7 +300,7 @@ public class MonthlySchedule {
             
 
             int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment
-                    + changeInShiftsPunishment*differences + monthScoreNurse;
+                    + changeInShiftsBetweenWeeks*differences + monthScoreNurse;
             System.out.println(ScoreNurse);
             totalScore += ScoreNurse;
             System.out.println(totalScore);
@@ -341,6 +343,43 @@ public class MonthlySchedule {
         }
         System.out.println("Month score of nurse: " + score);
         return score;
+    }
+    
+    public int patientSatisfaction (int type) {
+        //nurseteam vergelijken per dag, per week. # verschillen optellen en X penalty cost.
+        
+        //for days
+        
+        return 0;
+    }
+    
+    public ArrayList <Nurse> nursesWhoWorkOnDay (int day, int type) {
+        ArrayList <String> monthScheduleNurse = new ArrayList <String> ();
+        ArrayList <Nurse> usedNurses = new ArrayList <Nurse> ();
+        if (type == 1) {usedNurses = this.nursesType1;}
+        else {usedNurses = this.nursesType2;}
+        int counter =0;
+        
+        for (int k = 0; k < usedNurses.size(); k++) { //ga over elke nurse en haal de verschillende schema's op
+            System.out.println("Nurse: " + k);
+            monthScheduleNurse = schedulesSpecificNurse (k,type);
+        
+        for (int i = 0; i < monthScheduleNurse.size(); i++) { //nu over de 4 schema's gaan bij specific nurse
+            System.out.println(monthScheduleNurse.get(i));
+            
+            for (int j = 0; j < 7; j++) {
+                if (monthScheduleNurse.get(i).charAt(j) != 0)
+            }
+            
+            
+            
+            }
+        }
+        System.out.println(counter);System.out.println("");
+        for (Nurse nurse : usedNurses) {
+            System.out.println(nurse);
+        }
+        return null;
     }
     
     public ArrayList <String> schedulesSpecificNurse (int nurseNumber, int type) { //geeft de 4 weekschema's van de nurse die ingegeven is
