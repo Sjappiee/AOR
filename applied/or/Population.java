@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class Population {
     
     private int amountReplications = 2;
-    private int amountSchedules = 1;
     private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
 
     public Population(ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns) {
@@ -23,6 +22,9 @@ public class Population {
             System.out.println(schedule.getAmountNurses1());
             System.out.println(schedule.getAmountNurses2());
             this.wholepopulation.add(schedule);
+            schedule = null;
+            System.out.println("1HTDHTDFJRDEGDKUYTDSGHJGFDSFGHJLKHJGFDSSDFGHJIUTYRTDCVBNKYTRESDCVB");
+
         }
     }
     
