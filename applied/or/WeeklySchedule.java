@@ -202,7 +202,7 @@ public class WeeklySchedule {
                 min = temp [column] [i];
             }
         }
-        System.out.println(min);
+        //System.out.println(min);
         return min;
     }
   
