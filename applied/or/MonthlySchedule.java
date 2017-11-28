@@ -111,6 +111,63 @@ public class MonthlySchedule {
         return randomBit;
     }
     
+    public void fireNurses (){
+        ArrayList <Nurse> nurses = new ArrayList <Nurse>();
+        int amountNurses = 0;
+        String schedule ;
+        ArrayList <Integer> indexesToFire = new ArrayList <Integer>();
+        for (int i = 0; i < 2; i++) { //per type
+             if(i == 0){ //type 1
+                nurses = nursesType1;
+                amountNurses = amountNurses1;
+                schedule = schedule1;
+            }
+            else if (i == 1){ //type 2
+                nurses = nursesType2;
+                amountNurses = amountNurses2;
+                schedule = schedule2;
+            }
+            for (int j = 0; j < amountNurses; j++) {
+                Nurse nurse = nurses.get(j);
+                ArrayList <String> nurseSchedule = schedulesSpecificNurse (j, i);
+                int counter = 0;
+                int k = 0;
+                while(k < 4) {
+                    String weekSchedule = nurseSchedule.get(k);
+                    for (int l = 0; l < weekSchedule.length(); l++) {
+                        if(weekSchedule.charAt(l) == 1 || weekSchedule.charAt(l) == 2 || weekSchedule.charAt(l) == 3){
+                            counter++;
+                            k += 5; //when you find a nurse's first 1/2/3 you can stop the loop cause she can't be fired
+                        }
+                    }
+                    k++;
+                }
+                if(counter == 0){ //fire
+                    indexesToFire.add(j);
+                }
+            }
+            for (int index: indexesToFire) {
+                if(i==0){//type 1
+                    nursesType1.remove(index);
+                    amountNurses1 --;
+                    for (int j = 0; j < 4; j++) {
+                    String temp1 = schedule1.substring(0,index*8 + j*8*(amountNurses1));
+                    String temp2 = schedule1.substring(index*8 + j*(amountNurses1)*8+8,schedule1.length());
+                    schedule1 = temp1 + temp2;
+                    }
+                }
+                if(i==1){//type 2
+                    nursesType2.remove(index);
+                    amountNurses2 --;
+                    for (int j = 0; j < 4; j++) {
+                    String temp1 = schedule2.substring(0,index*8 + j*8*(amountNurses2));
+                    String temp2 = schedule2.substring(index*8 + j*(amountNurses2)*8+8,schedule2.length());
+                    schedule2 = temp1 + temp2;
+                    }
+                }
+            }
+        }
+    }
     
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
         double cost = 0;
