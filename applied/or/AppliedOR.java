@@ -141,14 +141,17 @@ public class AppliedOR {
         System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());System.out.println("");
 //        System.out.println(monthlySchedule.calcCost(2));
 //        monthlySchedule.calcNurseSat(2);
-        monthlySchedule.nursesWhoWorkOnDay(0, 1);
-        monthlySchedule.nursesWhoWorkOnDay(0, 2);
+        monthlySchedule.nursesWhoWorkOnDayInWeek(6, 3, 1);
+        monthlySchedule.nursesWhoWorkOnDayInWeek(6, 3, 2);
+        
+        monthlySchedule.patientSatisfaction(1);
+        monthlySchedule.patientSatisfaction(2);
 //      
 //        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
 //        System.out.println("type1:" + monthlySchedule.getSchedule1());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmount
 //        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-//        System.out.println("type2: " + monthlySchedule.getSchedule2());
-//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
+//        System.out.println("type2: " + monthlySchedule.getSchedule2());Nurses2());
 //        String schema1 = monthlySchedule.getSchedule1();
 //        String schema2 = monthlySchedule.getSchedule2();
 //        ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
