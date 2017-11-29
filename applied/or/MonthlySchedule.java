@@ -21,13 +21,6 @@ public class MonthlySchedule {
     private double [] objectiveWeights = {0.5,0.5,0};
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
-        this.objectiveFunctions = null;
-        this.amountNurses1 = 0;
-        this.amountNurses2 = 0;
-        this.nursesType1 = null;
-        this.nursesType2 = null;
-        this.schedule1 = null;
-        this.schedule2 = null;
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
         String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week/type
         String [] monthSchedule = new String [2]; // per type
@@ -57,6 +50,7 @@ public class MonthlySchedule {
                 int changeOrNot = randomBoolean(100);  //0%kans dat voor week 2 een nieuw schema word opgesteld
                 if(changeOrNot == 1){
                     weeklySchedule.resetBinarySchedule();
+//                    System.out.println(weeklySchedule.getNurses());
                     weeklySchedule.schedulingProcess();
                 }
                 amountPerTypePerWeek [0][i] = weeklySchedule.amountWithType(weeklySchedule.getNurses())[0];
@@ -357,15 +351,10 @@ public class MonthlySchedule {
             
             //door schema i gaan en kijken of deze hetzelfde max waarde heeft als het schema ervoor. Zo niet is het sws slect met zware penalty!!
             int monthScoreNurse = MonthlyPreferenceCalculation(k, type);
-            
-            
-            
-            
-            
 
             int ScoreNurse = breakFreeDaysPunishment*amountOfInteruptions + differenceWorkingDays*lowerWorkratePunishment +AmountOfShiftChanges*changeInShiftsPunishment
                     + changeInShiftsBetweenWeeks*differences + monthScoreNurse;
-            System.out.println(ScoreNurse);
+//            System.out.println(ScoreNurse);
             totalScore += ScoreNurse;
 //            System.out.println(totalScore);
         }
@@ -444,7 +433,7 @@ public class MonthlySchedule {
         }
         
         //for days
-       System.out.println(counter);
+//       System.out.println(counter);
         return (NewNursePenalty*counter);
     }
     

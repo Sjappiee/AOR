@@ -4,7 +4,7 @@ package applied.or;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Nurse {
+public class Nurse implements Cloneable {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 en getShiftType () AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 2;
@@ -17,6 +17,16 @@ public class Nurse {
     private int [] [] MonthlyPreferences; //dit is een 2D array bestaande uit 5 rijen. Elke shift is een rij (vroeg, dag, laat, nacht, vrij) en 28 kolommen (voor elke dag in het schema)
 
 
+    public Nurse(String nr, float employmentRate,int[][] binaryDayPlanning, int type, String preferenceText, int[][] preferences, int[][] monthlyPreferences) {
+        this.nr = nr;
+        this.binaryDayPlanning = binaryDayPlanning;
+        this.employmentRate = employmentRate;
+        this.type = type;
+        this.preferenceText = preferenceText;
+        this.preferences = preferences;
+        this.MonthlyPreferences = monthlyPreferences;
+    }
+    
     public Nurse(String nr, float employmentRate, int type, String preferenceText, int[][] preferences) {
         this.nr = nr;
         this.binaryDayPlanning = null;
@@ -202,5 +212,11 @@ public class Nurse {
     public void setEmploymentRate(float employmentRate) {
         this.employmentRate = employmentRate;
     }
-        
+     
+    @Override
+    public Nurse clone(){
+        Nurse nurse2 = new Nurse(nr, employmentRate, binaryDayPlanning, type, preferenceText, preferences,MonthlyPreferences);
+        return nurse2;
+    }
+    
 }

@@ -21,12 +21,14 @@ import jxl.read.biff.BiffException;
  */
 public class ExcellReader {
     private String inputFile;
-    private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
-    private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+    private ArrayList <Nurse> nurses;
+    private ArrayList <Nurse> workPatterns;
     
     
     public void setInputFile (String inputFile) { //nodig voor inlezen excel document
         this.inputFile = inputFile;
+        this.nurses = new ArrayList <Nurse> ();
+        this.workPatterns = new ArrayList <Nurse> ();
     }
     
     public ArrayList<Nurse> readAllExceptCyclicSchedule (int sheetNr) throws IOException { //methode om alle data in te lezen EN in de nurse objecten te steken
