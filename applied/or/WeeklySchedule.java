@@ -7,9 +7,8 @@ import java.util.Random;
 public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
-    //private ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
-    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
+    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 2;
 
@@ -37,7 +36,7 @@ public class WeeklySchedule {
         prefScoreCalculation ();
         //methode om workrate patterns en nurses te matchen
         for (int k = 0; k < workPatterns.size(); k++) {
-//            System.out.println(workPatterns.get(k));
+            System.out.println("TO ASSIGN: " + workPatterns.get(k));
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             String IDNurse = "";
@@ -54,7 +53,7 @@ public class WeeklySchedule {
 //                    System.out.println(randomIndex);
                 }
                 IDNurse = temp.get(randomIndex).getNr();
-//                System.out.println("completely random: ");
+                System.out.println("completely random: ");
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
@@ -62,7 +61,7 @@ public class WeeklySchedule {
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();
-//                    System.out.println("sub random: ");
+                    System.out.println("sub random: ");
                 }
                 else{
                 //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
@@ -74,15 +73,15 @@ public class WeeklySchedule {
                             IDNurse = nurse.getNr();
                         }   
                 }
-//                System.out.println("optimal: ");
+                System.out.println("optimal: ");
                 }
                 
                 // deze nurse word gekoppeld aan het workpattern
             }
             nurses.get(IDToIndex(IDNurse,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
-//            System.out.print(nurses.get(IDToIndex(IDNurse,nurses)).toString());
-//            System.out.println("");
-//            System.out.println("");
+            System.out.print("CHOSEN: " + nurses.get(IDToIndex(IDNurse,nurses)).toString());
+            System.out.println("");
+            System.out.println("");
             for (int i = 0; i < workPatterns.size(); i++) {
                 prefScores[i][IDToIndex(IDNurse,nurses)] = 1000;
             }
@@ -102,7 +101,7 @@ public class WeeklySchedule {
     public ArrayList <Nurse> possibleNursesList(int scheduleNr){
         ArrayList <Nurse> possibleNursesList = new ArrayList <Nurse> ();
         for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() == EmploymentRateSchedule(scheduleNr)
+            if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()
                     && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                 possibleNursesList.add(nurses.get(i));
             }
@@ -110,7 +109,7 @@ public class WeeklySchedule {
         // als er geen zijn met zelfde, zoek nurses met hogere  
         if (possibleNursesList.isEmpty()) {
             for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
+                if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() >= workPatterns.get(scheduleNr).getEmploymentRate()
                         && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                     possibleNursesList.add(nurses.get(i));
                 }
@@ -119,10 +118,10 @@ public class WeeklySchedule {
         if(possibleNursesList.isEmpty()){
             System.out.println("not enough nurses");
         }
-//        for (Nurse nurse: possibleNursesList){
-//            System.out.println(nurse.toString());
-//        }
-//        System.out.println("");    
+        for (Nurse nurse: possibleNursesList){
+            System.out.println(nurse.toString());
+        }
+        System.out.println("");    
         
         return possibleNursesList;
     }
@@ -132,7 +131,7 @@ public class WeeklySchedule {
         //zoek nurses met zelfde workrate als schedule
             for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
                 for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                    if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == EmploymentRateSchedule(scheduleNr)
+                    if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()
                             && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                         nursesLowScore.add(nurses.get(i));
                     }
@@ -148,7 +147,7 @@ public class WeeklySchedule {
             if (nursesLowScore.isEmpty()) {
                for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
                     for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                        if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= EmploymentRateSchedule(scheduleNr)
+                        if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= workPatterns.get(scheduleNr).getEmploymentRate()
                                 && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                             nursesLowScore.add(nurses.get(i));
                         }
@@ -161,12 +160,11 @@ public class WeeklySchedule {
                     }
                 }
             }
-//        for (Nurse nurse: nursesLowScore){
-//            System.out.println(nurse.toString());
-//        }
-//        System.out.println("");
-            
-            
+        for (Nurse nurse: nursesLowScore){
+            System.out.println(nurse.toString());
+        }
+        System.out.println("");
+   
         return nursesLowScore;
     }
     
@@ -214,7 +212,7 @@ public class WeeklySchedule {
         for (int i = 0; i < workPatterns.size(); i++) {
             int [][] workPattern = workPatterns . get(i).getBinaryDayPlanning();
             //calc workrate for the pattern i
-            double workRate = EmploymentRateSchedule (i);
+            double workRate = workPatterns . get(i).getEmploymentRate();
             //calc prefscores for each nurse for the pattern i
             for (int j = 0; j < nurses.size(); j++) {
                 int[][] nursePref = nurses.get(j).getPreferences();
@@ -246,31 +244,24 @@ public class WeeklySchedule {
        return prefScores;
     }
     
-    public double EmploymentRateSchedule (int scheduleNr) 
-    {
-        ArrayList <Nurse> temp = workPatterns; //we werken met de workpatterns dat ingeladen zijn bij bepaald department bij de creatie van het schedule.
-        double rate = 0 ; 
-        for (int j = 0; j < amountShifts; j++) {
-           for (int i = 0; i < 7; i++) { //in 2 afzonderlijke for lussen
-            rate += temp.get(scheduleNr).getBinaryDayPlanning() [j][i];   
-            } 
-        }
-        //door beide lijnen van de array kolom per kolom gaan en optellen en /4. Hoogste employment rate retourneren (dus telkens gaan we 0 en iets anders hebben)
-        return (rate/rateInDays[0]);
-    }
-    
+        
         public double EmploymentRateSchedule (ArrayList <Nurse> usedList, int scheduleNr) 
     {
         ArrayList <Nurse> temp = usedList; //we werken met de workpatterns dat ingeladen zijn bij bepaald department bij de creatie van het schedule.
-        double rate = 0 ; 
+        double rate = 0 ;
+        double employmentRate = 6;
         //door beide lijnen van de array kolom per kolom gaan en optellen en /4. Hoogste employment rate retourneren (dus telkens gaan we 0 en iets anders hebben)
         for (int j = 0; j < amountShifts; j++) {
             for (int i = 0; i < 7; i++) { 
                 rate += temp.get(scheduleNr).getBinaryDayPlanning() [j][i];   
             }
         }
+        if(rate == rateInDays[0]) employmentRate = 1.00;
+        if(rate == rateInDays[1]) employmentRate = 0.75;
+        if(rate == rateInDays[2]) employmentRate = 0.5;
+        if(rate == rateInDays[3]) employmentRate = 0.25;
 
-        return (rate/rateInDays[0]);
+        return employmentRate;
     }
     
     public void hireNurses (){
@@ -289,15 +280,57 @@ public class WeeklySchedule {
         for (int k = 1; k < 3; k++) { //per type (1,2)
             int [] amountsNurses = amountWithRates (nurses, k);
             int [] amountsPatterns = amountWithRates (workPatterns, k);
-            for (int i = 0; i < 4; i++) { //per rate (100,75,50,25)
-                if(amountsNurses[i] < amountsPatterns[i]){
-                    int amount = amountsPatterns[i] - amountsNurses[i];
+            // 100%
+            int rate = 0;
+            if(amountsNurses[rate] < amountsPatterns[rate]){
+                    int amount = amountsPatterns[rate] - amountsNurses[rate];
                     for (int j = 0; j < amount; j++){ 
-                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[i], k, " ",preferencesWeek, preferencesMonth);
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
                         nurses.add(newNurse);
                     }
                 }
+            // 75%
+            rate = 1;
+            if(amountsNurses[rate] < amountsPatterns[rate]){
+                int amount = amountsPatterns[rate] - amountsNurses[rate];
+                if(amount > (amountsNurses[rate-1] - amountsPatterns[rate-1])){
+                    for (int j = 0; j < amount; j++){ 
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        nurses.add(newNurse);
+                    }
+                 }
             }
+            // 50%
+            rate = 2;
+            if(amountsNurses[rate] < amountsPatterns[rate]){
+                int amount = amountsPatterns[rate] - amountsNurses[rate];
+                if(amount > (amountsNurses[rate-1] - amountsPatterns[rate-1] + amountsNurses[rate-2] - amountsPatterns[rate-2])){
+                    for (int j = 0; j < amount; j++){ 
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        nurses.add(newNurse);
+                    }
+                 }
+            }
+            // 25%
+            rate = 3;
+            if(amountsNurses[rate] < amountsPatterns[rate]){
+                int amount = amountsPatterns[rate] - amountsNurses[rate];
+                if(amount > (amountsNurses[rate-1] - amountsPatterns[rate-1] + amountsNurses[rate-2] - amountsPatterns[rate-2] + amountsNurses[rate-3] - amountsPatterns[rate-3] )){
+                    for (int j = 0; j < amount; j++){ 
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        nurses.add(newNurse);
+                    }
+                 }
+            }
+//            for (int i = 0; i < 4; i++) { //per rate (100,75,50,25)
+//                if(amountsNurses[i] < amountsPatterns[i]){
+//                    int amount = amountsPatterns[i] - amountsNurses[i];
+//                    for (int j = 0; j < amount; j++){ 
+//                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[i], k, " ",preferencesWeek, preferencesMonth);
+//                        nurses.add(newNurse);
+//                    }
+//                }
+//            }
         }
 //        for (Nurse nurse: nurses) {
 //            System.out.println(nurse);
@@ -309,23 +342,59 @@ public class WeeklySchedule {
         int [][] temp = prefScores;
         for (int k = 1; k < 3; k++) { // voor nurse type 1 en 2
             int [] amountsNurses = amountWithRates (nurses, k);
-            for (int i = 0; i < 3; i++) { //voor elke rate die gesplitst kan worden 
-                int [] amountsPatterns = amountWithRates (workPatterns, k);
-                if(amountsNurses[i] < amountsPatterns[i]){ //check of er gesplitst moet worden
-                    //welke schedules je gaat splitsen
+            // rate 100%
+            int rate = 0;
+            int [] amountsPatterns = amountWithRates (workPatterns, k);
+            if(amountsNurses[rate] < amountsPatterns[rate]){ //check of er gesplitst moet worden
 //                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
-                    int amountToSplit = amountsPatterns[i] - amountsNurses[i];
-                    String [] patternsSplit = getPatternsToSplit (temp,k,i, amountToSplit);
-                    //splits
-                    splitPatterns(patternsSplit,k,i);
-                    
-                    //herbereken prefscores om volgende rate te kunnen splitsen
-                 prefScoreCalculation ();
-                temp = prefScores;                   
-                    
-                }
-                
+                int amountToSplit = amountsPatterns[rate] - amountsNurses[rate];
+                String [] patternsSplit = getPatternsToSplit (temp,k,rate, amountToSplit);
+                splitPatterns(patternsSplit,k,rate);
+                prefScoreCalculation ();
+                temp = prefScores;                      
             }
+            // rate 75%
+            rate = 1;
+            amountsPatterns = amountWithRates (workPatterns, k);
+            if(amountsNurses[rate] < amountsPatterns[rate]){ //check of er gesplitst moet worden
+//                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
+                int amountToSplit = amountsPatterns[rate] - amountsNurses[rate];
+                if(amountToSplit > (amountsNurses[rate-1] - amountsPatterns[rate-1])){
+                    String [] patternsSplit = getPatternsToSplit (temp,k,rate, amountToSplit);
+                    splitPatterns(patternsSplit,k,rate);
+                    prefScoreCalculation ();
+                    temp = prefScores;
+                }
+            }
+            // rate 50%
+            rate = 2;
+            amountsPatterns = amountWithRates (workPatterns, k);
+            if(amountsNurses[rate] < amountsPatterns[rate]){ //check of er gesplitst moet worden
+//                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
+                int amountToSplit = amountsPatterns[rate] - amountsNurses[rate];
+                if(amountToSplit > ((amountsNurses[rate-1] - amountsPatterns[rate-1])+(amountsNurses[rate-2] - amountsPatterns[rate-2]))){
+                    String [] patternsSplit = getPatternsToSplit (temp,k,rate, amountToSplit);
+                    splitPatterns(patternsSplit,k,rate);
+                    prefScoreCalculation (); 
+                 }
+            }
+//            for (int i = 0; i < 3; i++) { //voor elke rate die gesplitst kan worden 
+//                int [] amountsPatterns = amountWithRates (workPatterns, k);
+//                if(amountsNurses[i] < amountsPatterns[i]){ //check of er gesplitst moet worden
+//                    //welke schedules je gaat splitsen
+////                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
+//                    int amountToSplit = amountsPatterns[i] - amountsNurses[i];
+//                    String [] patternsSplit = getPatternsToSplit (temp,k,i, amountToSplit);
+//                    //splits
+//                    splitPatterns(patternsSplit,k,i);
+//                    
+//                    //herbereken prefscores om volgende rate te kunnen splitsen
+//                 prefScoreCalculation ();
+//                temp = prefScores;                   
+//                    
+//                }
+//                
+//            }
         }
     }
     
@@ -453,7 +522,7 @@ public class WeeklySchedule {
 //                System.out.println("indexes: " + temp.get(i).getIndexof1());
 //                System.out.println("shiftType: " + temp.get(i).getShiftType());
 //                System.out.println("indexes of TOETEVOEGEN: " + temp.get(j).getAllIndexesOf1());
-                if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType() && temp.get(j).getType()== temp.get(i).getType() && temp.get(j).getAllIndexesOf1().size() < 4) {//indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
+                if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType() && temp.get(j).getType()== temp.get(i).getType() && temp.get(j).getAllIndexesOf1().size() < rateInDays[0]) {//indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
                     
                     
                     temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
@@ -474,9 +543,12 @@ public class WeeklySchedule {
         for (int i = 0; i < temp.size(); i++) {
             workPatterns.add(temp.get(i));
         }
-//        for(Nurse nurse:temp){
-//            System.out.println(nurse);
-//        }
+        System.out.println("AFTER RECOMBINE: ");
+        for(Nurse nurse:workPatterns){
+            System.out.println(nurse);
+        }
+        System.out.println("");
+        System.out.println("");
     }   
     
     public ArrayList <Nurse> searchQuarterSchedules () {
@@ -639,30 +711,32 @@ public class WeeklySchedule {
         
         for (int i = 0; i < temp.size(); i++) { //nu voor elke string van 14 delen juist toevoegen
         //beide = 0, eerste = 0 en tweede niet, tweede = 0 en eerste niet
-            for (int j = 0; j < 7; j++) {
-               if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0' /* && temp.get(i).charAt(j+14) == '0' */)
-               {
-                   output+= "0";
-               }
-               else if (temp.get(i).charAt(j) == '1' && temp.get(i).charAt(j+7) == '0' /* && temp.get(i).charAt(j+14) == '0' */) 
-               {
-                   output+= "1";
-               }
-               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '1' /* && temp.get(i).charAt(j+14) == '0' */) 
-               {
-                   output+= "2";
-               }
+            if(temp.get(i).equals("")){
+                output+= "0000000*";
+            }
+            else{
+                for (int j = 0; j < 7; j++) {
+                    if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0' /* && temp.get(i).charAt(j+14) == '0' */){
+                        output+= "0";
+                    }
+                    else if (temp.get(i).charAt(j) == '1' && temp.get(i).charAt(j+7) == '0' /* && temp.get(i).charAt(j+14) == '0' */){ 
+                        output+= "1";
+                    }
+                    else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '1' /* && temp.get(i).charAt(j+14) == '0' */){ 
+                        output+= "2";
+                    }
                //SHIFTSYSTEM:3 => alles uit comment zetten in if's + de if hieronder
-//               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0' /* && temp.get(i).charAt(j+14) == '1' */) 
-//               {
+//               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0' /* && temp.get(i).charAt(j+14) == '1' */){ 
 //                   output+= "3";
 //               }
+                }
+                output += "*";
             }
-            output += "*";
         }
         return output;
     }  
-        public int randomBoolean (int probOnOne){
+        
+    public int randomBoolean (int probOnOne){
         int randomBit = 0;
         float prob1 = probOnOne/10;
         int temp = new Random().nextInt(10);

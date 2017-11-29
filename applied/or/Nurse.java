@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Nurse implements Cloneable {
-    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 en getShiftType () AANPASSEN
+    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! LIJN 670 en getShiftType () AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 2;
+    
     private String nr;
     private int [] [] binaryDayPlanning; //[shift][day]
     private float employmentRate;

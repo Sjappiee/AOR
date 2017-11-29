@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MonthlySchedule {
-    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
-    float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
-    int amountShifts = 2;
-    private String schedule1; //type1
+    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
     private double [][] wages1 = {{324,240},{437.4,324}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
-    private String schedule2; //type2
     private double [][] wages2 = {{243,180},{328.05,243}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
     private double fixedAdmCost = 100000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
     private int shiftHours = 12;  //!!SHIFTSYSTEM
+    int amountShifts = 2;
+    
+    float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};    
+    private String schedule1; //type1
+    private String schedule2; //type2
     private int amountNurses1 = 0;
     private int amountNurses2 = 0;
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();

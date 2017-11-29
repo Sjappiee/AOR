@@ -18,22 +18,22 @@ public class AppliedOR {
        }*/
        
         ExcellReader test = new ExcellReader ();
-        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
+        test.setInputFile("C:\\TEST AOR\\input 2x12 5-2 .xls");
       
-      /*  System.out.println(test.searchFirstRowNurse(3));
-        System.out.println(test.searchLastRowNurse(3));
-        System.out.println("");
-        System.out.println(test.searchFirstRowWorkSchedule(3));
-        System.out.println(test.searchLastRowWorkSchedule(3));
-       */
+//        System.out.println(test.searchFirstRowNurse(3));
+//        System.out.println(test.searchLastRowNurse(3));
+//        System.out.println("");
+//        System.out.println(test.searchFirstRowWorkSchedule(3));
+//        System.out.println(test.searchLastRowWorkSchedule(3));
+       
 
-       /*test.giveNurseNumber(1,14);
-       test.giveBinaryDayPlanning(1,14);
-       test.giveEmploymentRate(1,14);
-       test.giveType(1,14);
-       test.givePref(1,14);
-       test.giveNumbPref(1,14);
-       */
+//        System.out.println(test.giveNurseNumber(1,14));
+//       System.out.println(test.giveBinaryDayPlanning(1,14));
+//       System.out.println(test.giveEmploymentRate(1,14));
+//       System.out.println(test.giveType(1,14));
+//       System.out.println(test.givePref(1,14));
+//       System.out.println(test.giveNumbPref(1,14));
+       
        
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
@@ -41,7 +41,7 @@ public class AppliedOR {
         nursesD = test.readAllExceptCyclicSchedule(0);  
         workPatternsD = test.readWorkPatterns(0);
    
-//        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
+        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
 //        System.out.println("type1:" + monthlySchedule.getSchedule1());
 //        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
 //        System.out.println("type2: " + monthlySchedule.getSchedule2());
@@ -57,8 +57,8 @@ public class AppliedOR {
 //        monthlySchedule.patientSatisfaction(2);
 
         
-        Population population = new Population (nursesD,workPatternsD);
-        population.giveOptimal();
+//        Population population = new Population (nursesD,workPatternsD);
+//        population.giveOptimal();
             
 //        ExcellWriter PrintOplossing = new ExcellWriter();
 //        PrintOplossing.writeScheduleToExcel(nursesType1, nursesType2, schema1, schema2, 0);

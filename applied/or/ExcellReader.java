@@ -23,6 +23,7 @@ public class ExcellReader {
     private String inputFile;
     private ArrayList <Nurse> nurses;
     private ArrayList <Nurse> workPatterns;
+    int [] rateInDays = {5,4,3,2}; // SHIFTSYSTEM
     
     
     public void setInputFile (String inputFile) { //nodig voor inlezen excel document
@@ -460,19 +461,19 @@ public class ExcellReader {
         }
         
         public float calcPatternRate (int [] [] dayPlanning){
-            int rateInDays = 0;
+            int rateInDaysint = 0;
             double rate = 0;
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 2; j++) {
                     if(dayPlanning[j][i] == 1){
-                        rateInDays++;
+                        rateInDaysint++;
                     }
                 }
             }
-            if(rateInDays == 4) rate = 1.0; // afhankelijk van SHIFTSYSTEM
-            if(rateInDays == 3) rate = 0.75;
-            if(rateInDays == 2) rate = 0.50;
-            if(rateInDays == 1) rate = 0.25;
+            if(rateInDaysint == rateInDays[0]) rate = 1.0; // afhankelijk van SHIFTSYSTEM
+            if(rateInDaysint == rateInDays[1]) rate = 0.75;
+            if(rateInDaysint == rateInDays[2]) rate = 0.50;
+            if(rateInDaysint == rateInDays[3]) rate = 0.25;
             
             return (float)rate;
         }
