@@ -301,7 +301,7 @@ public class MonthlySchedule {
                         counter++;
                     }
                 }
-                differenceWorkingDays += (int) ((usedNurses.get(k).getEmploymentRate()*4) - counter);
+                differenceWorkingDays += (int) ((usedNurses.get(k).getEmploymentRate()*rateInDays[0]) - counter);
             }
         
 //            System.out.println("Total working days less than nurse wanted: " + differenceWorkingDays);
