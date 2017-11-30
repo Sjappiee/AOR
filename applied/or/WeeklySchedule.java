@@ -8,7 +8,7 @@ public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
-    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
+    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! LIJN tistring AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 2;
 
@@ -422,38 +422,44 @@ public class WeeklySchedule {
                                     counter1++;
                                 }
                                 else{
-                                    int counter2 = 0;
 //                            System.out.println("s1= "+ restPatterns[sequence[i]][counter2]);
 //                            System.out.println("s2= "+ restPatterns[sequence[i]][counter2]);
 //                            System.out.println("already in rest= "+ getAmountShiftsRest (restPatterns, counter2, 14));
-                                    while (restPatterns[sequence[i]][counter2] == 1 || restPatterns[sequence[i]][counter2] == 1 || getAmountShiftsRest (restPatterns, counter2, 7*amountShifts) == shiftDays){
-                                        counter2++;
-                                    }
-                                    restPatterns[sequence[i]][counter2] = 1;
+                                    int counter2 = 0;
+
+                                        while (restPatterns[sequence[i]][counter2] == 1 || getAmountShiftsRest (restPatterns, counter2, 7*amountShifts) == shiftDays){
+                                            counter2++;
+                                        }
+                                        restPatterns[sequence[i]][counter2] = 1;
+                                    
 //                            System.out.println("rest(" + sequence[i] + "," + counter2 + ") = "+ restPatterns[sequence[i]][counter2]);
- 
+                                    
                                 }
                             }
                         }
                         
-                    }
+                    
                 }
+            }
             Nurse pattern = new Nurse(getNewIDPattern (),calcPatternRate(newPattern), newPattern, type);
             workPatterns.add(pattern);
             workPatterns.remove(IDToIndex(patternID,workPatterns));
+            
         }
         //maak pattern uit de restjes
-        for (int j = 0; j < getLengthArray(restPatterns,amountShifts*7,100); j++) {
-            int [][] newPattern = new int [amountShifts][7];
+        for (int j = 0; j < getLengthArray(restPatterns,amountShifts*7,100); j++) {            
             for (int s = 0; s < amountShifts; s++) {
+                int [][] newPattern = new int [amountShifts][7];
                 for (int l = s*7; l < 7*(s+1); l++) {
                     int a = s*7;
                     int b = 7*(s+1);
                      newPattern [s][l-s*7] = restPatterns[l][j];
                 }
-            }
-            Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
+                System.out.println(calcPatternRate(newPattern));
+           Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
             workPatterns.add(newPattern2);
+            }
+
         }
 //        System.out.println("AFTER SPLIT FOR RATE: " + rate);
 //        for(Nurse nurse: workPatterns){
@@ -461,6 +467,7 @@ public class WeeklySchedule {
 //        }
 //        System.out.println("");
     }
+
     
     public String [] getPatternsToSplit ( int [][] temp, int type, int rate, int amountToSplit){ //temp = prefScores, maar waarin word aangepast
 //        System.out.println(rate + " " + amountToSplit); 
@@ -503,11 +510,11 @@ public class WeeklySchedule {
         int indexFirstRest = searchFirstIndexOfRestSchedules();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
         
-//        System.out.println("LIJST MET RESTSCHEMA'S");
-//        for (Nurse nurse : temp) {
-//            System.out.println(nurse);
-//        }
-//        System.out.println("");
+        System.out.println("LIJST MET RESTSCHEMA'S");
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
+        System.out.println("");
         //lijst met .25 proberen hercombineren tot schema's
 
         for (int j = 0; j < temp.size(); j++) {
