@@ -23,7 +23,7 @@ public class ExcellReader {
     private String inputFile;
     private ArrayList <Nurse> nurses;
     private ArrayList <Nurse> workPatterns;
-    int [] rateInDays = {5,4,3,2}; // SHIFTSYSTEM
+    int [] rateInDays = {4,3,2,1}; //AANPASSEN NAAR SHIFTSYSTEM
     
     
     public void setInputFile (String inputFile) { //nodig voor inlezen excel document

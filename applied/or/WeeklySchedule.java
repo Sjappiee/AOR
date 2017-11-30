@@ -8,9 +8,9 @@ public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
-    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
+    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
-    int amountShifts = 2;
+    int amountShifts = 2; //uniek per lijn!
 
     public WeeklySchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
@@ -444,16 +444,18 @@ public class WeeklySchedule {
         }
         //maak pattern uit de restjes
         for (int j = 0; j < getLengthArray(restPatterns,amountShifts*7,100); j++) {
-            int [][] newPattern = new int [amountShifts][7];
+            
             for (int s = 0; s < amountShifts; s++) {
+                int [][] newPattern = new int [amountShifts][7];
                 for (int l = s*7; l < 7*(s+1); l++) {
                     int a = s*7;
                     int b = 7*(s+1);
                      newPattern [s][l-s*7] = restPatterns[l][j];
                 }
+                Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
+                workPatterns.add(newPattern2);
             }
-            Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
-            workPatterns.add(newPattern2);
+
         }
 //        System.out.println("AFTER SPLIT FOR RATE: " + rate);
 //        for(Nurse nurse: workPatterns){

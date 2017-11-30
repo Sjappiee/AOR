@@ -18,7 +18,7 @@ public class AppliedOR {
        }*/
        
         ExcellReader test = new ExcellReader ();
-        test.setInputFile("C:\\TEST AOR\\input 2x12 5-2 .xls");
+        test.setInputFile("C:\\TEST AOR\\4-9_2x12.xls");
       
 //        System.out.println(test.searchFirstRowNurse(3));
 //        System.out.println(test.searchLastRowNurse(3));
@@ -42,6 +42,9 @@ public class AppliedOR {
         workPatternsD = test.readWorkPatterns(0);
    
         MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
+
+        monthlySchedule.fireNurses(2);
+        //monthlySchedule.calcNurseSat(1);
 //        System.out.println("type1:" + monthlySchedule.getSchedule1());
 //        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
 //        System.out.println("type2: " + monthlySchedule.getSchedule2());
