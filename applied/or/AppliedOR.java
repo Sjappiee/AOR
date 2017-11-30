@@ -37,14 +37,17 @@ public class AppliedOR {
        
         ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
-
+//
         nursesD = test.readAllExceptCyclicSchedule(0);  
         workPatternsD = test.readWorkPatterns(0);
-   
-        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
-
-        monthlySchedule.fireNurses(2);
-        //monthlySchedule.calcNurseSat(1);
+//   
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
+//
+//        monthlySchedule.fireNurses(1);
+//        monthlySchedule.fireNurses(2);
+//        monthlySchedule.calcNurseSat(1);
+//        monthlySchedule.calcTotalObjectiveFunction();
+//        monthlySchedule.patientSatisfaction(2);
 //        System.out.println("type1:" + monthlySchedule.getSchedule1());
 //        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
 //        System.out.println("type2: " + monthlySchedule.getSchedule2());
@@ -60,8 +63,8 @@ public class AppliedOR {
 //        monthlySchedule.patientSatisfaction(2);
 
         
-//        Population population = new Population (nursesD,workPatternsD);
-//        population.giveOptimal();
+        Population population = new Population (nursesD,workPatternsD); System.out.println(""); System.out.println("");System.out.println("Optimal method");
+        population.giveOptimal();
             
 //        ExcellWriter PrintOplossing = new ExcellWriter();
 //        PrintOplossing.writeScheduleToExcel(nursesType1, nursesType2, schema1, schema2, 0);

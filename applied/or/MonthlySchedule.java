@@ -19,7 +19,7 @@ public class MonthlySchedule {
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
     private int [][] objectiveFunctions = new int [2][3]; //per type, 3obj functions
-    private double [] objectiveWeights = {0.5,0.5,0};
+    private double [] objectiveWeights = {0.3,0.3,0.4};
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
@@ -48,7 +48,7 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(0);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                int changeOrNot = randomBoolean(100);  //0%kans dat voor week 2 een nieuw schema word opgesteld
                 if(changeOrNot == 1){
                     weeklySchedule.resetBinarySchedule();
 //                    System.out.println(weeklySchedule.getNurses());

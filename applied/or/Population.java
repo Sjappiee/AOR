@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Population {
     
-    private int amountReplications = 2;
+    private int amountReplications = 50;
     private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
 
     public Population(ArrayList<Nurse> nursesExcel,ArrayList<Nurse> workPatternsExcel) {
@@ -25,8 +25,10 @@ public class Population {
             System.out.println("MONTH: " + (i+1) );
             System.out.println("SCHEDULE1: " + schedule.getSchedule1());
             System.out.println("SCHEDULE2: " + schedule.getSchedule2());
+            System.out.println("DIFFERENT SCORES: ");
+            double score = schedule.calcTotalObjectiveFunction();
             schedule = null;
-
+            System.out.println(""); System.out.println("");
         }
     }
     

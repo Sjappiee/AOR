@@ -36,7 +36,7 @@ public class WeeklySchedule {
         prefScoreCalculation ();
         //methode om workrate patterns en nurses te matchen
         for (int k = 0; k < workPatterns.size(); k++) {
-            System.out.println("TO ASSIGN: " + workPatterns.get(k));
+//            System.out.println("TO ASSIGN: " + workPatterns.get(k));
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             String IDNurse = "";
@@ -53,7 +53,7 @@ public class WeeklySchedule {
 //                    System.out.println(randomIndex);
                 }
                 IDNurse = temp.get(randomIndex).getNr();
-                System.out.println("completely random: ");
+//                System.out.println("completely random: ");
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
@@ -61,7 +61,7 @@ public class WeeklySchedule {
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();
-                    System.out.println("sub random: ");
+//                    System.out.println("sub random: ");
                 }
                 else{
                 //nu uit deze lijst zoeken naar de nurse die het moeilijkste in te plannen is (dus de max prefscore som voor alle workpatterns heeft)
@@ -73,15 +73,15 @@ public class WeeklySchedule {
                             IDNurse = nurse.getNr();
                         }   
                 }
-                System.out.println("optimal: ");
+////                System.out.println("optimal: ");
                 }
                 
                 // deze nurse word gekoppeld aan het workpattern
             }
             nurses.get(IDToIndex(IDNurse,nurses)).setBinaryDayPlanning(workPatterns.get(k).getBinaryDayPlanning());
-            System.out.print("CHOSEN: " + nurses.get(IDToIndex(IDNurse,nurses)).toString());
-            System.out.println("");
-            System.out.println("");
+//            System.out.print("CHOSEN: " + nurses.get(IDToIndex(IDNurse,nurses)).toString());
+//            System.out.println("");
+//            System.out.println("");
             for (int i = 0; i < workPatterns.size(); i++) {
                 prefScores[i][IDToIndex(IDNurse,nurses)] = 1000;
             }
@@ -118,11 +118,11 @@ public class WeeklySchedule {
         if(possibleNursesList.isEmpty()){
             System.out.println("not enough nurses");
         }
-        for (Nurse nurse: possibleNursesList){
-            System.out.println(nurse.toString());
-        }
-        System.out.println("");    
-        
+//        for (Nurse nurse: possibleNursesList){
+//            System.out.println(nurse.toString());
+//        }
+//        System.out.println("");    
+//        
         return possibleNursesList;
     }
        
@@ -160,11 +160,11 @@ public class WeeklySchedule {
                     }
                 }
             }
-        for (Nurse nurse: nursesLowScore){
-            System.out.println(nurse.toString());
-        }
-        System.out.println("");
-   
+//        for (Nurse nurse: nursesLowScore){
+//            System.out.println(nurse.toString());
+//        }
+//        System.out.println("");
+//   
         return nursesLowScore;
     }
     
@@ -545,12 +545,12 @@ public class WeeklySchedule {
         for (int i = 0; i < temp.size(); i++) {
             workPatterns.add(temp.get(i));
         }
-        System.out.println("AFTER RECOMBINE: ");
-        for(Nurse nurse:workPatterns){
-            System.out.println(nurse);
-        }
-        System.out.println("");
-        System.out.println("");
+//        System.out.println("AFTER RECOMBINE: ");
+//        for(Nurse nurse:workPatterns){
+//            System.out.println(nurse);
+//        }
+//        System.out.println("");
+//        System.out.println("");
     }   
     
     public ArrayList <Nurse> searchQuarterSchedules () {
