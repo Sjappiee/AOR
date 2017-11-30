@@ -8,9 +8,9 @@ public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
-    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! LIJN tistring AANPASSEN
+    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
-    int amountShifts = 2;
+    int amountShifts = 2; //uniek per lijn!
 
     public WeeklySchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
         this.nurses = nurses;
@@ -25,10 +25,10 @@ public class WeeklySchedule {
     }
     
     public void allProcesses (){
-        addaptSchedule ();
-        recombineQuarterSchedules();
-        hireNurses();
-        schedulingProcess();
+        addaptSchedule ();System.out.println("adapt done");
+        recombineQuarterSchedules();System.out.println("recomb done");
+        hireNurses();System.out.println("hire done");
+        schedulingProcess();System.out.println("schedule done");
     }
     
     public void schedulingProcess (){
@@ -447,7 +447,8 @@ public class WeeklySchedule {
             
         }
         //maak pattern uit de restjes
-        for (int j = 0; j < getLengthArray(restPatterns,amountShifts*7,100); j++) {            
+        for (int j = 0; j < getLengthArray(restPatterns,amountShifts*7,100); j++) {
+            
             for (int s = 0; s < amountShifts; s++) {
                 int [][] newPattern = new int [amountShifts][7];
                 for (int l = s*7; l < 7*(s+1); l++) {
@@ -455,9 +456,8 @@ public class WeeklySchedule {
                     int b = 7*(s+1);
                      newPattern [s][l-s*7] = restPatterns[l][j];
                 }
-                System.out.println(calcPatternRate(newPattern));
-           Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
-            workPatterns.add(newPattern2);
+                Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
+                workPatterns.add(newPattern2);
             }
 
         }

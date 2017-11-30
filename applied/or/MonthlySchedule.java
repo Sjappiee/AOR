@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MonthlySchedule {
-    int [] rateInDays = {5,4,3,2}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
+    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
     private double [][] wages1 = {{324,240},{437.4,324}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
     private double [][] wages2 = {{243,180},{328.05,243}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
-    private double fixedAdmCost = 100000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
+    private double fixedAdmCost = 60000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
     private int shiftHours = 12;  //!!SHIFTSYSTEM
-    int amountShifts = 2;
+    int amountShifts = 2; //of 3
     
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};    
     private String schedule1; //type1
@@ -48,7 +48,7 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(100);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                int changeOrNot = randomBoolean(0);  //0%kans dat voor week 2 een nieuw schema word opgesteld
                 if(changeOrNot == 1){
                     weeklySchedule.resetBinarySchedule();
 //                    System.out.println(weeklySchedule.getNurses());
@@ -94,6 +94,10 @@ public class MonthlySchedule {
         this.schedule2 =   monthSchedule [1];
         this.nursesType1 = temp1.getNurses();
         this.nursesType2 = temp2.getNurses();
+        System.out.println("scheduel 1: " +schedule1);
+        System.out.println("Amount of nurses type 1: " + amountNurses1);
+        System.out.println("schedule 2: " + schedule2);
+        System.out.println("Amount of nurses type 2: " + amountNurses2);
     }
     
     public int randomBoolean (int probOnOne){
@@ -106,64 +110,65 @@ public class MonthlySchedule {
         return randomBit;
     }
     
-    public void fireNurses (){
+    public void fireNurses (int type){
         ArrayList <Nurse> nurses = new ArrayList <Nurse>();
         int amountNurses = 0;
-        String schedule ;
-        ArrayList <Integer> indexesToFire = new ArrayList <Integer>();
-        for (int i = 0; i < 2; i++) { //per type
-             if(i == 0){ //type 1
+        String schedule = "";
+        ArrayList <Integer> indexesToFire = new ArrayList <Integer> ();
+       
+             if(type == 1){ //type 1
                 nurses = nursesType1;
-                amountNurses = amountNurses1;
+                amountNurses = this.amountNurses1;
                 schedule = schedule1;
             }
-            else if (i == 1){ //type 2
+            else if (type == 2){ //type 2
                 nurses = nursesType2;
-                amountNurses = amountNurses2;
+                amountNurses = this.amountNurses2;
                 schedule = schedule2;
             }
-            for (int j = 0; j < amountNurses; j++) {
-                Nurse nurse = nurses.get(j);
-                ArrayList <String> nurseSchedule = schedulesSpecificNurse (j, i);
+             
+             System.out.println("PRE FIRE SCHEDULE" + schedule);
+
+            for (int j = 0; j < nurses.size(); j++) {
+                ArrayList <String> nurseSchedule = schedulesSpecificNurse (j, type);
                 int counter = 0;
-                int k = 0;
-                while(k < 4) {
-                    String weekSchedule = nurseSchedule.get(k);
-                    for (int l = 0; l < weekSchedule.length(); l++) {
-                        if(weekSchedule.charAt(l) == 1 || weekSchedule.charAt(l) == 2 || weekSchedule.charAt(l) == 3){
-                            counter++;
-                            k += 5; //when you find a nurse's first 1/2/3 you can stop the loop cause she can't be fired
-                        }
-                    }
-                    k++;
+                for (int l = 0; l < nurseSchedule.size(); l++) {
+                    if(nurseSchedule.get(l).equalsIgnoreCase("0000000"))
+                        counter++;
                 }
-                if(counter == 0){ //fire
+                if(counter == 4){ //fire
                     indexesToFire.add(j);
                 }
+            } 
+  
+            int nursesFired = 0;
+
+
+            for (int f =0 ; f<indexesToFire.size(); f++) {
+                //type 1
+                     String temp1 = schedule.substring(0,(indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)); //begin tot eerste onderbreking OK
+                    String temp2 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)+8, (indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)+8 +1*8*(amountNurses-1)); //alle nurses tot volgende punt
+                    String temp3 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 1*8*(amountNurses)+8, (indexesToFire.get(f)-nursesFired)*8 + 1*8*(amountNurses)+8 +1*8*(amountNurses-1)); //alle nurses tot volgende punt
+                    String temp4 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 2*8*(amountNurses)+8, (indexesToFire.get(f)-nursesFired)*8 + 2*8*(amountNurses)+8 +1*8*(amountNurses-1));  //alle nurses tot volgende punt
+                    String temp5 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 2*8*(amountNurses)+8 +1*8*(amountNurses-1)+8); 
+                    
+                    schedule = temp1 + temp2+temp3 + temp4 + temp5;
+                    
+                    nurses.remove(indexesToFire.get(f)-nursesFired);
+                    amountNurses --;
+                    nursesFired++;   
             }
-            for (int index: indexesToFire) {
-                if(i==0){//type 1
-                    nursesType1.remove(index);
-                    amountNurses1 --;
-                    for (int j = 0; j < 4; j++) {
-                    String temp1 = schedule1.substring(0,index*8 + j*8*(amountNurses1));
-                    String temp2 = schedule1.substring(index*8 + j*(amountNurses1)*8+8,schedule1.length());
-                    schedule1 = temp1 + temp2;
-                    }
-                }
-                if(i==1){//type 2
-                    nursesType2.remove(index);
-                    amountNurses2 --;
-                    for (int j = 0; j < 4; j++) {
-                    String temp1 = schedule2.substring(0,index*8 + j*8*(amountNurses2));
-                    String temp2 = schedule2.substring(index*8 + j*(amountNurses2)*8+8,schedule2.length());
-                    schedule2 = temp1 + temp2;
-                    }
-                }
+            if (type==1) {
+                amountNurses1=amountNurses;
+                schedule1=schedule;
             }
+            else if (type == 2) {
+                amountNurses2= amountNurses;
+                schedule2 = schedule;
+            }  System.out.println("output schedule: " + schedule);
+            System.out.println("Constructor schedule: " + schedule2);
         }
-    }
-    
+
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
         double cost = 0;
         int labourHoursWeek = 0;
@@ -207,6 +212,22 @@ public class MonthlySchedule {
         return cost;
     }
 
+    public void test () {
+        for (Nurse nurse : nursesType1) {
+            System.out.println(nurse);
+        } System.out.println(""); System.out.println("");
+        for (int i=0;i<nursesType1.size();i++) {
+            System.out.println("nurse " + nursesType1.get(i).getNr());
+            ArrayList <String> temp = new ArrayList <String> ();
+            temp = schedulesSpecificNurse(i, 1);
+            for (String string : temp) {
+                System.out.println(string);
+            }System.out.println("");
+        }System.out.println("");
+        
+
+    }
+    
     public int calcNurseSat (int type){ //later opdelen in verschillende methodes. Don't be a Tine
         ArrayList <String> monthScheduleNurse = new ArrayList <String> ();
         int breakFreeDaysPunishment = 20;
@@ -457,21 +478,20 @@ public class MonthlySchedule {
     }
     
     public ArrayList <String> schedulesSpecificNurse (int nurseNumber, int type) { //geeft de 4 weekschema's van de nurse die ingegeven is
-        int amountOfNurses;
+        int amountOfNurses=0;
         String schedule = null;
         ArrayList <String> temp = new ArrayList <String> ();
         
         if (type == 1)
         {
             amountOfNurses = this.amountNurses1;
-            schedule = schedule1;
+            schedule = this.schedule1;
         }
-        else 
+        else if (type ==2)
         {
            amountOfNurses = this.amountNurses2;
            schedule = this.schedule2;
         }
-
         for (int i = 0; i < 4; i++) {
             temp.add(schedule.substring(nurseNumber*8 + i*8*(amountOfNurses), nurseNumber*8 + i*(amountOfNurses)*8+7));
         }
