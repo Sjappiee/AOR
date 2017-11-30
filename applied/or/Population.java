@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Population {
     
-    private int amountReplications = 50;
+    private int amountReplications = 1000;
     private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
 
     public Population(ArrayList<Nurse> nursesExcel,ArrayList<Nurse> workPatternsExcel) {

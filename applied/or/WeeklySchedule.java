@@ -378,23 +378,6 @@ public class WeeklySchedule {
                     prefScoreCalculation (); 
                  }
             }
-//            for (int i = 0; i < 3; i++) { //voor elke rate die gesplitst kan worden 
-//                int [] amountsPatterns = amountWithRates (workPatterns, k);
-//                if(amountsNurses[i] < amountsPatterns[i]){ //check of er gesplitst moet worden
-//                    //welke schedules je gaat splitsen
-////                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
-//                    int amountToSplit = amountsPatterns[i] - amountsNurses[i];
-//                    String [] patternsSplit = getPatternsToSplit (temp,k,i, amountToSplit);
-//                    //splits
-//                    splitPatterns(patternsSplit,k,i);
-//                    
-//                    //herbereken prefscores om volgende rate te kunnen splitsen
-//                 prefScoreCalculation ();
-//                temp = prefScores;                   
-//                    
-//                }
-//                
-//            }
         }
     }
     
@@ -448,16 +431,17 @@ public class WeeklySchedule {
         }
         //maak pattern uit de restjes
         for (int j = 0; j < getLengthArray(restPatterns,amountShifts*7,100); j++) {
-            
             for (int s = 0; s < amountShifts; s++) {
-                int [][] newPattern = new int [amountShifts][7];
+                int [][] newPattern= new int [amountShifts][7];
                 for (int l = s*7; l < 7*(s+1); l++) {
-                    int a = s*7;
-                    int b = 7*(s+1);
-                     newPattern [s][l-s*7] = restPatterns[l][j];
+                    if(restPatterns[l][j] == 1){
+                        newPattern = new int [amountShifts][7];
+                        newPattern [s][l-s*7] = restPatterns[l][j];
+                        Nurse newPattern2 = new Nurse (getNewIDPattern (),(float) 0.25,newPattern,type);
+                        workPatterns.add(newPattern2);
+                    }
                 }
-                Nurse newPattern2 = new Nurse (getNewIDPattern (),calcPatternRate(newPattern),newPattern,type);
-                workPatterns.add(newPattern2);
+                
             }
 
         }
@@ -510,11 +494,11 @@ public class WeeklySchedule {
         int indexFirstRest = searchFirstIndexOfRestSchedules();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
         
-        System.out.println("LIJST MET RESTSCHEMA'S");
-        for (Nurse nurse : temp) {
-            System.out.println(nurse);
-        }
-        System.out.println("");
+//        System.out.println("LIJST MET RESTSCHEMA'S");
+//        for (Nurse nurse : temp) {
+//            System.out.println(nurse);
+//        }
+//        System.out.println("");
         //lijst met .25 proberen hercombineren tot schema's
 
         for (int j = 0; j < temp.size(); j++) {
