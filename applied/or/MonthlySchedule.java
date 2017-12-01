@@ -23,6 +23,7 @@ public class MonthlySchedule {
     private int optimalCost = 0;
     private int optimalNurseSat = 0;
     private int optimalPatientSat = 0;
+    private int optimalTotalScore = 0;
 
 
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
@@ -611,6 +612,11 @@ public class MonthlySchedule {
     public int getOptimalPatientSat() {
         return optimalPatientSat;
     }
+
+    public int getOptimalTotalScore() {
+        return (optimalCost+optimalNurseSat+optimalPatientSat);
+    }
+    
     
     
 }
