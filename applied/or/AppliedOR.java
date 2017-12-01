@@ -37,19 +37,46 @@ public class AppliedOR {
 //       System.out.println(test.giveType(1,14));
 //       System.out.println(test.givePref(1,14));
 //       System.out.println(test.giveNumbPref(1,14));
-       for(int department : departments){
-            ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
-            ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
-            nurses = test.readAllExceptCyclicSchedule(department);  
-            workPatterns = test.readWorkPatterns(department);
-            for (int percantageNotCyclic : percantagesNotCyclic) {
+        
+        double minTotaal = 10000000;
+        double minCostTotaal = 10000000;
+        double minNurseSatTotaal = 10000000;
+        double minPatientSatTotaal = 10000000;
+        int optimalPercantageNotCyclic;
+        int optimalPercentageRandomWeekly;
+        int optimalPercentageSubrandomWeekly;
+        MonthlySchedule [] optimalSchedules = new MonthlySchedule [4]; //per department
+        for (int percantageNotCyclic : percantagesNotCyclic) {
                for (int percentageRandomWeekly : percentagesRandomWeekly){
-                   for()
+                   for(int percentageSubrandomWeekly : percentagesSubrandomWeekly){
+                      double totalScore=0;
+                      MonthlySchedule [] schedules = new MonthlySchedule [4]; //per department
+                      for(int department : departments){
+                        ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+                        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+                        nurses = test.readAllExceptCyclicSchedule(department);  
+                        workPatterns = test.readWorkPatterns(department);
+                        Population population = new Population (nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly,percantageNotCyclic); System.out.println(""); System.out.println("");System.out.println("Optimal method");
+                        totalScore += population.giveOptimal().calcTotalObjectiveFunction();
+                        minCostTotaal += 
+                        schedules [department] = population.giveOptimal();
+                      } 
+                      if(totalScore < minTotaal){
+                        optimalPercantageNotCyclic = percantageNotCyclic;
+                        optimalPercentageRandomWeekly = percentageRandomWeekly;
+                        optimalPercentageSubrandomWeekly = percentageSubrandomWeekly;
+                        minTotaal = totalScore;
+                        minCostTotaal = 
+                          for (int i = 0; i < 4; i++) { //per department
+                              optimalSchedules = schedules;
+                          }
+                        
+                      }
+                      
+                   }
                }
-                   
-           }
-       }
-       
+        }
+     
 //   
 //        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
 //
@@ -74,8 +101,6 @@ public class AppliedOR {
 //        monthlySchedule.patientSatisfaction(2);
 
         
-        Population population = new Population (nursesD,workPatternsD,0,0,0); System.out.println(""); System.out.println("");System.out.println("Optimal method");
-        population.giveOptimal();System.out.println("EIND");
             
 //        ExcellWriter PrintOplossing = new ExcellWriter();
 //        PrintOplossing.writeScheduleToExcel(nursesType1, nursesType2, schema1, schema2, 0);
