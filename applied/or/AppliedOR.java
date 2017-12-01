@@ -18,7 +18,7 @@ public class AppliedOR {
        }*/
        
         ExcellReader test = new ExcellReader ();
-        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
+        test.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
       
 //        System.out.println(test.searchFirstRowNurse(3));
 //        System.out.println(test.searchLastRowNurse(3));
