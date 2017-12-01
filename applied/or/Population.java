@@ -13,22 +13,19 @@ import java.util.ArrayList;
  */
 public class Population {
     
-    private int amountReplications = 1000;
+    private int amountReplications = 100;
     private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
+     int percentageRandomWeekly;
+     int percentageSubrandomWeekly;
+     int percantageNotCyclic;
 
-    public Population(ArrayList<Nurse> nursesExcel,ArrayList<Nurse> workPatternsExcel) {
+    public Population(ArrayList<Nurse> nursesExcel,ArrayList<Nurse> workPatternsExcel,  int percentageRandomWeekly, int percentageSubrandomWeekly, int percantageNotCyclic) {
         for (int i = 0; i < amountReplications; i++) {
             ArrayList<Nurse> nurses = cloneList(nursesExcel);
             ArrayList<Nurse> workPatterns = cloneList(workPatternsExcel);
-            MonthlySchedule schedule = new MonthlySchedule(nurses,workPatterns);
-            this.wholepopulation.add(schedule);
-            System.out.println("MONTH: " + (i+1) );
-            System.out.println("SCHEDULE1: " + schedule.getSchedule1());
-            System.out.println("SCHEDULE2: " + schedule.getSchedule2());
-            System.out.println("DIFFERENT SCORES: ");
-            double score = schedule.calcTotalObjectiveFunction();
+            MonthlySchedule schedule = new MonthlySchedule(nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly, percantageNotCyclic);
+            this.wholepopulation.add(schedule);  
             schedule = null;
-            System.out.println(""); System.out.println("");
         }
     }
     
@@ -38,15 +35,21 @@ public class Population {
         int scheduleNr = -1;
         for (MonthlySchedule schedule: wholepopulation) {
             System.out.println("schedule: " + (wholepopulation.indexOf(schedule)+1));
+            System.out.println("SCHEDULE1: " + schedule.getSchedule1());
+            System.out.println("SCHEDULE2: " + schedule.getSchedule2());
+            System.out.println("DIFFERENT SCORES: ");
             double score = schedule.calcTotalObjectiveFunction();
             System.out.println("score: " + score);
             if(score < min){
                 min = score;
                 scheduleNr = wholepopulation.indexOf(schedule);
             }
+            System.out.println("");
+            System.out.println("");
         }
         System.out.println("optimal schedule index:" + scheduleNr);
         System.out.println("with a min score of: " + min);
+        
         return wholepopulation.get(scheduleNr);
     }
     

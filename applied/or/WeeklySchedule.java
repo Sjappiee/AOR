@@ -11,11 +11,15 @@ public class WeeklySchedule {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 2; //uniek per lijn!
+    int percentageRandomWeekly;
+    int percentageSubrandomWeekly;
 
-    public WeeklySchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns) {
+    public WeeklySchedule(ArrayList<Nurse> nurses, ArrayList<Nurse> workPatterns, int percentageRandomWeekly, int percentageSubrandomWeekly) {
         this.nurses = nurses;
         this.workPatterns = workPatterns;
-        this.prefScores = null;   
+        this.prefScores = null;
+        this.percentageRandomWeekly = percentageRandomWeekly;
+        this.percentageSubrandomWeekly = percentageSubrandomWeekly;
     }
     
     public WeeklySchedule(ArrayList<Nurse> nurses) {
@@ -44,7 +48,7 @@ public class WeeklySchedule {
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
             String IDNurse = "";
-            int randomOrNot = randomBoolean(50); //20% kans op een random schedule
+            int randomOrNot = randomBoolean(percentageRandomWeekly); //20% kans op een random schedule
             if(randomOrNot == 1){
                 ArrayList <Nurse> temp= possibleNursesList(k);
                 int randomIndex = 0;
@@ -61,7 +65,7 @@ public class WeeklySchedule {
             }
             else{
                 ArrayList <Nurse> temp = listMinScore(k);        // lijst met nurses die min prefscores bij een bepaald workpattern
-                int subRandomOrNot = randomBoolean(50); //35% kans op een random schedule
+                int subRandomOrNot = randomBoolean(percentageSubrandomWeekly); //35% kans op een random schedule
                 if(subRandomOrNot == 1){
                     int randomIndex2 = new Random().nextInt(temp.size());
                     IDNurse = temp.get(randomIndex2).getNr();

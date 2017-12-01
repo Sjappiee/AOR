@@ -64,7 +64,7 @@ public class AppliedOR {
 //        monthlySchedule.patientSatisfaction(2);
 
         
-        Population population = new Population (nursesD,workPatternsD); System.out.println(""); System.out.println("");System.out.println("Optimal method");
+        Population population = new Population (nursesD,workPatternsD,0,0,0); System.out.println(""); System.out.println("");System.out.println("Optimal method");
         population.giveOptimal();System.out.println("EIND");
             
 //        ExcellWriter PrintOplossing = new ExcellWriter();

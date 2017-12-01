@@ -20,14 +20,20 @@ public class MonthlySchedule {
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
     private int [][] objectiveFunctions = new int [2][3]; //per type, 3obj functions
     private double [] objectiveWeights = {0.1,0.6,0.3};
+     int percentageRandomWeekly;
+     int percentageSubrandomWeekly;
+     int percantageNotCyclic;
     
-    public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
+    public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns, int percentageRandomWeekly, int percentageSubrandomWeekly, int percantageNotCyclic){ // weekly schedule waar alle nurses al assigned zijn aan patterns
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
         String [] [] monthScheduleArray = new String [2][4]; // nodig voor verschillen in aantal nurses/week/type
         String [] monthSchedule = new String [2]; // per type
         WeeklySchedule temp1 = null;
         WeeklySchedule temp2 = null;
-        WeeklySchedule weeklySchedule = new WeeklySchedule (nurses,workPatterns);
+        this.percentageRandomWeekly = percentageRandomWeekly;
+        this.percentageSubrandomWeekly = percentageSubrandomWeekly;
+        this.percantageNotCyclic = percantageNotCyclic;
+        WeeklySchedule weeklySchedule = new WeeklySchedule (nurses,workPatterns,percentageRandomWeekly, percentageSubrandomWeekly);
         
         //week1,2,3,4
         for (int i = 0; i < 4; i++) {
@@ -48,7 +54,7 @@ public class MonthlySchedule {
                 monthScheduleArray [1][i] = temp2.ScheduleToString();
             }
             else{   //week 2,3,4
-                int changeOrNot = randomBoolean(100);  //0%kans dat voor week 2 een nieuw schema word opgesteld
+                int changeOrNot = randomBoolean(percantageNotCyclic);  //0%kans dat voor week 2 een nieuw schema word opgesteld
                 if(changeOrNot == 1){
                     weeklySchedule.resetBinarySchedule();
 //                    System.out.println(weeklySchedule.getNurses());
