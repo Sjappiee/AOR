@@ -19,7 +19,7 @@ public class MonthlySchedule {
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
     private int [][] objectiveFunctions = new int [2][3]; //per type, 3obj functions
-    private double [] objectiveWeights = {0.1,0.6,0.3};
+    private double [] objectiveWeights = {1,1,1};
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns){ // weekly schedule waar alle nurses al assigned zijn aan patterns
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
@@ -504,11 +504,14 @@ public class MonthlySchedule {
     public int [][] calcObjectiveFunctions () {
         for (int i = 0; i < 2; i++) { //per type
             System.out.println("TYPE:" + i);
-            objectiveFunctions [i][0] = (int) calcCost (i+1); //als i=0 dan type 1, als i=1 dan type 2
+            objectiveFunctions [i][0] = (int) ((calcCost (i+1))/200); //als i=0 dan type 1, als i=1 dan type 2
             System.out.println("Cost: " + objectiveFunctions [i][0]);
             objectiveFunctions [i][1] = calcNurseSat (i+1);
             System.out.println("NurseSat: " + objectiveFunctions [i][1]);
-            objectiveFunctions [i][2] = patientSatisfaction(i+1); // berekening maar ook nog deel laten samenhangen met nurse satisfaction!
+            int temp1 = objectiveFunctions [i][1];
+            int temp2 = patientSatisfaction(i+1);
+            int result = temp1 + temp2;
+            objectiveFunctions [i][2] = result; // berekening maar ook nog deel laten samenhangen met nurse satisfaction!
             System.out.println("PatientSat: " + objectiveFunctions [i][2]);
         }
         return objectiveFunctions;
