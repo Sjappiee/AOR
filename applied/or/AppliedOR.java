@@ -9,6 +9,7 @@ public class AppliedOR {
  
     public static void main(String[] args) throws IOException, WriteException {
         java.util.Locale.setDefault(new java.util.Locale("en", "US"));
+        int [] percantagesNotCyclic = {100,75,50,25,0};
     /*    Process process = new Process();
        Department depA = new Department ('A',32);
        process.read_personnel_characteristics('A',32);
