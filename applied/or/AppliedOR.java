@@ -15,10 +15,10 @@ public class AppliedOR {
 //        int [] percentagesSubrandomWeekly = {100,50,0};
 
         int [] percantagesNotCyclic = {100,75,50,25,0};
-        int [] percentagesRandomWeekly = {50};
-        int [] percentagesSubrandomWeekly = {50};
+        int [] percentagesRandomWeekly = {100,50,0};
+        int [] percentagesSubrandomWeekly = {100,50,0};
         int [] departments = {0,1,2,3};
-        int amountReplications = 5;
+        int amountCombinations = 5;
     /*    Process process = new Process();
        Department depA = new Department ('A',32);
        process.read_personnel_characteristics('A',32);
@@ -48,13 +48,14 @@ public class AppliedOR {
         int optimalPercantageNotCyclic=0;
         int optimalPercentageRandomWeekly=0;
         int optimalPercentageSubrandomWeekly=0;
+        MonthlySchedule [] optimalMonth = new MonthlySchedule [4];
         
-        double [] [] Cost = new double [amountReplications][4];
-        double [] [] NurseSat = new double [amountReplications][4];
-        double [] [] PatientSat = new double [amountReplications][4];
-        double [] [] Total = new double [amountReplications][4];
-        String [][] Schedules1 = new String [amountReplications][4];
-        String [][] Schedules2 = new String [amountReplications][4];
+        double [] [] Cost = new double [amountCombinations][4];
+        double [] [] NurseSat = new double [amountCombinations][4];
+        double [] [] PatientSat = new double [amountCombinations][4];
+        double [] [] Total = new double [amountCombinations][4];
+        String [][] Schedules1 = new String [amountCombinations][4];
+        String [][] Schedules2 = new String [amountCombinations][4];
 
         ArrayList <String> schedule = new ArrayList<>();
         int i =0;
@@ -99,11 +100,12 @@ public class AppliedOR {
                         minCostTotal = totalCost;
                         minNurseSatTotal = totalNurseSat;
                         minPatientSatTotal = totalPatientSat;
+                        
                               for (int j = 0; j < 4; j++) {
                               SchedulesOutput[0][j] = schedules[j].getSchedule1();
                               SchedulesOutput[1][j] = schedules[j].getSchedule2();
+                              optimalMonth [j] = schedules [j];
                           }
-
                       }
                     i++;
                        System.out.println(i);
@@ -115,28 +117,28 @@ public class AppliedOR {
         for (int j = 0; j < 4; j++) {
             System.out.println("FINAL OUTPUT DEPARTMENT " + j);
             System.out.println("COST");
-            for (int k = 0; k < amountReplications; k++) {
+            for (int k = 0; k < amountCombinations; k++) {
              System.out.println(Cost [k][j]);   
             }
             System.out.println("NURSESSAT");
-            for (int k = 0; k < amountReplications; k++) {
+            for (int k = 0; k < amountCombinations; k++) {
              System.out.println(NurseSat [k][j]);   
             }
             System.out.println("Patient Sat");
-            for (int k = 0; k < amountReplications; k++) {
+            for (int k = 0; k < amountCombinations; k++) {
              System.out.println(PatientSat [k][j]);   
             }
             System.out.println("Total " );
-            for (int k = 0; k < amountReplications; k++) {
+            for (int k = 0; k < amountCombinations; k++) {
              System.out.println(Total [k][j]);   
             }           
             
-            String [] [] Schedules = new String [amountReplications][4];
+            String [] [] Schedules = new String [amountCombinations][4];
             for (int k = 0; k < 2; k++) {
                 System.out.println("Schedule of Type: " + k);
                 if(k==0)Schedules = Schedules1;
                 if(k==1)Schedules = Schedules2;
-                for (int l = 0; l < amountReplications; l++) {
+                for (int l = 0; l < amountCombinations; l++) {
                     System.out.println(Schedules[l][j]);
                 }
             }
@@ -151,13 +153,24 @@ public class AppliedOR {
         System.out.println("minNurseSatTotal " + minNurseSatTotal);
         System.out.println("minPatientSatTotal " + minPatientSatTotal);
         
+        
+        
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 2; k++) {
                 System.out.println("DEPARTEMENET " + j );
                 System.out.println("Type " + k);
                 System.out.println(SchedulesOutput[k][j]);
             }
+           
+            ArrayList<Nurse> Nurses1 = optimalMonth[j].getNursesType1();
+            ArrayList<Nurse> Nurses2 = optimalMonth[j].getNursesType2();
+            String schema1 = optimalMonth[j].getSchedule1();
+            String schema2 = optimalMonth[j].getSchedule2();
+            int dep = j;
+            ExcellWriter test2 = new ExcellWriter();
+            test2.writeShiftToExcel(Nurses1, Nurses2, schema1, schema2, dep);
         }
+        
         
         
 //     
