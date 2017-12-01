@@ -29,10 +29,14 @@ public class WeeklySchedule {
     }
     
     public void allProcesses (){
-        addaptSchedule ();System.out.println("adapt done");
-        recombineQuarterSchedules();System.out.println("recomb done");
-        hireNurses();System.out.println("hire done");
-        schedulingProcess();System.out.println("schedule done");
+        addaptSchedule ();
+//        System.out.println("adapt done");
+        recombineQuarterSchedules();
+//        System.out.println("recomb done");
+        hireNurses();
+//        System.out.println("hire done");
+        schedulingProcess();
+//        System.out.println("schedule done");
     }
     
     public void schedulingProcess (){

@@ -106,10 +106,10 @@ public class MonthlySchedule {
         this.schedule2 =   monthSchedule [1];
         this.nursesType1 = temp1.getNurses();
         this.nursesType2 = temp2.getNurses();
-        System.out.println("scheduel 1: " +schedule1);
-        System.out.println("Amount of nurses type 1: " + amountNurses1);
-        System.out.println("schedule 2: " + schedule2);
-        System.out.println("Amount of nurses type 2: " + amountNurses2);
+//        System.out.println("scheduel 1: " +schedule1);
+//        System.out.println("Amount of nurses type 1: " + amountNurses1);
+//        System.out.println("schedule 2: " + schedule2);
+//        System.out.println("Amount of nurses type 2: " + amountNurses2);
     }
     
     public int randomBoolean (int probOnOne){
@@ -139,7 +139,7 @@ public class MonthlySchedule {
                 schedule = schedule2;
             }
              
-             System.out.println("PRE FIRE SCHEDULE" + schedule);
+//             System.out.println("PRE FIRE SCHEDULE" + schedule);
 
             for (int j = 0; j < nurses.size(); j++) {
                 ArrayList <String> nurseSchedule = schedulesSpecificNurse (j, type);
@@ -177,8 +177,9 @@ public class MonthlySchedule {
             else if (type == 2) {
                 amountNurses2= amountNurses;
                 schedule2 = schedule;
-            }  System.out.println("output schedule: " + schedule);
-            System.out.println("Constructor schedule: " + schedule2);
+            }  
+//System.out.println("output schedule: " + schedule);
+//            System.out.println("Constructor schedule: " + schedule2);
         }
 
     public double calcCost (int type){ //toepasbaar op schedule1 en schedule2
@@ -224,22 +225,22 @@ public class MonthlySchedule {
         optimalCost = (int) cost/200;
         return cost/200;
     }
-
-    public void test () {
-        for (Nurse nurse : nursesType1) {
-            System.out.println(nurse);
-        } System.out.println(""); System.out.println("");
-        for (int i=0;i<nursesType1.size();i++) {
-            System.out.println("nurse " + nursesType1.get(i).getNr());
-            ArrayList <String> temp = new ArrayList <String> ();
-            temp = schedulesSpecificNurse(i, 1);
-            for (String string : temp) {
-                System.out.println(string);
-            }System.out.println("");
-        }System.out.println("");
-        
-
-    }
+//
+//    public void test () {
+//        for (Nurse nurse : nursesType1) {
+////            System.out.println(nurse);
+//////        } System.out.println(""); System.out.println("");
+//        for (int i=0;i<nursesType1.size();i++) {
+//            System.out.println("nurse " + nursesType1.get(i).getNr());
+//            ArrayList <String> temp = new ArrayList <String> ();
+//            temp = schedulesSpecificNurse(i, 1);
+//            for (String string : temp) {
+//                System.out.println(string);
+//            }System.out.println("");
+//        }System.out.println("");
+//        
+//
+//    }
     
     public int calcNurseSat (int type){ //later opdelen in verschillende methodes. Don't be a Tine
         ArrayList <String> monthScheduleNurse = new ArrayList <String> ();
@@ -518,13 +519,13 @@ public class MonthlySchedule {
 //    }
     public int [][] calcObjectiveFunctions () {
         for (int i = 0; i < 2; i++) { //per type
-            System.out.println("TYPE:" + i);
+//            System.out.println("TYPE:" + i);
             objectiveFunctions [i][0] = (int) ((calcCost (i+1))); //als i=0 dan type 1, als i=1 dan type 2
-            System.out.println("Cost: " + objectiveFunctions [i][0]);
+//            System.out.println("Cost: " + objectiveFunctions [i][0]);
             objectiveFunctions [i][1] = calcNurseSat (i+1);
-            System.out.println("NurseSat: " + objectiveFunctions [i][1]);
+//            System.out.println("NurseSat: " + objectiveFunctions [i][1]);
             objectiveFunctions [i][2] = patientSatisfaction(i+1); // berekening maar ook nog deel laten samenhangen met nurse satisfaction!
-            System.out.println("PatientSat: " + objectiveFunctions [i][2]);
+//            System.out.println("PatientSat: " + objectiveFunctions [i][2]);
         }
         return objectiveFunctions;
     }
@@ -537,7 +538,7 @@ public class MonthlySchedule {
                 total += objectiveFunctions [i][j] * objectiveWeights[j];
             }
         }
-        System.out.println("TOTALSCORE: " + total);
+//        System.out.println("TOTALSCORE: " + total);
         return total;
     }
     

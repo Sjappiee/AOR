@@ -71,10 +71,10 @@ public class AppliedOR {
                         ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
                         nurses = test.readAllExceptCyclicSchedule(department);  
                         workPatterns = test.readWorkPatterns(department);
-                        Population population = new Population (nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly,percantageNotCyclic); System.out.println(""); System.out.println("");System.out.println("Optimal method");
+                        Population population = new Population (nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly,percantageNotCyclic); 
+//                        System.out.println(""); System.out.println("");System.out.println("Optimal method");
                         population.giveOptimal();
                         totalScore += population.getOptimalSchedule().getOptimalTotalScore();
-                          System.out.println(population.getOptimalSchedule().getOptimalTotalScore());
                         totalCost += population.getOptimalSchedule().getOptimalCost();
                         totalNurseSat += population.getOptimalSchedule().getOptimalNurseSat();
                         totalPatientSat += population.getOptimalSchedule().getOptimalPatientSat();
@@ -124,6 +124,12 @@ public class AppliedOR {
             for (int k = 0; k < 10; k++) {
              System.out.println(Total [k][j]);   
             }           
+            
+            for (int k = 0; k < 2; k++) {
+                for (int l = 0; l < 10; l++) {
+                    
+                }
+            }
         }
         
         System.out.println("WINNAAR ");
