@@ -19,10 +19,15 @@ public class MonthlySchedule {
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
     private int [][] objectiveFunctions = new int [2][3]; //per type, 3obj functions
-    private double [] objectiveWeights = {0.1,0.6,0.3};
-     int percentageRandomWeekly;
-     int percentageSubrandomWeekly;
-     int percantageNotCyclic;
+    private double [] objectiveWeights = {0.20,0.6,0.1}; //cost, nurse, patient
+    private int optimalCost = 0;
+    private int optimalNurseSat = 0;
+    private int optimalPatientSat = 0;
+    private int percentageRandomWeekly;
+    private int percentageSubrandomWeekly;
+    private int percantageNotCyclic;
+
+
     
     public MonthlySchedule (ArrayList<Nurse> nurses,ArrayList<Nurse> workPatterns, int percentageRandomWeekly, int percentageSubrandomWeekly, int percantageNotCyclic){ // weekly schedule waar alle nurses al assigned zijn aan patterns
         int [] [] amountPerTypePerWeek = new int [2][4]; //type 1 and 2
@@ -215,6 +220,7 @@ public class MonthlySchedule {
         //administrative costs
         cost += fixedAdmCost + labourHoursWeek + labourHoursWeekend;
 //        System.out.println("COST: " + cost);
+        optimalCost = (int) cost;
         return cost;
     }
 
@@ -394,7 +400,8 @@ public class MonthlySchedule {
 //        alle dagen werken dat je wil? Dus schema = ER?  OK 
 //        veranderen in shiften?
 //        System.out.println("NURSESAT: " + totalScore);
-        return totalScore;
+    optimalNurseSat=totalScore;    
+    return totalScore;
     }
     
     
@@ -462,6 +469,7 @@ public class MonthlySchedule {
         
         //for days
 //       System.out.println(counter);
+        optimalPatientSat = (NewNursePenalty*counter);
         return (NewNursePenalty*counter);
     }
     
@@ -514,7 +522,7 @@ public class MonthlySchedule {
             System.out.println("Cost: " + objectiveFunctions [i][0]);
             objectiveFunctions [i][1] = calcNurseSat (i+1);
             System.out.println("NurseSat: " + objectiveFunctions [i][1]);
-            int temp1 = objectiveFunctions [i][1];
+            int temp1 = (int) (0.5*objectiveFunctions [i][1]);
             int temp2 = patientSatisfaction(i+1);
             int result = temp1 + temp2;
             objectiveFunctions [i][2] = result; // berekening maar ook nog deel laten samenhangen met nurse satisfaction!
@@ -597,6 +605,18 @@ public class MonthlySchedule {
 
     public ArrayList<Nurse> getNursesType2() {
         return nursesType2;
+    }
+    
+        public int getOptimalCost() {
+        return optimalCost;
+    }
+
+    public int getOptimalNurseSat() {
+        return optimalNurseSat;
+    }
+
+    public int getOptimalPatientSat() {
+        return optimalPatientSat;
     }
     
     

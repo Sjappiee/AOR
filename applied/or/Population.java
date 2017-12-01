@@ -13,11 +13,9 @@ import java.util.ArrayList;
  */
 public class Population {
     
-    private int amountReplications = 100;
+    private int amountReplications = 10000;
     private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
-     int percentageRandomWeekly;
-     int percentageSubrandomWeekly;
-     int percantageNotCyclic;
+    private MonthlySchedule optimalSchedule = null;
 
     public Population(ArrayList<Nurse> nursesExcel,ArrayList<Nurse> workPatternsExcel,  int percentageRandomWeekly, int percentageSubrandomWeekly, int percantageNotCyclic) {
         for (int i = 0; i < amountReplications; i++) {
@@ -49,7 +47,7 @@ public class Population {
         }
         System.out.println("optimal schedule index:" + scheduleNr);
         System.out.println("with a min score of: " + min);
-        
+        optimalSchedule =wholepopulation.get(scheduleNr);
         return wholepopulation.get(scheduleNr);
     }
     
@@ -61,6 +59,18 @@ public class Population {
     }
     return cloneList;
 }
+
+    public int getAmountReplications() {
+        return amountReplications;
+    }
+
+    public ArrayList<MonthlySchedule> getWholepopulation() {
+        return wholepopulation;
+    }
+
+    public MonthlySchedule getOptimalSchedule() {
+        return optimalSchedule;
+    }
  
 
     

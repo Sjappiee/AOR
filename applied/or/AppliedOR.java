@@ -39,9 +39,9 @@ public class AppliedOR {
 //       System.out.println(test.giveNumbPref(1,14));
         
         double minTotaal = 10000000;
-        double minCostTotaal = 10000000;
-        double minNurseSatTotaal = 10000000;
-        double minPatientSatTotaal = 10000000;
+        double minCostTotal = 10000000;
+        double minNurseSatTotal = 10000000;
+        double minPatientSatTotal = 10000000;
         int optimalPercantageNotCyclic;
         int optimalPercentageRandomWeekly;
         int optimalPercentageSubrandomWeekly;
@@ -50,6 +50,9 @@ public class AppliedOR {
                for (int percentageRandomWeekly : percentagesRandomWeekly){
                    for(int percentageSubrandomWeekly : percentagesSubrandomWeekly){
                       double totalScore=0;
+                      double totalCost = 0;
+                      double totalNurseSat = 0;
+                      double totalPatientSat = 0;
                       MonthlySchedule [] schedules = new MonthlySchedule [4]; //per department
                       for(int department : departments){
                         ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
@@ -57,16 +60,21 @@ public class AppliedOR {
                         nurses = test.readAllExceptCyclicSchedule(department);  
                         workPatterns = test.readWorkPatterns(department);
                         Population population = new Population (nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly,percantageNotCyclic); System.out.println(""); System.out.println("");System.out.println("Optimal method");
-                        totalScore += population.giveOptimal().calcTotalObjectiveFunction();
-                        minCostTotaal += 
+                        population.giveOptimal();
+                        //totalScore += population.getOptimalSchedule().g;
+                        totalCost += population.getOptimalSchedule().getOptimalCost();
+                        totalNurseSat += population.getOptimalSchedule().getOptimalNurseSat();
+                        totalPatientSat += population.getOptimalSchedule().getOptimalPatientSat();
                         schedules [department] = population.giveOptimal();
                       } 
                       if(totalScore < minTotaal){
                         optimalPercantageNotCyclic = percantageNotCyclic;
                         optimalPercentageRandomWeekly = percentageRandomWeekly;
                         optimalPercentageSubrandomWeekly = percentageSubrandomWeekly;
-                        minTotaal = totalScore;
-                        minCostTotaal = 
+                        minTotal = totalScore;
+                        minCostTotal = totalCost;
+                        minNurseSatTotal = totalNurseSat;
+                        minPatientSatTotal = totalPatientSat;
                           for (int i = 0; i < 4; i++) { //per department
                               optimalSchedules = schedules;
                           }
