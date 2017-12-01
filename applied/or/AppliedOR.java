@@ -12,8 +12,8 @@ public class AppliedOR {
         java.util.Locale.setDefault(new java.util.Locale("en", "US"));
 
         int [] percantagesNotCyclic = {100,75,50,25,0};
-        int [] percentagesRandomWeekly = {50,};
-        int [] percentagesSubrandomWeekly = {50};
+        int [] percentagesRandomWeekly = {100,50,0};
+        int [] percentagesSubrandomWeekly = {100,50,0};
         int [] departments = {0,1,2,3};
         int amountCombinations = 50;
 
