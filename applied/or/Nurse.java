@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Nurse implements Cloneable {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 en getShiftType () AANPASSEN als we met 3 shifts werken!
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
-    int amountShifts = 2; //uniek per systeem
+    int amountShifts = 3; //uniek per systeem
     
     private String nr;
     private int [] [] binaryDayPlanning; //[shift][day]
@@ -192,6 +192,8 @@ public class Nurse implements Cloneable {
     public int getShiftType () {
         int counter1 =0;
         int counter2 = 0;
+        int counter3 = 0;
+        ArrayList <Integer> counters = new ArrayList <Integer> ();
         for (int i = 0; i < 7; i++) {
             if (BinaryPlanningToString().charAt(i) == '1'){ //tellen hoeveel x 1 en 2 in een werkschema staat
             counter1++;
@@ -201,13 +203,30 @@ public class Nurse implements Cloneable {
             if (BinaryPlanningToString().charAt(i) == '1'){
                 counter2++;
             }
-        }            
-        if (counter1 > counter2){
-            return 1;
         }
-        else{
-            return 2;
+        //3de shift
+        for (int i = 14; i < 21; i++) {
+            if (BinaryPlanningToString().charAt(i) == '1'){
+                counter3++;
+            }
         }
+        counters.add(counter1);
+        counters.add(counter2);
+        counters.add(counter3);
+        
+        int min = counters.get(0);
+        int shift = 0;
+        
+        for (int i = 0; i < amountShifts; i++) {
+            if (counters.get(i)<= min)
+            {
+                min = counters.get(i);
+                shift = i+1;
+                       
+            }
+        }
+        
+        return shift;
     }
 
     public void setEmploymentRate(float employmentRate) {

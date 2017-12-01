@@ -7,7 +7,11 @@ public class MonthlySchedule {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
     private double [][] wages1 = {{324,240},{437.4,324}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
     private double [][] wages2 = {{243,180},{328.05,243}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
-    private double fixedAdmCost = 60000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
+    // 2x12 4-3: wages1 = {{324,240},{437.4,324}},wages2 = {{243,180},{328.05,243}}
+    // 3x9 5-2: wages1 = {{216,160,176},{291.6,216,237.6}}, wages2 = {{162,120,132},{218.7,162,178.2}}
+    // 2x12 5-2: wages1 = {{324,240,264},{437.4,324,356.4}},wages2 = {{243,180,198},{328.05,243,267.3}}
+    // 3x9 4-3: wages1 = {{216,160},{291.6,216}}, wages2 = {{162,120},{218.7,162}}
+    private double fixedAdmCost = 100000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
     private int shiftHours = 12;  //!!SHIFTSYSTEM
     int amountShifts = 2; //of 3
     
