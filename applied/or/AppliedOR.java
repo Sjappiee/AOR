@@ -10,6 +10,9 @@ public class AppliedOR {
     public static void main(String[] args) throws IOException, WriteException {
         java.util.Locale.setDefault(new java.util.Locale("en", "US"));
         int [] percantagesNotCyclic = {100,75,50,25,0};
+        int [] percentagesRandomWeekly = {100,75,50,25,0};
+        int [] percentagesSubrandomWeekly = {100,75,50,25,0};
+        int [] departments = {0,1,2,3};
     /*    Process process = new Process();
        Department depA = new Department ('A',32);
        process.read_personnel_characteristics('A',32);
@@ -34,13 +37,19 @@ public class AppliedOR {
 //       System.out.println(test.giveType(1,14));
 //       System.out.println(test.givePref(1,14));
 //       System.out.println(test.giveNumbPref(1,14));
+       for(int department : departments){
+            ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+            ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+            nurses = test.readAllExceptCyclicSchedule(department);  
+            workPatterns = test.readWorkPatterns(department);
+            for (int percantageNotCyclic : percantagesNotCyclic) {
+               for (int percentageRandomWeekly : percentagesRandomWeekly){
+                   for()
+               }
+                   
+           }
+       }
        
-       
-        ArrayList <Nurse> nursesD = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
-        ArrayList <Nurse> workPatternsD = new ArrayList <Nurse> ();
-//
-        nursesD = test.readAllExceptCyclicSchedule(0);  
-        workPatternsD = test.readWorkPatterns(0);
 //   
 //        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
 //
