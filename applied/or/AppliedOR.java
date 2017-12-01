@@ -38,7 +38,7 @@ public class AppliedOR {
 //       System.out.println(test.givePref(1,14));
 //       System.out.println(test.giveNumbPref(1,14));
         
-        double minTotaal = 10000000;
+        double minTotal = 10000000;
         double minCostTotal = 10000000;
         double minNurseSatTotal = 10000000;
         double minPatientSatTotal = 10000000;
@@ -61,13 +61,13 @@ public class AppliedOR {
                         workPatterns = test.readWorkPatterns(department);
                         Population population = new Population (nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly,percantageNotCyclic); System.out.println(""); System.out.println("");System.out.println("Optimal method");
                         population.giveOptimal();
-                        //totalScore += population.getOptimalSchedule().g;
+                        totalScore += population.getOptimalSchedule().getOptimalTotalScore();
                         totalCost += population.getOptimalSchedule().getOptimalCost();
                         totalNurseSat += population.getOptimalSchedule().getOptimalNurseSat();
                         totalPatientSat += population.getOptimalSchedule().getOptimalPatientSat();
                         schedules [department] = population.giveOptimal();
                       } 
-                      if(totalScore < minTotaal){
+                      if(totalScore < minTotal){
                         optimalPercantageNotCyclic = percantageNotCyclic;
                         optimalPercentageRandomWeekly = percentageRandomWeekly;
                         optimalPercentageSubrandomWeekly = percentageSubrandomWeekly;
@@ -75,10 +75,8 @@ public class AppliedOR {
                         minCostTotal = totalCost;
                         minNurseSatTotal = totalNurseSat;
                         minPatientSatTotal = totalPatientSat;
-                          for (int i = 0; i < 4; i++) { //per department
-                              optimalSchedules = schedules;
-                          }
-                        
+                        optimalSchedules = schedules;
+
                       }
                       
                    }

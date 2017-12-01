@@ -26,6 +26,7 @@ public class MonthlySchedule {
     private int percentageRandomWeekly;
     private int percentageSubrandomWeekly;
     private int percantageNotCyclic;
+    private int optimalTotalScore = 0;
 
 
     
@@ -618,6 +619,11 @@ public class MonthlySchedule {
     public int getOptimalPatientSat() {
         return optimalPatientSat;
     }
+
+    public int getOptimalTotalScore() {
+        return (optimalCost+optimalNurseSat+optimalPatientSat);
+    }
+    
     
     
 }
