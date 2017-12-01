@@ -18,7 +18,7 @@ public class AppliedOR {
        }*/
        
         ExcellReader test = new ExcellReader ();
-        test.setInputFile("C:\\TEST AOR\\EchteTest.xls");
+        test.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
       
 //        System.out.println(test.searchFirstRowNurse(3));
 //        System.out.println(test.searchLastRowNurse(3));
@@ -65,7 +65,7 @@ public class AppliedOR {
 
         
         Population population = new Population (nursesD,workPatternsD); System.out.println(""); System.out.println("");System.out.println("Optimal method");
-        population.giveOptimal();
+        population.giveOptimal();System.out.println("EIND");
             
 //        ExcellWriter PrintOplossing = new ExcellWriter();
 //        PrintOplossing.writeScheduleToExcel(nursesType1, nursesType2, schema1, schema2, 0);

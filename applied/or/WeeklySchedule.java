@@ -32,10 +32,14 @@ public class WeeklySchedule {
     }
     
     public void schedulingProcess (){
-        
         prefScoreCalculation ();
         //methode om workrate patterns en nurses te matchen
         for (int k = 0; k < workPatterns.size(); k++) {
+//            for(Nurse nurse: nurses){
+//                System.out.println(nurse);
+//            }
+//            System.out.println("");
+//            System.out.println("");
 //            System.out.println("TO ASSIGN: " + workPatterns.get(k));
             // if listMinScore is lijst met alle nurses, allen met pref = 1000, dan zijn alle nurses opgeruikt => maak nieuwe nurse aan
             // !!! prefscore moet <10 opdat de nurse aan dat pattern mag worden assigned => nakijken of dit met deze pref kosten zo zou uitkomen
@@ -73,7 +77,7 @@ public class WeeklySchedule {
                             IDNurse = nurse.getNr();
                         }   
                 }
-////                System.out.println("optimal: ");
+//                System.out.println("optimal: ");
                 }
                 
                 // deze nurse word gekoppeld aan het workpattern
@@ -100,66 +104,93 @@ public class WeeklySchedule {
     
     public ArrayList <Nurse> possibleNursesList(int scheduleNr){
         ArrayList <Nurse> possibleNursesList = new ArrayList <Nurse> ();
-        for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-            if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()
-                    && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
-                possibleNursesList.add(nurses.get(i));
-            }
-        }
-        // als er geen zijn met zelfde, zoek nurses met hogere  
-        if (possibleNursesList.isEmpty()) {
-            for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() >= workPatterns.get(scheduleNr).getEmploymentRate()
-                        && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
-                    possibleNursesList.add(nurses.get(i));
+        double patternRate = workPatterns.get(scheduleNr).getEmploymentRate();
+        int temp = 0;
+         while (temp==0){
+            double j = 0;
+            while ( j < 0.76 && temp==0) {
+                if(patternRate+j > 1.1 && patternRate != 1.00){
+                    temp++;
+//                    System.out.println("not enough nurses");
                 }
+                for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+                    if (nurses.get(i).getBinaryDayPlanning()==null && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()+j
+                            && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+                    possibleNursesList.add(nurses.get(i));
+                    }
+                }
+                if(!possibleNursesList.isEmpty()){
+                    temp++;
+                }
+                j += 0.25;
             }
-        }
-        if(possibleNursesList.isEmpty()){
-            System.out.println("not enough nurses");
-        }
-//        for (Nurse nurse: possibleNursesList){
-//            System.out.println(nurse.toString());
-//        }
-//        System.out.println("");    
-//        
+        }   
         return possibleNursesList;
     }
        
     public ArrayList <Nurse> listMinScore (int scheduleNr) { 
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
-        //zoek nurses met zelfde workrate als schedule
-            for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
-                for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                    if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()
-                            && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
-                        nursesLowScore.add(nurses.get(i));
-                    }
+        double patternRate = workPatterns.get(scheduleNr).getEmploymentRate();
+        int temp = 0;
+         while (temp==0){
+            double j = 0;
+            while ( j < 0.76 && temp==0) {
+                if(patternRate+j > 1.1 && patternRate != 1.00){
+                    temp++;
+//                    System.out.println("not enough nurses");
                 }
-                if (nursesLowScore.isEmpty()){
-//                    System.out.println("old min: " + min);
-                }
-                else{
-                    min +=1000;
-                }
-            }
-        // als er geen zijn met zelfde, zoek nurses met hogere  
-            if (nursesLowScore.isEmpty()) {
-               for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
+                for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
                     for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
-                        if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= workPatterns.get(scheduleNr).getEmploymentRate()
+                        if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()+j
                                 && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
                             nursesLowScore.add(nurses.get(i));
                         }
                     }
                     if (nursesLowScore.isEmpty()){
-//                        System.out.println("old min: " + min);
+//                    System.out.println("old min: " + min);
                     }
                     else{
                         min +=1000;
                     }
+                }   
+                if(!nursesLowScore.isEmpty()){
+                    temp++;
                 }
+                j += 0.25;
             }
+        }
+        //zoek nurses met zelfde workrate als schedule
+//            for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
+//                for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+//                    if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() == workPatterns.get(scheduleNr).getEmploymentRate()
+//                            && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+//                        nursesLowScore.add(nurses.get(i));
+//                    }
+//                }
+//                if (nursesLowScore.isEmpty()){
+////                    System.out.println("old min: " + min);
+//                }
+//                else{
+//                    min +=1000;
+//                }
+//            }
+//        // als er geen zijn met zelfde, zoek nurses met hogere  
+//            if (nursesLowScore.isEmpty()) {
+//               for (int min = getMinOfColumn (scheduleNr); min < 1000; min++) {
+//                    for (int i = 0; i < nurses.size(); i++) { //gaat voor 1 schedule door alle nurses
+//                        if (prefScores [scheduleNr] [i] == min && nurses.get(i).getEmploymentRate() >= workPatterns.get(scheduleNr).getEmploymentRate()
+//                                && nurses.get(i).getType() == workPatterns.get(scheduleNr).getType()) {
+//                            nursesLowScore.add(nurses.get(i));
+//                        }
+//                    }
+//                    if (nursesLowScore.isEmpty()){
+////                        System.out.println("old min: " + min);
+//                    }
+//                    else{
+//                        min +=1000;
+//                    }
+//                }
+//            }
 //        for (Nurse nurse: nursesLowScore){
 //            System.out.println(nurse.toString());
 //        }
