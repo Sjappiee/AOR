@@ -10,25 +10,13 @@ public class AppliedOR {
  
     public static void main(String[] args) throws IOException, WriteException {
         java.util.Locale.setDefault(new java.util.Locale("en", "US"));
-//        int [] percantagesNotCyclic = {100,75,50,25,0};
-//        int [] percentagesRandomWeekly = {100,50,0};
-//        int [] percentagesSubrandomWeekly = {100,50,0};
-
+/*
         int [] percantagesNotCyclic = {100,75,50,25,0};
         int [] percentagesRandomWeekly = {100,50,0};
         int [] percentagesSubrandomWeekly = {100,50,0};
         int [] departments = {0,1,2,3};
         int amountCombinations = 50;
-    /*    Process process = new Process();
-       Department depA = new Department ('A',32);
-       process.read_personnel_characteristics('A',32);
-       int x;
-       for(x=0;x<depA.getAmountNurses();x++){
-       System.out.println(process.personelNr[x] + '\n');
-       }*/
-    
-    
-    
+
         double minTotal = 10000000;
         double minCostTotal = 10000000;
         double minNurseSatTotal = 10000000;
@@ -58,7 +46,7 @@ public class AppliedOR {
                       MonthlySchedule [] schedules = new MonthlySchedule [4]; //per department
                       for(int department : departments){
                           ExcellReader test =new ExcellReader();
-                          test.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
+                          test.setInputFile("C:\\TEST AOR\\input 3x9 4-3.xls");
                         ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
                         ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
                         nurses = test.readAllExceptCyclicSchedule(department);  
@@ -159,10 +147,29 @@ public class AppliedOR {
             test2.writeShiftToExcel(Nurses1, Nurses2, schema1, schema2, dep);
         }
         
+        */
         
-        
-//     
-//   
+        ExcellReader test =new ExcellReader();
+        test.setInputFile("C:\\TEST AOR\\input 3x9 4-3.xls");
+        ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+        nurses = test.readAllExceptCyclicSchedule(0);  
+        workPatterns = test.readWorkPatterns(0);
+        for(Nurse pattern: workPatterns){
+            System.out.println(pattern.getNr());
+            System.out.println(pattern.BinaryPlanningToString ());
+        }
+            
+//        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
+//        week.allProcesses();
+//        for(Nurse nurse:nurses){
+//            System.out.println(nurse);
+//        }
+
+
+
+
+
 //        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
 //
 //        monthlySchedule.fireNurses(1);
