@@ -18,7 +18,7 @@ public class AppliedOR {
         int [] percentagesRandomWeekly = {100,50,0};
         int [] percentagesSubrandomWeekly = {100,50,0};
         int [] departments = {0,1,2,3};
-        int amountCombinations = 5;
+        int amountCombinations = 50;
     /*    Process process = new Process();
        Department depA = new Department ('A',32);
        process.read_personnel_characteristics('A',32);
@@ -27,19 +27,6 @@ public class AppliedOR {
        System.out.println(process.personelNr[x] + '\n');
        }*/
        
-        ExcellReader testA = new ExcellReader ();
-        testA.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-                
-        ExcellReader testB = new ExcellReader ();
-        testB.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-                
-        ExcellReader testC = new ExcellReader ();
-        testC.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-               
-        ExcellReader testD = new ExcellReader ();
-        testD.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-      
-
  
         double minTotal = 10000000;
         double minCostTotal = 10000000;
