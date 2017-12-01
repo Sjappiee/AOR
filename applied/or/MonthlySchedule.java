@@ -19,7 +19,7 @@ public class MonthlySchedule {
     private ArrayList <Nurse> nursesType1 = new ArrayList<Nurse> ();
     private ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
     private int [][] objectiveFunctions = new int [2][3]; //per type, 3obj functions
-    private double [] objectiveWeights = {0.20,0.6,0.1}; //cost, nurse, patient
+    private double [] objectiveWeights = {0.25,0.6,0.15}; //cost, nurse, patient
     private int optimalCost = 0;
     private int optimalNurseSat = 0;
     private int optimalPatientSat = 0;
@@ -221,8 +221,8 @@ public class MonthlySchedule {
         //administrative costs
         cost += fixedAdmCost + labourHoursWeek + labourHoursWeekend;
 //        System.out.println("COST: " + cost);
-        optimalCost = (int) cost;
-        return cost;
+        optimalCost = (int) cost/200;
+        return cost/200;
     }
 
     public void test () {
@@ -470,8 +470,8 @@ public class MonthlySchedule {
         
         //for days
 //       System.out.println(counter);
-        optimalPatientSat = (NewNursePenalty*counter);
-        return (NewNursePenalty*counter);
+        optimalPatientSat = (int) ((NewNursePenalty*counter) + 0.5*optimalNurseSat);
+        return (int) (NewNursePenalty*counter + 0.5*optimalNurseSat);
     }
     
     public ArrayList <Nurse> nursesWhoWorkOnDayInWeek (int day, int week, int type) {
@@ -519,14 +519,11 @@ public class MonthlySchedule {
     public int [][] calcObjectiveFunctions () {
         for (int i = 0; i < 2; i++) { //per type
             System.out.println("TYPE:" + i);
-            objectiveFunctions [i][0] = (int) ((calcCost (i+1))/200); //als i=0 dan type 1, als i=1 dan type 2
+            objectiveFunctions [i][0] = (int) ((calcCost (i+1))); //als i=0 dan type 1, als i=1 dan type 2
             System.out.println("Cost: " + objectiveFunctions [i][0]);
             objectiveFunctions [i][1] = calcNurseSat (i+1);
             System.out.println("NurseSat: " + objectiveFunctions [i][1]);
-            int temp1 = (int) (0.5*objectiveFunctions [i][1]);
-            int temp2 = patientSatisfaction(i+1);
-            int result = temp1 + temp2;
-            objectiveFunctions [i][2] = result; // berekening maar ook nog deel laten samenhangen met nurse satisfaction!
+            objectiveFunctions [i][2] = patientSatisfaction(i+1); // berekening maar ook nog deel laten samenhangen met nurse satisfaction!
             System.out.println("PatientSat: " + objectiveFunctions [i][2]);
         }
         return objectiveFunctions;
@@ -621,7 +618,7 @@ public class MonthlySchedule {
     }
 
     public int getOptimalTotalScore() {
-        return (optimalCost+optimalNurseSat+optimalPatientSat);
+        return (int) (objectiveWeights[0]*optimalCost+ objectiveWeights[1]*optimalNurseSat+objectiveWeights[2]*optimalPatientSat);
     }
     
     
