@@ -25,21 +25,9 @@ public class AppliedOR {
        for(x=0;x<depA.getAmountNurses();x++){
        System.out.println(process.personelNr[x] + '\n');
        }*/
-       
-        ExcellReader testA = new ExcellReader ();
-        testA.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-                
-        ExcellReader testB = new ExcellReader ();
-        testB.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-                
-        ExcellReader testC = new ExcellReader ();
-        testC.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-               
-        ExcellReader testD = new ExcellReader ();
-        testD.setInputFile("C:\\TEST AOR\\input 2x12 4-3.xls");
-      
-
- 
+    
+    
+    
         double minTotal = 10000000;
         double minCostTotal = 10000000;
         double minNurseSatTotal = 10000000;
