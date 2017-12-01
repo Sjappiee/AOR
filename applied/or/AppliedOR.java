@@ -18,6 +18,7 @@ public class AppliedOR {
         int [] percentagesRandomWeekly = {50};
         int [] percentagesSubrandomWeekly = {50};
         int [] departments = {0,1,2,3};
+        int amountReplications = 5;
     /*    Process process = new Process();
        Department depA = new Department ('A',32);
        process.read_personnel_characteristics('A',32);
@@ -48,10 +49,12 @@ public class AppliedOR {
         int optimalPercentageRandomWeekly=0;
         int optimalPercentageSubrandomWeekly=0;
         
-        double [] [] Cost = new double [10][4];
-        double [] [] NurseSat = new double [10][4];
-        double [] [] PatientSat = new double [10][4];
-        double [] [] Total = new double [10][4];
+        double [] [] Cost = new double [amountReplications][4];
+        double [] [] NurseSat = new double [amountReplications][4];
+        double [] [] PatientSat = new double [amountReplications][4];
+        double [] [] Total = new double [amountReplications][4];
+        String [][] Schedules1 = new String [amountReplications][4];
+        String [][] Schedules2 = new String [amountReplications][4];
 
         ArrayList <String> schedule = new ArrayList<>();
         int i =0;
@@ -84,6 +87,8 @@ public class AppliedOR {
                         NurseSat [i][department] = population.getOptimalSchedule().getOptimalNurseSat();
                         PatientSat [i][department] = population.getOptimalSchedule().getOptimalPatientSat();
                         Total [i][department] = population.getOptimalSchedule().getOptimalTotalScore();
+                        Schedules1 [i][department] = population.getOptimalSchedule().getSchedule1();
+                        Schedules2 [i][department] = population.getOptimalSchedule().getSchedule2();
                         
                       } 
                       if(totalScore < minTotal){
@@ -100,7 +105,8 @@ public class AppliedOR {
                           }
 
                       }
-                    i++;  
+                    i++;
+                       System.out.println(i);
                    }
                }
         }
@@ -109,25 +115,29 @@ public class AppliedOR {
         for (int j = 0; j < 4; j++) {
             System.out.println("FINAL OUTPUT DEPARTMENT " + j);
             System.out.println("COST");
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < amountReplications; k++) {
              System.out.println(Cost [k][j]);   
             }
             System.out.println("NURSESSAT");
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < amountReplications; k++) {
              System.out.println(NurseSat [k][j]);   
             }
             System.out.println("Patient Sat");
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < amountReplications; k++) {
              System.out.println(PatientSat [k][j]);   
             }
             System.out.println("Total " );
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < amountReplications; k++) {
              System.out.println(Total [k][j]);   
             }           
             
+            String [] [] Schedules = new String [amountReplications][4];
             for (int k = 0; k < 2; k++) {
-                for (int l = 0; l < 10; l++) {
-                    
+                System.out.println("Schedule of Type: " + k);
+                if(k==0)Schedules = Schedules1;
+                if(k==1)Schedules = Schedules2;
+                for (int l = 0; l < amountReplications; l++) {
+                    System.out.println(Schedules[l][j]);
                 }
             }
         }
