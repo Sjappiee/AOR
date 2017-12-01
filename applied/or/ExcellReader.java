@@ -396,11 +396,11 @@ public class ExcellReader {
                 Cell cell = sheet.getCell(j, row);
                 if (cell.getContents().isEmpty()) 
                 {
-                    binaryPlanning [1] [counter3] = 0;
+                    binaryPlanning [2] [counter3] = 0;
                 }
                 else 
                 {
-                    binaryPlanning [1] [counter3] = Integer.parseInt (cell.getContents());
+                    binaryPlanning [2] [counter3] = Integer.parseInt (cell.getContents());
                 }
                 counter3++;
             }

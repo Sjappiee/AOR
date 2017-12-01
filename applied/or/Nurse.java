@@ -214,19 +214,19 @@ public class Nurse implements Cloneable {
         counters.add(counter2);
         counters.add(counter3);
         
-        int min = counters.get(0);
+        int max = counters.get(0);
         int shift = 0;
         
         for (int i = 0; i < amountShifts; i++) {
-            if (counters.get(i)<= min)
+            if (counters.get(i)> max)
             {
-                min = counters.get(i);
-                shift = i+1;
+                max = counters.get(i);
+                shift = i;
                        
             }
         }
         
-        return shift;
+        return shift+1;
     }
 
     public void setEmploymentRate(float employmentRate) {
