@@ -21,8 +21,7 @@ import jxl.write.WriteException;
 public class ExcellWriter {
 
     public void writeShiftToExcel(ArrayList<Nurse> Nurses1, ArrayList<Nurse> Nurses2, String schema1, String schema2, int dep) throws IOException, WriteException {
-        File f = new File("C:\\TEST AOR\\OutputSchedule.xls");
-        WritableWorkbook myexcel = Workbook.createWorkbook(f);
+        
         String departement = null;
         if (dep == 0) {
             departement = "A";
@@ -36,6 +35,8 @@ public class ExcellWriter {
         if (dep == 3) {
             departement = "D";
         }
+        File f = new File("C:\\TEST AOR\\OutputSchedule" + departement + ".xls");
+        WritableWorkbook myexcel = Workbook.createWorkbook(f);
         int minass = 28;
         int maxass = 0;
         int minconsass = 28;
