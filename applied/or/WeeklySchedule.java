@@ -555,7 +555,7 @@ public class WeeklySchedule {
        
     public void recombineQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
-        int indexFirstRest = searchFirstIndexOfRestSchedules();
+        //int indexFirstRest = searchFirstIndexOfRestSchedules();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
         
 //        System.out.println("LIJST MET RESTSCHEMA'S");
@@ -591,10 +591,19 @@ public class WeeklySchedule {
         for (int i = 0; i < temp.size(); i++) { //juiste ER instellen dat data nog steeds klopt
             temp.get(i).setEmploymentRate((float) EmploymentRateSchedule(temp, i));
         }
-        for (int j = indexFirstRest; j<workPatterns.size();j++){ //de algemene worklijst aanpassen. Dus alle restschema's eruit smijten en dan de nieuwe gecombineerde temp list toevoegen
-            workPatterns.remove(j);
-            j--;
+        
+        for (int i = 0; i < workPatterns.size(); i++) {
+            if (workPatterns.get(i).getEmploymentRate() == 0.2)
+            {
+                workPatterns.remove(i);
+                i--;
+            }
         }
+        
+//        for (int j = indexFirstRest; j<workPatterns.size();j++){ //de algemene worklijst aanpassen. Dus alle restschema's eruit smijten en dan de nieuwe gecombineerde temp list toevoegen
+//            workPatterns.remove(j);
+//            j--;
+//        }
         for (int i = 0; i < temp.size(); i++) {
             workPatterns.add(temp.get(i));
         }
