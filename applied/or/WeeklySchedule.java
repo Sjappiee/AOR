@@ -8,7 +8,7 @@ public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
-    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
+    int [] rateInDays = {5,4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 3; //uniek per lijn!
     int percentageRandomWeekly;
@@ -290,10 +290,12 @@ public class WeeklySchedule {
                 rate += temp.get(scheduleNr).getBinaryDayPlanning() [j][i];   
             }
         }
+        
         if(rate == rateInDays[0]) employmentRate = 1.00;
-        if(rate == rateInDays[1]) employmentRate = 0.75;
-        if(rate == rateInDays[2]) employmentRate = 0.5;
-        if(rate == rateInDays[3]) employmentRate = 0.25;
+        if(rate == rateInDays[1]) employmentRate = .80;
+        if(rate == rateInDays[2]) employmentRate = 0.6;
+        if(rate == rateInDays[3]) employmentRate = 0.4;
+        if(rate == rateInDays[4]) employmentRate = 0.2;
 
         return employmentRate;
     }
@@ -590,20 +592,22 @@ public class WeeklySchedule {
 //        System.out.println("");
     }   
     
+        //.25 voor 4-3, .20 voor 5-2
     public ArrayList <Nurse> searchQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
         for (Nurse workPattern : workPatterns) {
-            if (workPattern.getEmploymentRate() == 0.25){
+            if (workPattern.getEmploymentRate() == 0.2){
                 temp.add(workPattern);
             }
         }
         return temp;
     }
     
+    //.25 voor 4-3, .20 voor 5-2
     public int searchFirstIndexOfRestSchedules () {
         int counter =0;
         for (int i = 0; i < workPatterns.size(); i++) {
-            if (workPatterns.get(i).getEmploymentRate() == 0.25){
+            if (workPatterns.get(i).getEmploymentRate() == 0.2){
                 i+=100;
             }
             else{
@@ -695,6 +699,7 @@ public class WeeklySchedule {
             if(rateInDays1 == rateInDays[1]) rate = rates[1];
             if(rateInDays1 == rateInDays[2]) rate = rates[2];
             if(rateInDays1 == rateInDays[3]) rate = rates[3];
+            if(rateInDays1 == rateInDays[4]) rate = rates[4];
             
             return (float)rate;
         }
