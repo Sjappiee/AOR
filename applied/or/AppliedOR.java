@@ -10,7 +10,7 @@ public class AppliedOR {
  
     public static void main(String[] args) throws IOException, WriteException {
         java.util.Locale.setDefault(new java.util.Locale("en", "US"));
-
+/*
         int [] percantagesNotCyclic = {100,75,50,25,0};
         int [] percentagesRandomWeekly = {100,50,0};
         int [] percentagesSubrandomWeekly = {100,50,0};
@@ -153,7 +153,7 @@ public class AppliedOR {
             test2.writeShiftToExcel(Nurses1, Nurses2, schema1, schema2, dep);
         }
         
-        
+        */
         ExcellReader test =new ExcellReader();
         test.setInputFile("C:\\TEST AOR\\input 3x9 5-2.xls");
         ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
@@ -161,19 +161,11 @@ public class AppliedOR {
         nurses = test.readAllExceptCyclicSchedule(0);  
         workPatterns = test.readWorkPatterns(0);
             
-        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
-        week.addaptSchedule();
-        week.recombineQuarterSchedules();
-        week.hireNurses();
-        
-        for (Nurse workPattern : workPatterns) {
-            System.out.println(workPattern);
+        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);        
+        week.allProcesses();
+        for(Nurse nurse:nurses){
+            System.out.println(nurse);
         }
-        
-//        week.allProcesses();
-//        for(Nurse nurse:nurses){
-//            System.out.println(nurse);
-//        }
 
 //        MonthlySchedule monthlySchedule = new MonthlySchedule(nurses,workPatterns,0,0,100);
 ////
