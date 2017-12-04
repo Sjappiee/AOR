@@ -558,32 +558,32 @@ public class WeeklySchedule {
         //int indexFirstRest = searchFirstIndexOfRestSchedules();
         temp = searchQuarterSchedules(); //nu hebben we de lijst met alle werkschema's die en rate van .25 hebben.
         
-//        System.out.println("LIJST MET RESTSCHEMA'S");
-//        for (Nurse nurse : temp) {
-//            System.out.println(nurse);
-//        }
-//        System.out.println("");
+        System.out.println("LIJST MET RESTSCHEMA'S");
+        for (Nurse nurse : temp) {
+            System.out.println(nurse);
+        }
+        System.out.println("");
         //lijst met .25 proberen hercombineren tot schema's
 
         for (int j = 0; j < temp.size(); j++) {
             if(j == temp.size()-1){
-//                System.out.println("last");
+                System.out.println("last");
             }
-//            System.out.println("TOEVOEGNAAN: " + temp.get(j));
+            System.out.println("TOEVOEGNAAN: " + temp.get(j));
             
-//            System.out.println("shiftType: "+ temp.get(j).getShiftType());
+            System.out.println("shiftType: "+ temp.get(j).getShiftType());
             for (int i = j+1; i < temp.size(); i++) { //herkennen wat er te combineren valt en dit dan doen (in de tijdelijke lijst               
-//                System.out.println("opties: "+ temp.get(i));
-//                System.out.println("indexes: " + temp.get(i).getIndexof1());
-//                System.out.println("shiftType: " + temp.get(i).getShiftType());
-//                System.out.println("indexes of TOETEVOEGEN: " + temp.get(j).getAllIndexesOf1());
+                System.out.println("opties: "+ temp.get(i));
+                System.out.println("indexes: " + temp.get(i).getIndexof1());
+                System.out.println("shiftType: " + temp.get(i).getShiftType());
+                System.out.println("indexes of TOETEVOEGEN: " + temp.get(j).getAllIndexesOf1());
                 if (!temp.get(j).getAllIndexesOf1().contains(temp.get(i).getIndexof1()) && temp.get(j).getShiftType() == temp.get(i).getShiftType() && temp.get(j).getType()== temp.get(i).getType() && temp.get(j).getAllIndexesOf1().size() < rateInDays[0]) {//indien combinable //AANPASSEN NAAR GET ALLE INDEXES OF 1 VOOR HUIDIGE OBJECT
                     
                     
                     temp.get(j).setSpecificBinaryToOne(temp.get(i).getShiftType()-1, temp.get(i).getIndexof1());
                     temp.remove(i);
-//                    System.out.println("recombine");
-//                    System.out.println("new: " + temp.get(j));
+                    System.out.println("recombine");
+                    System.out.println("new: " + temp.get(j));
                     i--;}
             }
             
@@ -593,7 +593,7 @@ public class WeeklySchedule {
         }
         
         for (int i = 0; i < workPatterns.size(); i++) {
-            if (workPatterns.get(i).getEmploymentRate() == 0.2)
+            if (workPatterns.get(i).getEmploymentRate() - 0.2 < 0.1 && workPatterns.get(i).getEmploymentRate() - 0.2 >=0)
             {
                 workPatterns.remove(i);
                 i--;
@@ -619,7 +619,7 @@ public class WeeklySchedule {
     public ArrayList <Nurse> searchQuarterSchedules () {
         ArrayList <Nurse> temp = new ArrayList <Nurse> ();
         for (Nurse workPattern : workPatterns) {
-            if (workPattern.getEmploymentRate() == 0.2){
+            if (workPattern.getEmploymentRate() - 0.2 < 0.1 && workPattern.getEmploymentRate() - 0.2 >=0){
                 temp.add(workPattern);
             }
         }
@@ -627,18 +627,18 @@ public class WeeklySchedule {
     }
     
     //.25 voor 4-3, .20 voor 5-2
-    public int searchFirstIndexOfRestSchedules () {
-        int counter =0;
-        for (int i = 0; i < workPatterns.size(); i++) {
-            if (workPatterns.get(i).getEmploymentRate() == 0.2){
-                i+=100;
-            }
-            else{
-                counter ++;
-            }
-        }
-        return counter;
-    }
+//    public int searchFirstIndexOfRestSchedules () {
+//        int counter =0;
+//        for (int i = 0; i < workPatterns.size(); i++) {
+//            if (workPatterns.get(i).getEmploymentRate() == 0.2){
+//                i+=100;
+//            }
+//            else{
+//                counter ++;
+//            }
+//        }
+//        return counter;
+//    }
     
     public int getLengthArray (int [][] array, int amountColumns , int amountRows){
         int counter1 = 0;
