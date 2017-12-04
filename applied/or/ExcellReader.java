@@ -496,12 +496,12 @@ public class ExcellReader {
                 }
             }
             if(rateInDaysint == rateInDays[0]) rate = 1.0; // afhankelijk van SHIFTSYSTEM
-            if(rateInDaysint == rateInDays[1]) rate = 0.80;
-            if(rateInDaysint == rateInDays[2]) rate = 0.60;
-            if(rateInDaysint == rateInDays[3]) rate = 0.40;
-            if(rateInDaysint == rateInDays[4]) rate = 0.20;
+            if(rateInDaysint == rateInDays[1]) rate = 0.8;
+            if(rateInDaysint == rateInDays[2]) rate = 0.6;
+            if(rateInDaysint == rateInDays[3]) rate = 0.4;
+            if(rateInDaysint == rateInDays[4]) rate = 0.2;
             
-            return (float)rate;
+            return (float) rate;
         }
         
         //checken!!!

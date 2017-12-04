@@ -9,7 +9,7 @@ public class WeeklySchedule {
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
     int [] rateInDays = {5,4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
-    float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
+    float [] rates = {(float)1.0,(float)0.8,(float)0.60,(float)0.40,(float)0.20};
     int amountShifts = 3; //uniek per lijn!
     int percentageRandomWeekly;
     int percentageSubrandomWeekly;
@@ -409,12 +409,14 @@ public class WeeklySchedule {
             rateN = 0;
             rateP = 1;
             amountsPatterns = amountWithRatesPatterns (workPatterns, k);
-            if(amountsNurses[rateN] - amountsPatterns[rateP-1] < amountsPatterns[rateP]){ //check of er gesplitst moet worden
-                int amountToSplit = amountsPatterns[rateP] - amountsNurses[rateN] - amountsPatterns[rateP-1];
-                String [] patternsSplit = getPatternsToSplit (temp,k,rateP, amountToSplit);
-                splitPatterns(patternsSplit,k,rateP);
-                prefScoreCalculation ();
-                temp = prefScores;                      
+            if(amountsNurses[rateN] - amountsPatterns[rateP-1]< amountsPatterns[rateP]){ //check of er gesplitst moet worden
+                int amountToSplit = amountsPatterns[rateP] - (amountsNurses[rateN] - amountsPatterns[rateP-1]);
+                if(amountToSplit > (amountsNurses[rateN] - amountsPatterns[rateP-1])){
+                    String [] patternsSplit = getPatternsToSplit (temp,k,rateP, amountToSplit);
+                    splitPatterns(patternsSplit,k,rateP);
+                    prefScoreCalculation ();
+                    temp = prefScores;
+                }
             }
             // N:rate 75%, P:60%
             rateN = 1;
@@ -507,11 +509,11 @@ public class WeeklySchedule {
             }
 
         }
-        System.out.println("AFTER SPLIT FOR RATE: " + rate);
-        for(Nurse nurse: workPatterns){
-            System.out.println(nurse);
-        }
-        System.out.println("");
+//        System.out.println("AFTER SPLIT FOR RATE: " + rate);
+//        for(Nurse nurse: workPatterns){
+//            System.out.println(nurse);
+//        }
+//        System.out.println("");
     }
 
     
@@ -682,17 +684,17 @@ public class WeeklySchedule {
     
     public int [] amountWithRatesPatterns (ArrayList<Nurse> list, int type){
         int [] amounts = new int [5];
-        double j = 1.00;
+        double j = 1;
         int counter = 0;
         while (j>0.19) {
             int amount = 0;
             for (int i = 0; i < list.size(); i++) {
-                if(list.get(i).getEmploymentRate() == j && list.get(i).getType() == type)
+                if(list.get(i).getEmploymentRate() - j < 0.1 && list.get(i).getEmploymentRate() - j >= 0 && list.get(i).getType() == type)
                     amount++; 
             }
             amounts[counter] = amount;
             counter++;
-            j = j - 0.20;
+            j = j - 0.2;
         }
         return amounts;
     }
