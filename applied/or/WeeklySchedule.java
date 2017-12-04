@@ -116,7 +116,10 @@ public class WeeklySchedule {
     //j<.76 en j++.25 voor 4-3 systeem. j<.81 en j++.2 voor 5-2 systeem
     public ArrayList <Nurse> possibleNursesList(int scheduleNr){
         ArrayList <Nurse> possibleNursesList = new ArrayList <Nurse> ();
-        double patternRate = workPatterns.get(scheduleNr).getEmploymentRate();
+        double patternRate0 = workPatterns.get(scheduleNr).getEmploymentRate();
+        DecimalFormat df = new DecimalFormat("#.##");
+        double patternRate = Double.parseDouble(df.format(patternRate0));
+        
         int temp = 0;
          while (temp==0){
             double j = 0;
@@ -144,10 +147,8 @@ public class WeeklySchedule {
         ArrayList <Nurse> nursesLowScore = new ArrayList <Nurse> ();
         double patternRate0 = workPatterns.get(scheduleNr).getEmploymentRate();
         DecimalFormat df = new DecimalFormat("#.##");
-        
         double patternRate = Double.parseDouble(df.format(patternRate0));
-        System.out.println("NEW: " + patternRate);
-        System.out.println("OLD: " + patternRate0);
+        
         int temp = 0;
          while (temp==0){
             double j = 0;
