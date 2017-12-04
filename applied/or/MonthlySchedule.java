@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MonthlySchedule {
-    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
+    int [] rateInDays = {5,4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
     private double [][] wages1 = {{216,160,176},{291.6,216,237.6}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
     private double [][] wages2 = {{162,120,132},{218.7,162,178.2}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
     // 2x12 : wages1 = {{324,240},{437.4,324}},wages2 = {{243,180},{328.05,243}}
@@ -13,7 +13,7 @@ public class MonthlySchedule {
     private int shiftHours = 9;  //!!SHIFTSYSTEM
     int amountShifts = 3; //of 3
     
-    float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};    
+    float [] rates = {(float)1.0,(float)0.8,(float)0.60,(float)0.4,(float)0.2};    
     private String schedule1; //type1
     private String schedule2; //type2
     private int amountNurses1 = 0;
@@ -162,7 +162,7 @@ public class MonthlySchedule {
 
             for (int f =0 ; f<indexesToFire.size(); f++) {
                 //type 1
-                     String temp1 = schedule.substring(0,(indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)); //begin tot eerste onderbreking OK
+                    String temp1 = schedule.substring(0,(indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)); //begin tot eerste onderbreking OK
                     String temp2 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)+8, (indexesToFire.get(f)-nursesFired)*8 + 0*8*(amountNurses)+8 +1*8*(amountNurses-1)); //alle nurses tot volgende punt
                     String temp3 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 1*8*(amountNurses)+8, (indexesToFire.get(f)-nursesFired)*8 + 1*8*(amountNurses)+8 +1*8*(amountNurses-1)); //alle nurses tot volgende punt
                     String temp4 = schedule.substring((indexesToFire.get(f)-nursesFired)*8 + 2*8*(amountNurses)+8, (indexesToFire.get(f)-nursesFired)*8 + 2*8*(amountNurses)+8 +1*8*(amountNurses-1));  //alle nurses tot volgende punt
@@ -318,6 +318,7 @@ public class MonthlySchedule {
                     shift = shift.substring(index3 + 1);
                     index3 = shift.indexOf("303");
                 }
+                
                 amountOfInteruptions+= count;
                 amountOfInteruptions+= count2;
                 amountOfInteruptions+= count3;
