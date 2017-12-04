@@ -161,8 +161,15 @@ public class AppliedOR {
 //        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
 //        nurses = test.readAllExceptCyclicSchedule(0);  
 //        workPatterns = test.readWorkPatterns(0);
-            
+//            
 //        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
+//        week.addaptSchedule();
+//        week.recombineQuarterSchedules();
+//        
+//        for (Nurse workPattern : workPatterns) {
+//            System.out.println(workPattern);
+//        }
+        
 //        week.allProcesses();
 //        for(Nurse nurse:nurses){
 //            System.out.println(nurse);
