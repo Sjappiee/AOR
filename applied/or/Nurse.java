@@ -183,6 +183,7 @@ public class Nurse implements Cloneable {
                 }
                 else{
                     indexesOfOne.add(counterShift1);
+                    counterShift1++;
                 }
             }
         }
