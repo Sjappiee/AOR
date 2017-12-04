@@ -384,9 +384,9 @@ public class WeeklySchedule {
 //                }
 //            }
         }
-//        for (Nurse nurse: nurses) {
-//            System.out.println(nurse);
-//        }
+        for (Nurse nurse: nurses) {
+            System.out.println(nurse);
+        } System.out.println(""); System.out.println("");
     }
     
     public void addaptSchedule () {

@@ -154,21 +154,21 @@ public class AppliedOR {
         }
         
         
+        ExcellReader test =new ExcellReader();
+        test.setInputFile("C:\\TEST AOR\\input 3x9 5-2.xls");
+        ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+        nurses = test.readAllExceptCyclicSchedule(0);  
+        workPatterns = test.readWorkPatterns(0);
+            
+        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
+        week.addaptSchedule();
+        week.recombineQuarterSchedules();
+        week.hireNurses();
         
-//        ExcellReader test =new ExcellReader();
-//        test.setInputFile("C:\\TEST AOR\\input 3x9 4-3.xls");
-//        ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
-//        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
-//        nurses = test.readAllExceptCyclicSchedule(0);  
-//        workPatterns = test.readWorkPatterns(0);
-//            
-//        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
-//        week.addaptSchedule();
-//        week.recombineQuarterSchedules();
-//        
-//        for (Nurse workPattern : workPatterns) {
-//            System.out.println(workPattern);
-//        }
+        for (Nurse workPattern : workPatterns) {
+            System.out.println(workPattern);
+        }
         
 //        week.allProcesses();
 //        for(Nurse nurse:nurses){
