@@ -19,6 +19,7 @@ public class Population {
 
     public Population(ArrayList<Nurse> nursesExcel,ArrayList<Nurse> workPatternsExcel,  int percentageRandomWeekly, int percentageSubrandomWeekly, int percantageNotCyclic) {
         for (int i = 0; i < amountReplications; i++) {
+//            System.out.println("Iteratie " + i);
             ArrayList<Nurse> nurses = cloneList(nursesExcel);
             ArrayList<Nurse> workPatterns = cloneList(workPatternsExcel);
             MonthlySchedule schedule = new MonthlySchedule(nurses,workPatterns,percentageRandomWeekly,percentageSubrandomWeekly, percantageNotCyclic);
