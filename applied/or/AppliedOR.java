@@ -161,20 +161,19 @@ public class AppliedOR {
         nurses = test.readAllExceptCyclicSchedule(0);  
         workPatterns = test.readWorkPatterns(0);
             
-        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);        
-        week.allProcesses();
-        for(Nurse nurse:nurses){
-            System.out.println(nurse);
-        }
+        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);   
 
-//        MonthlySchedule monthlySchedule = new MonthlySchedule(nurses,workPatterns,0,0,100);
-////
-//        monthlySchedule.fireNurses(1);
-//        monthlySchedule.fireNurses(2);
-//        monthlySchedule.calcTotalObjectiveFunction();
-//        System.out.println("type1:" + monthlySchedule.getSchedule1());
-//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-//        System.out.println("type2: " + monthlySchedule.getSchedule2());
+//        week.allProcesses();
+//        for(Nurse nurse:week.getNurses()){
+//            System.out.println(nurse);
+//        }
+
+        MonthlySchedule monthlySchedule = new MonthlySchedule(nurses,workPatterns,0,0,0);
+
+        monthlySchedule.calcTotalObjectiveFunction();
+        System.out.println("type1:" + monthlySchedule.getSchedule1());
+        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
+        System.out.println("type2: " + monthlySchedule.getSchedule2());
 //
 //        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
 //        String schema1 = monthlySchedule.getSchedule1();
