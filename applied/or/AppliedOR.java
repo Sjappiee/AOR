@@ -160,7 +160,7 @@ public class AppliedOR {
         week.addaptSchedule();
         for(Nurse pattern : week.getWorkPatterns()){
             System.out.println(pattern);
-        }
+        } System.out.println(""); System.out.println("");
         week.recombineQuarterSchedules();
         for(Nurse pattern : week.getWorkPatterns()){
             System.out.println(pattern);
