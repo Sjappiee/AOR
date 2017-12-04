@@ -8,7 +8,7 @@ public class WeeklySchedule {
     private ArrayList <Nurse> nurses = new ArrayList <Nurse> ();
     private ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
-    int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
+    int [] rateInDays = {5,4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};
     int amountShifts = 3; //uniek per lijn!
     int percentageRandomWeekly;
@@ -292,44 +292,60 @@ public class WeeklySchedule {
         for (int k = 1; k < 3; k++) { //per type (1,2)
             int [] amountsNurses = amountWithRatesNurses (nurses, k);
             int [] amountsPatterns = amountWithRatesPatterns (workPatterns, k);
-            // 100%
-            int rate = 0;
-            if(amountsNurses[rate] < amountsPatterns[rate]){
-                    int amount = amountsPatterns[rate] - amountsNurses[rate];
+            // N: 100%, P: 100%
+            int rateN = 0;
+            int rateP = 0;
+            if(amountsNurses[rateN] < amountsPatterns[rateP]){
+                    int amount = amountsPatterns[rateP] - amountsNurses[rateP];
                     for (int j = 0; j < amount; j++){ 
-                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rateP], k, " ",preferencesWeek, preferencesMonth);
                         nurses.add(newNurse);
                     }
                 }
-            // 75%
-            rate = 1;
-            if(amountsNurses[rate] < amountsPatterns[rate]){
-                int amount = amountsPatterns[rate] - amountsNurses[rate];
-                if(amount > (amountsNurses[rate-1] - amountsPatterns[rate-1])){
+            // N: 100%, P: 80%
+            rateN = 0;
+            rateP = 1;
+            if(amountsNurses[rateN] < amountsPatterns[rateP]){
+                int amount = amountsPatterns[rateP] - amountsNurses[rateN];
+                if(amount > (amountsNurses[rateN] - amountsPatterns[rateP-1])){
                     for (int j = 0; j < amount; j++){ 
-                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rateP], k, " ",preferencesWeek, preferencesMonth);
                         nurses.add(newNurse);
                     }
                  }
             }
-            // 50%
-            rate = 2;
-            if(amountsNurses[rate] < amountsPatterns[rate]){
-                int amount = amountsPatterns[rate] - amountsNurses[rate];
-                if(amount > (amountsNurses[rate-1] - amountsPatterns[rate-1] + amountsNurses[rate-2] - amountsPatterns[rate-2])){
+            // N: 75%, P: 60%
+            rateN = 1;
+            rateP = 2;
+            if(amountsNurses[rateN] < amountsPatterns[rateP]){
+                int amount = amountsPatterns[rateP] - amountsNurses[rateN];
+                if(amount > ((amountsNurses[rateN-1] - amountsPatterns[rateP-1]) + (amountsNurses[rateN-1] - amountsPatterns[rateP-2]) )){
                     for (int j = 0; j < amount; j++){ 
-                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rateP], k, " ",preferencesWeek, preferencesMonth);
                         nurses.add(newNurse);
                     }
                  }
             }
-            // 25%
-            rate = 3;
-            if(amountsNurses[rate] < amountsPatterns[rate]){
-                int amount = amountsPatterns[rate] - amountsNurses[rate];
-                if(amount > (amountsNurses[rate-1] - amountsPatterns[rate-1] + amountsNurses[rate-2] - amountsPatterns[rate-2] + amountsNurses[rate-3] - amountsPatterns[rate-3] )){
+            // N: 50%, P: 40%
+            rateN = 2;
+            rateP = 3;
+            if(amountsNurses[rateN] < amountsPatterns[rateP]){
+                int amount = amountsPatterns[rateP] - amountsNurses[rateN];
+                if(amount > ((amountsNurses[rateN-1] - amountsPatterns[rateP-1])+(amountsNurses[rateP-2] - amountsPatterns[rateP-2]) + (amountsNurses[rateP-2] - amountsPatterns[rateP-3]))){
                     for (int j = 0; j < amount; j++){ 
-                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rate], k, " ",preferencesWeek, preferencesMonth);
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rateP], k, " ",preferencesWeek, preferencesMonth);
+                        nurses.add(newNurse);
+                    }
+                 }
+            }
+            // N: 25%, P: 20%
+            rateN = 3;
+            rateP = 4;
+            if(amountsNurses[rateN] < amountsPatterns[rateP]){
+                int amount = amountsPatterns[rateP] - amountsNurses[rateN];
+                if(amount > ((amountsNurses[rateN-1] - amountsPatterns[rateP-1])+(amountsNurses[rateP-2] - amountsPatterns[rateP-2]) + (amountsNurses[rateP-3] - amountsPatterns[rateP-3]) + (amountsNurses[rateP-3] - amountsPatterns[rateP-4]))){
+                    for (int j = 0; j < amount; j++){ 
+                        Nurse newNurse = new Nurse(getNewIDNurse (k), rates[rateP], k, " ",preferencesWeek, preferencesMonth);
                         nurses.add(newNurse);
                     }
                  }
@@ -359,7 +375,6 @@ public class WeeklySchedule {
             int rateP = 0;
             int [] amountsPatterns = amountWithRatesPatterns (workPatterns, k);
             if(amountsNurses[rateN] < amountsPatterns[rateP]){ //check of er gesplitst moet worden
-//                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
                 int amountToSplit = amountsPatterns[rateP] - amountsNurses[rateN];
                 String [] patternsSplit = getPatternsToSplit (temp,k,rateP, amountToSplit);
                 splitPatterns(patternsSplit,k,rateP);
@@ -371,7 +386,6 @@ public class WeeklySchedule {
             rateP = 1;
             amountsPatterns = amountWithRatesPatterns (workPatterns, k);
             if(amountsNurses[rateN] - amountsPatterns[rateP-1] < amountsPatterns[rateP]){ //check of er gesplitst moet worden
-//                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
                 int amountToSplit = amountsPatterns[rateP] - amountsNurses[rateN] - amountsPatterns[rateP-1];
                 String [] patternsSplit = getPatternsToSplit (temp,k,rateP, amountToSplit);
                 splitPatterns(patternsSplit,k,rateP);
@@ -383,31 +397,30 @@ public class WeeklySchedule {
             rateP = 2;
             amountsPatterns = amountWithRatesPatterns (workPatterns, k);
             if(amountsNurses[rateN] < amountsPatterns[rateP]){ //check of er gesplitst moet worden
-//                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
-                int amountToSplit = amountsPatterns[rateP-1] - amountsNurses[rateN];
-                if(amountToSplit > (amountsNurses[rateN-1] - amountsPatterns[rateP-1])){
+                int amountToSplit = amountsPatterns[rateP] - amountsNurses[rateN];
+                if(amountToSplit > ((amountsNurses[rateN-1] - amountsPatterns[rateP-1]) + (amountsNurses[rateN-1] - amountsPatterns[rateP-2]) )){
                     String [] patternsSplit = getPatternsToSplit (temp,k,rateP, amountToSplit);
                     splitPatterns(patternsSplit,k,rateP);
                     prefScoreCalculation ();
                     temp = prefScores;
                 }
             }
-            // N: rate 50%, P:60%
-            rate = 2;
+            // N: rate 50%, P:40%
+            rateN = 2;
+            rateP = 3;
             amountsPatterns = amountWithRatesPatterns (workPatterns, k);
-            if(amountsNurses[rate] < amountsPatterns[rate]){ //check of er gesplitst moet worden
-//                    System.out.println(amountsPatterns[i] + " " + amountsNurses[i]);
-                int amountToSplit = amountsPatterns[rate] - amountsNurses[rate];
-                if(amountToSplit > ((amountsNurses[rate-1] - amountsPatterns[rate-1])+(amountsNurses[rate-2] - amountsPatterns[rate-2]))){
-                    String [] patternsSplit = getPatternsToSplit (temp,k,rate, amountToSplit);
-                    splitPatterns(patternsSplit,k,rate);
+            if(amountsNurses[rateN] < amountsPatterns[rateP]){ //check of er gesplitst moet worden
+                int amountToSplit = amountsPatterns[rateP] - amountsNurses[rateN];
+                if(amountToSplit > ((amountsNurses[rateN-1] - amountsPatterns[rateP-1])+(amountsNurses[rateP-2] - amountsPatterns[rateP-2]) + (amountsNurses[rateP-2] - amountsPatterns[rateP-3]))){
+                    String [] patternsSplit = getPatternsToSplit (temp,k,rateP, amountToSplit);
+                    splitPatterns(patternsSplit,k,rateP);
                     prefScoreCalculation (); 
                  }
             }
         }
     }
     
-    public void splitPatterns (String [] patternsSplit, int type, int rate){
+    public void splitPatterns (String [] patternsSplit, int type, int rate){ //rate = patternrate
         int [][] restPatterns = new int [7*amountShifts][100]; // [11111112222222][#nieuwe rest schedules (gwn heel groot getal)]
         int shiftDays = rateInDays [rate+1];
         int [] days = new int [7*amountShifts];
@@ -417,7 +430,6 @@ public class WeeklySchedule {
         //maak splitsingen en sla restjes op
         for(String patternID : patternsSplit){
             int [][] newPattern = new int [amountShifts][7];
-//            int [][] splitPattern = workPatterns.get(IDToIndex(patternID,workPatterns)).getBinaryDayPlanning();
             String splitPattern = workPatterns.get(IDToIndex(patternID,workPatterns)).BinaryPlanningToString ();
             int counter1 = 0;
             int [] sequence = shuffleArray(days);
@@ -463,7 +475,7 @@ public class WeeklySchedule {
                     if(restPatterns[l][j] == 1){
                         newPattern = new int [amountShifts][7];
                         newPattern [s][l-s*7] = restPatterns[l][j];
-                        Nurse newPattern2 = new Nurse (getNewIDPattern (),(float) 0.25,newPattern,type);
+                        Nurse newPattern2 = new Nurse (getNewIDPattern (),(float) 0.20,newPattern,type);
                         workPatterns.add(newPattern2);
                     }
                 }
@@ -471,11 +483,11 @@ public class WeeklySchedule {
             }
 
         }
-//        System.out.println("AFTER SPLIT FOR RATE: " + rate);
-//        for(Nurse nurse: workPatterns){
-//            System.out.println(nurse);
-//        }
-//        System.out.println("");
+        System.out.println("AFTER SPLIT FOR RATE: " + rate);
+        for(Nurse nurse: workPatterns){
+            System.out.println(nurse);
+        }
+        System.out.println("");
     }
 
     

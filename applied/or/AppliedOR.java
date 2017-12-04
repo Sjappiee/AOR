@@ -158,6 +158,7 @@ public class AppliedOR {
         System.out.println(workPatterns);
             
         WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
+        week.addaptSchedule();
 //        week.allProcesses();
 //        for(Nurse nurse:nurses){
 //            System.out.println(nurse);
