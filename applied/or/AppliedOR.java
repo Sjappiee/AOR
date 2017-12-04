@@ -155,6 +155,7 @@ public class AppliedOR {
         ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
         nurses = test.readAllExceptCyclicSchedule(0);  
         workPatterns = test.readWorkPatterns(0);
+        System.out.println(workPatterns);
             
         WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
 //        week.allProcesses();
