@@ -146,41 +146,31 @@ public class AppliedOR {
             ExcellWriter test2 = new ExcellWriter();
             test2.writeShiftToExcel(Nurses1, Nurses2, schema1, schema2, dep);
         }
-        
         */
         
+        
         ExcellReader test =new ExcellReader();
-        test.setInputFile("C:\\TEST AOR\\input 3x9 4-3.xls");
+        test.setInputFile("C:\\TEST AOR\\input 3x9 5-2.xls");
         ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
         ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
         nurses = test.readAllExceptCyclicSchedule(0);  
         workPatterns = test.readWorkPatterns(0);
-        for(Nurse pattern: workPatterns){
-            System.out.println(pattern.getNr());
-            System.out.println(pattern.BinaryPlanningToString ());
-        }
             
-//        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
+        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
 //        week.allProcesses();
 //        for(Nurse nurse:nurses){
 //            System.out.println(nurse);
 //        }
 
-
-
-
-
-//        MonthlySchedule monthlySchedule = new MonthlySchedule(nursesD,workPatternsD);
-//
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(nurses,workPatterns,0,0,100);
+////
 //        monthlySchedule.fireNurses(1);
 //        monthlySchedule.fireNurses(2);
-//        monthlySchedule.calcNurseSat(1);
 //        monthlySchedule.calcTotalObjectiveFunction();
-//        monthlySchedule.patientSatisfaction(2);
 //        System.out.println("type1:" + monthlySchedule.getSchedule1());
-////        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
 //        System.out.println("type2: " + monthlySchedule.getSchedule2());
-
+//
 //        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
 //        String schema1 = monthlySchedule.getSchedule1();
 //        String schema2 = monthlySchedule.getSchedule2();
@@ -188,10 +178,6 @@ public class AppliedOR {
 //        nursesType1 = monthlySchedule.getNursesType1();
 //        ArrayList <Nurse> nursesType2 = new ArrayList<Nurse> ();
 //        nursesType2 = monthlySchedule.getNursesType2();
-//        
-//        monthlySchedule.patientSatisfaction(1);
-//        monthlySchedule.patientSatisfaction(2);
-
         
             
 //        ExcellWriter PrintOplossing = new ExcellWriter();

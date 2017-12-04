@@ -5,15 +5,13 @@ import java.util.Random;
 
 public class MonthlySchedule {
     int [] rateInDays = {4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
-    private double [][] wages1 = {{324,240},{437.4,324}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
-    private double [][] wages2 = {{243,180},{328.05,243}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
-    // 2x12 4-3: wages1 = {{324,240},{437.4,324}},wages2 = {{243,180},{328.05,243}}
-    // 3x9 5-2: wages1 = {{216,160,176},{291.6,216,237.6}}, wages2 = {{162,120,132},{218.7,162,178.2}}
-    // 2x12 5-2: wages1 = {{324,240,264},{437.4,324,356.4}},wages2 = {{243,180,198},{328.05,243,267.3}}
-    // 3x9 4-3: wages1 = {{216,160},{291.6,216}}, wages2 = {{162,120},{218.7,162}}
-    private double fixedAdmCost = 100000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
-    private int shiftHours = 12;  //!!SHIFTSYSTEM
-    int amountShifts = 2; //of 3
+    private double [][] wages1 = {{216,160,176},{291.6,216,237.6}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
+    private double [][] wages2 = {{162,120,132},{218.7,162,178.2}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
+    // 2x12 : wages1 = {{324,240},{437.4,324}},wages2 = {{243,180},{328.05,243}}
+    // 3x9: wages1 = {{216,160,176},{291.6,216,237.6}}, wages2 = {{162,120,132},{218.7,162,178.2}}
+    private double fixedAdmCost = 60000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
+    private int shiftHours = 9;  //!!SHIFTSYSTEM
+    int amountShifts = 3; //of 3
     
     float [] rates = {(float)1.0,(float)0.75,(float)0.50,(float)0.25};    
     private String schedule1; //type1
@@ -114,6 +112,8 @@ public class MonthlySchedule {
 //        System.out.println("Amount of nurses type 1: " + amountNurses1);
 //        System.out.println("schedule 2: " + schedule2);
 //        System.out.println("Amount of nurses type 2: " + amountNurses2);
+        fireNurses(1);
+        fireNurses(2);
     }
     
     public int randomBoolean (int probOnOne){
@@ -209,6 +209,7 @@ public class MonthlySchedule {
             for (int n = 0; n < amountNurses; n++) { // nurses
                 for (int i = 0; i < 5; i++) { //week
                     if(Character.getNumericValue(schedule.charAt(counter)) > 0){
+//                        System.out.println(Character.getNumericValue(schedule.charAt(counter))-1);
                         cost += wages[0][Character.getNumericValue(schedule.charAt(counter))-1] ; //if type=1, wages[0][0] ,if type=2, wages[0][1]
                         labourHoursWeek += shiftHours;
                     }
@@ -288,6 +289,12 @@ public class MonthlySchedule {
                 if (shift.substring(0, 1).equalsIgnoreCase("02") && shift.charAt(6) == '2'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
                     amountOfInteruptions++;
                 }
+                if(shift.substring(5).equalsIgnoreCase("30") && shift.charAt(0) == '3'){ //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
+                    amountOfInteruptions++;
+                }
+                if (shift.substring(0, 1).equalsIgnoreCase("03") && shift.charAt(6) == '3'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
+                    amountOfInteruptions++;
+                }
                 int index = shift.indexOf("101"); //kijken of er 101 of 202 is in weekschema
                 int count = 0;
                 while (index != -1) {
@@ -302,9 +309,18 @@ public class MonthlySchedule {
                     count2++;
                     shift = shift.substring(index2 + 1);
                     index2 = shift.indexOf("202");
+                }                
+                
+                int index3 = shift.indexOf("303"); //kijken of er 101 of 202 is in weekschema
+                int count3 = 0;
+                while (index3 != -1) {
+                    count3++;
+                    shift = shift.substring(index3 + 1);
+                    index3 = shift.indexOf("303");
                 }
                 amountOfInteruptions+= count;
                 amountOfInteruptions+= count2;
+                amountOfInteruptions+= count3;
             }
 //            System.out.println("total interuptions " + amountOfInteruptions);
 //            System.out.println("METHODE VOOR EMPLOYMENT RATES");
@@ -330,6 +346,7 @@ public class MonthlySchedule {
                 
                 String shift = monthScheduleNurse.get(i);
                 String shift2 = monthScheduleNurse.get(i);
+                String shift3 = monthScheduleNurse.get(i);
                 
                 int index = shift.indexOf("1"); //kijken of er 101 of 202 is in weekschema
                 int count = 0;
@@ -348,7 +365,16 @@ public class MonthlySchedule {
                 index2 = shift2.indexOf("2");
                     
                 }
-                AmountOfShiftChanges  += Integer.min(count, count2);
+                
+                int index3 = shift3.indexOf("3"); //kijken of er 101 of 202 is in weekschema
+                int count3 = 0;
+                while (index3 != -1) {
+                count3++;
+                shift3 = shift3.substring(index3 + 1);
+                index3 = shift3.indexOf("3");
+                    
+                }
+                AmountOfShiftChanges  += Integer.min(count, Integer.min(count2,count3));
             }
 //            System.out.println("Amount of shift changes" + AmountOfShiftChanges);
 //            System.out.println("");
@@ -429,8 +455,11 @@ public class MonthlySchedule {
                 else if (currentValue == 1) { //we werken enkel met free, early en 
                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [3] [j + (i*7)];
                 }
-                else if (currentValue == 2) {
-                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [1] [j + (i*7)];
+                else if (currentValue == 2) { //we werken enkel met free, early en 
+                   weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [1] [j + (i*7)];
+                }
+                else if (currentValue == 3) {
+                    weeklyScore += usedNurses.get(nurseNumber).getMonthlyPreferences() [2] [j + (i*7)];
                 }           
             }
             score += weeklyScore;
@@ -581,6 +610,8 @@ public class MonthlySchedule {
      public int getShiftTypeFromString (String shift) {
             int counter1 =0;
             int counter2 = 0;
+            int counter3 = 0;
+            ArrayList <Integer> counters = new ArrayList <Integer> ();
             
             for (int i = 0; i < 7; i++) {
              if (shift.charAt(i) == '1')
@@ -591,15 +622,28 @@ public class MonthlySchedule {
              {
                  counter2 ++;
              }
+             else if (shift.charAt(i) == '3')
+             {
+                 counter3 ++;
+             }
          }
-            if (counter1 > counter2)
+        counters.add(counter1);
+        counters.add(counter2);
+        counters.add(counter3);
+        
+        int max = counters.get(0);
+        int shiftnr = 0;
+        
+        for (int i = 0; i < amountShifts; i++) {
+            if (counters.get(i)> max)
             {
-                return 1;
+                max = counters.get(i);
+                shiftnr = i;
+                       
             }
-            else
-            {
-                return 2;
-            }
+        }
+        
+        return shiftnr+1;
      }
 
     public ArrayList<Nurse> getNursesType1() {

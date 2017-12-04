@@ -23,7 +23,7 @@ public class ExcellReader {
     private String inputFile;
     private ArrayList <Nurse> nurses;
     private ArrayList <Nurse> workPatterns;
-    int [] rateInDays = {4,3,2,1}; //AANPASSEN NAAR SHIFTSYSTEM
+    int [] rateInDays = {5,4,3,2,1}; //AANPASSEN NAAR SHIFTSYSTEM
     int amountShifts = 3;
     
     
@@ -396,11 +396,11 @@ public class ExcellReader {
                 Cell cell = sheet.getCell(j, row);
                 if (cell.getContents().isEmpty()) 
                 {
-                    binaryPlanning [1] [counter3] = 0;
+                    binaryPlanning [2] [counter3] = 0;
                 }
                 else 
                 {
-                    binaryPlanning [1] [counter3] = Integer.parseInt (cell.getContents());
+                    binaryPlanning [2] [counter3] = Integer.parseInt (cell.getContents());
                 }
                 counter3++;
             }
@@ -496,9 +496,10 @@ public class ExcellReader {
                 }
             }
             if(rateInDaysint == rateInDays[0]) rate = 1.0; // afhankelijk van SHIFTSYSTEM
-            if(rateInDaysint == rateInDays[1]) rate = 0.75;
-            if(rateInDaysint == rateInDays[2]) rate = 0.50;
-            if(rateInDaysint == rateInDays[3]) rate = 0.25;
+            if(rateInDaysint == rateInDays[1]) rate = 0.80;
+            if(rateInDaysint == rateInDays[2]) rate = 0.60;
+            if(rateInDaysint == rateInDays[3]) rate = 0.40;
+            if(rateInDaysint == rateInDays[4]) rate = 0.20;
             
             return (float)rate;
         }
