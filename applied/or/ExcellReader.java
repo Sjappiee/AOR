@@ -500,7 +500,7 @@ public class ExcellReader {
             if(rateInDaysint == rateInDays[2]) rate = 0.6;
             if(rateInDaysint == rateInDays[3]) rate = 0.4;
             if(rateInDaysint == rateInDays[4]) rate = 0.2;
-            
+                       
             return (float) rate;
         }
         

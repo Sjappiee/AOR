@@ -157,15 +157,9 @@ public class AppliedOR {
         workPatterns = test.readWorkPatterns(0);
             
         WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,0,0);
-        week.addaptSchedule();
-        week.recombineQuarterSchedules();
-        week.hireNurses();
+
         
-        for (Nurse workPattern : workPatterns) {
-            System.out.println(workPattern);
-        }
-        
-//        week.allProcesses();
+        week.allProcesses();
 //        for(Nurse nurse:nurses){
 //            System.out.println(nurse);
 //        }
