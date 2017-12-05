@@ -10,7 +10,7 @@ public class AppliedOR {
  
     public static void main(String[] args) throws IOException, WriteException {
         java.util.Locale.setDefault(new java.util.Locale("en", "US"));
-/*
+
         int [] percantagesNotCyclic = {100,75,50,25,0};
         int [] percentagesRandomWeekly = {50};
         int [] percentagesSubrandomWeekly = {50};
@@ -152,29 +152,29 @@ public class AppliedOR {
             ExcellWriter test2 = new ExcellWriter();
             test2.writeShiftToExcel(Nurses1, Nurses2, schema1, schema2, dep);
         }
-        */
+        
 //        
-        ExcellReader test =new ExcellReader();
-        test.setInputFile("C:\\TEST AOR\\input 3x9 5-2.xls");
-        ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
-        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
-        nurses = test.readAllExceptCyclicSchedule(3);  
-        workPatterns = test.readWorkPatterns(3);
-//            
+//        ExcellReader test =new ExcellReader();
+//        test.setInputFile("C:\\TEST AOR\\input 3x9 5-2.xls");
+//        ArrayList <Nurse> nurses = new ArrayList <Nurse> (); //moet dan voor alle dptm gedaan worden
+//        ArrayList <Nurse> workPatterns = new ArrayList <Nurse> ();
+//        nurses = test.readAllExceptCyclicSchedule(3);  
+//        workPatterns = test.readWorkPatterns(3);
+////            
 //        WeeklySchedule week = new WeeklySchedule(nurses,workPatterns,50,50);   
 //
 //        week.allProcesses();
 //        for(Nurse nurse:week.getNurses()){
 //            System.out.println(nurse);
 //        }
-
-        MonthlySchedule monthlySchedule = new MonthlySchedule(nurses,workPatterns,100,50,100);
-
-        monthlySchedule.calcTotalObjectiveFunction();
-        System.out.println("type1:" + monthlySchedule.getSchedule1());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
-        System.out.println("type2: " + monthlySchedule.getSchedule2());
-        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
+//
+//        MonthlySchedule monthlySchedule = new MonthlySchedule(nurses,workPatterns,50,50,100);
+//
+//        monthlySchedule.calcTotalObjectiveFunction();
+//        System.out.println("type1:" + monthlySchedule.getSchedule1());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses1());
+//        System.out.println("type2: " + monthlySchedule.getSchedule2());
+//        System.out.println("amount nurses: " + monthlySchedule.getAmountNurses2());
 
 //        Population population = new Population (nurses,workPatterns,  50, 50, 100);
 //        
