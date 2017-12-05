@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Population {
     
-    private int amountReplications = 2;
+    private int amountReplications = 10000;
     private ArrayList <MonthlySchedule> wholepopulation = new ArrayList <MonthlySchedule> ();
     private MonthlySchedule optimalSchedule = null;
 
