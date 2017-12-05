@@ -5,13 +5,13 @@ import java.util.Random;
 
 public class MonthlySchedule {
     int [] rateInDays = {5,4,3,2,1}; //hangt af van SHIFTSYSTEM !!! calcNurseSat en getShiftTypeFromString AANPASSEN
-    private double [][] wages1 = {{216,160,176},{291.6,216,237.6}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
-    private double [][] wages2 = {{162,120,132},{218.7,162,178.2}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
+    private double [][] wages1 = {{324,240},{437.4,324}}; //[weekday,weekend][s1=nacht,s2=dag (12h)]  !!SHIFTSYSTEM
+    private double [][] wages2 = {{243,180},{328.05,243}}; //[weekday,weekend][s1,s2]  !!SHIFTSYSTEM
     // 2x12 : wages1 = {{324,240},{437.4,324}},wages2 = {{243,180},{328.05,243}}
     // 3x9: wages1 = {{216,160,176},{291.6,216,237.6}}, wages2 = {{162,120,132},{218.7,162,178.2}}
-    private double fixedAdmCost = 60000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
-    private int shiftHours = 9;  //!!SHIFTSYSTEM
-    int amountShifts = 3; //of 3
+    private double fixedAdmCost = 100000 * 2 * 28;  //28dagen, 12h:100000, 9h:60000   * amount shifts (2or3)      !!SHIFTSYSTEM
+    private int shiftHours = 12;  //!!SHIFTSYSTEM
+    int amountShifts = 2; //of 3
     
     float [] rates = {(float)1.0,(float)0.8,(float)0.60,(float)0.4,(float)0.2};    
     private String schedule1; //type1
@@ -289,12 +289,12 @@ public class MonthlySchedule {
                 if (shift.substring(0, 1).equalsIgnoreCase("02") && shift.charAt(6) == '2'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
                     amountOfInteruptions++;
                 }
-                if(shift.substring(5).equalsIgnoreCase("30") && shift.charAt(0) == '3'){ //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
-                    amountOfInteruptions++;
-                }
-                if (shift.substring(0, 1).equalsIgnoreCase("03") && shift.charAt(6) == '3'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
-                    amountOfInteruptions++;
-                }
+//                if(shift.substring(5).equalsIgnoreCase("30") && shift.charAt(0) == '3'){ //in het uitzonderlijke geval van bv '1001110' Ook onderbreking (zaterdag-zondag-maandag)
+//                    amountOfInteruptions++;
+//                }
+//                if (shift.substring(0, 1).equalsIgnoreCase("03") && shift.charAt(6) == '3'){ //in het uitzonderlijke gevan van bv '0111001' Ook onderbreking (zondag-maandag-dinsdag)
+//                    amountOfInteruptions++;
+//                }
                 int index = shift.indexOf("101"); //kijken of er 101 of 202 is in weekschema
                 int count = 0;
                 while (index != -1) {
@@ -311,17 +311,17 @@ public class MonthlySchedule {
                     index2 = shift.indexOf("202");
                 }                
                 
-                int index3 = shift.indexOf("303"); //kijken of er 101 of 202 is in weekschema
-                int count3 = 0;
-                while (index3 != -1) {
-                    count3++;
-                    shift = shift.substring(index3 + 1);
-                    index3 = shift.indexOf("303");
-                }
+//                int index3 = shift.indexOf("303"); //kijken of er 101 of 202 is in weekschema
+//                int count3 = 0;
+//                while (index3 != -1) {
+//                    count3++;
+//                    shift = shift.substring(index3 + 1);
+//                    index3 = shift.indexOf("303");
+//                }
                 
                 amountOfInteruptions+= count;
                 amountOfInteruptions+= count2;
-                amountOfInteruptions+= count3;
+//                amountOfInteruptions+= count3;
             }
 //            System.out.println("total interuptions " + amountOfInteruptions);
 //            System.out.println("METHODE VOOR EMPLOYMENT RATES");
@@ -347,7 +347,7 @@ public class MonthlySchedule {
                 
                 String shift = monthScheduleNurse.get(i);
                 String shift2 = monthScheduleNurse.get(i);
-                String shift3 = monthScheduleNurse.get(i);
+//                String shift3 = monthScheduleNurse.get(i);
                 
                 int index = shift.indexOf("1"); //kijken of er 101 of 202 is in weekschema
                 int count = 0;
@@ -367,15 +367,15 @@ public class MonthlySchedule {
                     
                 }
                 
-                int index3 = shift3.indexOf("3"); //kijken of er 101 of 202 is in weekschema
-                int count3 = 0;
-                while (index3 != -1) {
-                count3++;
-                shift3 = shift3.substring(index3 + 1);
-                index3 = shift3.indexOf("3");
-                    
-                }
-                AmountOfShiftChanges  += Integer.min(count, Integer.min(count2,count3));
+//                int index3 = shift3.indexOf("3"); //kijken of er 101 of 202 is in weekschema
+//                int count3 = 0;
+//                while (index3 != -1) {
+//                count3++;
+//                shift3 = shift3.substring(index3 + 1);
+//                index3 = shift3.indexOf("3");
+//                    
+//                }
+                AmountOfShiftChanges  += Integer.min(count, count2);
             }
 //            System.out.println("Amount of shift changes" + AmountOfShiftChanges);
 //            System.out.println("");

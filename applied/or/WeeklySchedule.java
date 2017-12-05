@@ -11,7 +11,7 @@ public class WeeklySchedule {
     private int [][] prefScores = new int [workPatterns.size()][nurses.size()];  //workPatterns are columns, nurses are rows
     int [] rateInDays = {5,4,3,2,1}; //hangt af van SHIFTSYSTEM !!! LIJN 670 AANPASSEN
     float [] rates = {(float)1.0,(float)0.8,(float)0.60,(float)0.40,(float)0.20};
-    int amountShifts = 3; //uniek per lijn!
+    int amountShifts = 2; //uniek per lijn!
     int percentageRandomWeekly;
     int percentageSubrandomWeekly;
 
@@ -860,9 +860,9 @@ public class WeeklySchedule {
                         output+= "2";
                     }
                //SHIFTSYSTEM:3 => alles uit comment zetten in if's + de if hieronder
-               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0'  && temp.get(i).charAt(j+14) == '1' ){ 
-                   output+= "3";
-               }
+//               else if (temp.get(i).charAt(j) == '0' && temp.get(i).charAt(j+7) == '0'  && temp.get(i).charAt(j+14) == '1' ){ 
+//                   output+= "3";
+//               }
                 }
                 output += "*";
             }

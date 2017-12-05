@@ -24,7 +24,7 @@ public class ExcellReader {
     private ArrayList <Nurse> nurses;
     private ArrayList <Nurse> workPatterns;
     int [] rateInDays = {5,4,3,2,1}; //AANPASSEN NAAR SHIFTSYSTEM
-    int amountShifts = 3;
+    int amountShifts = 2;
     
     
     public void setInputFile (String inputFile) { //nodig voor inlezen excel document
@@ -239,7 +239,7 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(26, row); // 2shifts: 19, 3shifts: 26
+            Cell cell = sheet.getCell(19, row); // 2shifts: 19, 3shifts: 26
             pref += cell.getContents();
             
         }
@@ -260,7 +260,7 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(25, row); //2shifts: 18, 3shifts 25
+            Cell cell = sheet.getCell(18, row); //2shifts: 18, 3shifts 25
             type = Integer.parseInt(cell.getContents());
             
         }
@@ -300,7 +300,7 @@ public class ExcellReader {
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            Cell cell = sheet.getCell(24, row); //2shifts: 17, 3shifts 24
+            Cell cell = sheet.getCell(17, row); //2shifts: 17, 3shifts 24
             EmploymentRate = Float.parseFloat(cell.getContents());
             
         }
@@ -361,13 +361,13 @@ public class ExcellReader {
         int [] [] binaryPlanning = new int [rows] [columns];
         int counter1 = 0;
         int counter2 = 0;
-        int counter3 = 0;
+//        int counter3 = 0;
         
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
             
-            for (int j = 3; j < 22; j= j+amountShifts) {//2shifts: j<16, 3shifts: j<23
+            for (int j = 3; j < 16; j= j+amountShifts) {//2shifts: j<16, 3shifts: j<23
                 Cell cell = sheet.getCell(j, row);
                 if (cell.getContents().isEmpty()) {
                     binaryPlanning [0] [counter1] = 0;
@@ -379,7 +379,7 @@ public class ExcellReader {
                 counter1++;
             }
             
-            for (int j = 4; j <23 ; j= j +amountShifts) {//2shifts: j<17, 3shifts: j<24
+            for (int j = 4; j <17 ; j= j +amountShifts) {//2shifts: j<17, 3shifts: j<24
                 Cell cell = sheet.getCell(j, row);
                 if (cell.getContents().isEmpty()) 
                 {
@@ -392,18 +392,18 @@ public class ExcellReader {
                 counter2++;
             }
             // 3DE SHIFT
-            for (int j = 5; j <24 ; j= j +3) {
-                Cell cell = sheet.getCell(j, row);
-                if (cell.getContents().isEmpty()) 
-                {
-                    binaryPlanning [2] [counter3] = 0;
-                }
-                else 
-                {
-                    binaryPlanning [2] [counter3] = Integer.parseInt (cell.getContents());
-                }
-                counter3++;
-            }
+//            for (int j = 5; j <24 ; j= j +3) {
+//                Cell cell = sheet.getCell(j, row);
+//                if (cell.getContents().isEmpty()) 
+//                {
+//                    binaryPlanning [2] [counter3] = 0;
+//                }
+//                else 
+//                {
+//                    binaryPlanning [2] [counter3] = Integer.parseInt (cell.getContents());
+//                }
+//                counter3++;
+//            }
         }
 
         catch (BiffException e) {
@@ -431,14 +431,13 @@ public class ExcellReader {
         int counter1 = 0;
         int counter2 = 0;
         int counter3 = 0;
-        int counter4 = 0;
+//        int counter4 = 0;
         
         try{
             w = Workbook.getWorkbook(inputWorkbook); //workbook in java initialiseren 
             Sheet sheet = w.getSheet(sheetNr); //om eerste sheet te nemen van excel bestand
-            for (int k=27;k<54;k++){ //2shifts: k=20; k<41, 3shifts: k=27; k< 54
+            for (int k=20;k<41;k++){ //2shifts: k=20; k<41, 3shifts: k=27; k< 54
                Cell cell = sheet.getCell(k, row);
-               
                if (k%(amountShifts+1)==amountShifts){ //veelvoud van 3, is shift 1
                    preferences[0][counter1] = Integer.parseInt(cell.getContents());
                    counter1+=1;
@@ -448,13 +447,13 @@ public class ExcellReader {
                    counter2+=1;
                 }
                //3de shift
-               else if (k%(amountShifts+1)==1){
-                   preferences[2][counter4] = Integer.parseInt(cell.getContents()); 
-                   counter4+=1;
-               }
+//               else if (k%(amountShifts+1)==1){
+//                   preferences[2][counter4] = Integer.parseInt(cell.getContents()); 
+//                   counter4+=1;
+//               }
                
                else { //free shift
-                  preferences[3][counter3] = Integer.parseInt(cell.getContents());    
+                  preferences[2][counter3] = Integer.parseInt(cell.getContents());    
                    counter3+=1;
                 }
                
@@ -525,7 +524,6 @@ public class ExcellReader {
             //om eerste sheet te nemen van excel bestand
             for (int k= 41;k<181;k++){
                Cell cell = sheet.getCell(k, row);
-               
                if (k%5==1){ //41 early
                    monthPreferences[0][counter1] = Integer.parseInt(cell.getContents());
                    counter1+=1;
